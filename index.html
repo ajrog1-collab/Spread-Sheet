@@ -10099,6 +10099,13 @@
         .hw-list li::marker { color: #E8742C; font-weight: 800; }
         @media (max-width: 640px) { .hw-ex-row { grid-template-columns: 1fr; } .hw-ex-why { justify-content: flex-start; } }
         .ss-hero--top { padding: 14px 18px; gap: 10px; }
+        .ss-toast { position: fixed; left: 50%; bottom: 90px; transform: translateX(-50%); z-index: 3000; background: var(--ss-navy-dk); color: #FFFFFF; padding: 12px 18px; border-radius: 12px; font: 600 14px Inter, sans-serif; box-shadow: 0 10px 30px rgba(8,18,38,0.3); max-width: calc(100vw - 32px); }
+        .ss-toast--ok { background: #13603A; } .ss-toast--warn { background: #8A6D1F; }
+        .ss-admin-form { display: flex; flex-direction: column; gap: 8px; }
+        .ss-admin-form label { font: 800 11px Inter, sans-serif; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ss-muted); }
+        .ss-admin-form input { height: 46px; border-radius: 10px; border: 1px solid var(--ss-line2); padding: 0 12px; font: 500 15px Inter, sans-serif; background: var(--ss-surface); color: var(--ss-ink); }
+        .ss-admin-form .ss-btn-solid { border: 0; cursor: pointer; min-height: 46px; margin-top: 4px; }
+        .ss-admin-err { margin: 0; min-height: 18px; font-size: 13px; color: #B42318; }
         /* Polymarket off */
         body.ss-nopoly #tabValue, body.ss-nopoly .ss-toolbar--sticky .ss-seg,
         body.ss-nopoly .ss-vcall, body.ss-nopoly .ss-why-s2, body.ss-nopoly .ss-why-t2, body.ss-nopoly .ss-ml,
@@ -10698,7 +10705,7 @@
                         </button>
                         <button class="hamburger-dropdown-item ss-menu-item" role="menuitem" data-action="refresh" tabindex="-1">
                             <svg class="ss-menu-ico" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            <span class="ss-menu-text"><span>Refresh Data</span><small>Pull live prices now</small></span>
+                            <span class="ss-menu-text"><span>Refresh Data</span><small>Owner only (password)</small></span>
                         </button>
 <div class="ss-menu-label">Learn</div>
                         <button class="hamburger-dropdown-item ss-menu-item" role="menuitem" data-action="guide" tabindex="-1">
@@ -10719,10 +10726,7 @@
                             <span class="ss-menu-text"><span>Polymarket prices</span><small>Off = sportsbook lines and model only</small></span>
                             <button type="button" class="theme-toggle-switch" id="ssPolySwitch" role="switch" aria-checked="true" aria-label="Show Polymarket prices" onclick="event.stopPropagation(); ssTogglePoly()"></button>
                         </div>
-                        <button class="hamburger-dropdown-item ss-menu-item" role="menuitem" data-action="settings" tabindex="-1">
-                            <svg class="ss-menu-ico" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-                            <span class="ss-menu-text"><span>Settings</span><small>Data connection</small></span>
-                        </button>
+
                         <div class="menu-theme-row">
                             <span class="menu-theme-label">
                                 <span id="themeIcon" hidden></span>
@@ -10745,7 +10749,7 @@
             <div class="settings-content">
                 <div class="settings-field" style="flex:1;">
                     <label class="settings-label">Proxy Server URL</label>
-                    <input class="settings-input" type="text" id="proxyUrl" placeholder="https://your-app.onrender.com">
+                    <input class="settings-input" type="text" id="proxyUrl" value="https://cbb-edge-finder-proxy.onrender.com">
                 </div>
                 <div class="settings-actions">
                     <button class="btn-refresh" id="refreshBtn" onclick="refreshAllData()" aria-busy="false">
@@ -15547,8 +15551,8 @@ Example format:
         }
         function saveConfig() { localStorage.setItem('spreadsheet_proxy', document.getElementById('proxyUrl').value); }
         function loadConfig() {
-            const proxy = localStorage.getItem('spreadsheet_proxy');
-            if (proxy) document.getElementById('proxyUrl').value = proxy;
+            // The proxy address is built in; an old saved address is ignored
+            localStorage.removeItem('spreadsheet_proxy');
             loadTheme();
             initHamburgerMenu();
         }
@@ -15713,7 +15717,7 @@ Example format:
                     toggleSettings();
                     break;
                 case 'refresh':
-                    refreshAllData();
+                    ssAdminRefresh();
                     break;
                 case 'diagnostics':
                     showModelDiagnosticsModal();
@@ -16181,8 +16185,10 @@ Example format:
                     const controller = new AbortController();
                     const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
+                    const tok = localStorage.getItem('ss_admin_token');
                     const response = await fetch(url, {
                         ...options,
+                        headers: { ...(options.headers || {}), ...(tok ? { 'X-Admin-Token': tok } : {}) },
                         signal: controller.signal
                     });
                     clearTimeout(timeoutId);
@@ -29060,6 +29066,55 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             if (legacy) legacy.style.display = 'none';
         }
 
+        // ===== Owner-only refresh (password checked by the proxy) =====
+        function ssProxy() { return document.getElementById('proxyUrl').value.trim(); }
+        async function ssAdminCall(path, method = 'GET', token) {
+            const r = await fetch(ssProxy() + path, { method, headers: { 'X-Admin-Token': token || localStorage.getItem('ss_admin_token') || '' } });
+            let body = {};
+            try { body = await r.json(); } catch (e) { /* empty */ }
+            return { status: r.status, body };
+        }
+        function ssToast(msg, kind) {
+            document.getElementById('ssToast')?.remove();
+            const t = document.createElement('div');
+            t.id = 'ssToast'; t.className = 'ss-toast' + (kind ? ' ss-toast--' + kind : '');
+            t.setAttribute('role', 'status');
+            t.textContent = msg;
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 6000);
+        }
+        async function ssRunRefresh() {
+            ssToast('Refreshing…');
+            const res = await ssAdminCall('/api/admin/refresh', 'POST');
+            if (res.status === 401) { localStorage.removeItem('ss_admin_token'); return ssAdminRefresh(); }
+            refreshAllData();   // live data in this browser right away
+            ssToast(res.body.started ? 'Refreshing now. Everyone will see the new data in about 5 minutes.'
+                                     : `Live data loaded here. ${res.body.error || 'Saved data for everyone was not updated.'}`, res.body.started ? 'ok' : 'warn');
+        }
+        function ssAdminRefresh() {
+            if (localStorage.getItem('ss_admin_token')) return ssRunRefresh();
+            showInfoModal('adminModal', 'Owner refresh', `
+                <form class="ss-admin-form" onsubmit="event.preventDefault(); ssAdminLogin();">
+                    <p class="how-p">Data updates automatically around 9 AM and 5 PM ET (plus 11:30 AM on weekends). Enter the owner password to refresh now.</p>
+                    <label for="ssAdminPw">Password</label>
+                    <input id="ssAdminPw" type="password" autocomplete="current-password" required>
+                    <p class="ss-admin-err" id="ssAdminErr" role="alert"></p>
+                    <button type="submit" class="ss-btn-solid">Refresh now</button>
+                </form>`);
+            setTimeout(() => document.getElementById('ssAdminPw')?.focus(), 50);
+        }
+        async function ssAdminLogin() {
+            const pw = document.getElementById('ssAdminPw').value;
+            const err = document.getElementById('ssAdminErr');
+            err.textContent = 'Checking…';
+            let res;
+            try { res = await ssAdminCall('/api/admin/check', 'GET', pw); } catch (e) { err.textContent = 'Could not reach the server. Try again in a minute.'; return; }
+            if (res.status !== 200) { err.textContent = 'Wrong password.'; return; }
+            localStorage.setItem('ss_admin_token', pw);
+            document.getElementById('adminModal')?.remove();
+            ssRunRefresh();
+        }
+
         // ===== Polymarket on/off switch + Model Score + best line across sportsbooks =====
         let ssPolyOn = localStorage.getItem('ss_poly') !== 'off';
         function ssV() { return ssPolyOn ? state.value : { opportunities: [], all: [], longshots: [] }; }
@@ -29280,7 +29335,6 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 await renderPredictionTracker();
                 updateTrackedBadge();
                 const loaded = await loadSnapshotAndRender();
-                if (!loaded && !localStorage.getItem('spreadsheet_proxy')) setTimeout(() => showSettingsModal(), 300);
             } catch (e) {
                 console.warn('Could not initialize prediction tracker:', e);
             }
