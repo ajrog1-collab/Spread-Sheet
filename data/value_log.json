@@ -1,0 +1,39 @@
+{
+ "updatedAt": "2026-11-25T19:13:46.361580+00:00",
+ "minEdge": 0.03,
+ "summary": {
+  "flagged": 1,
+  "graded": 0,
+  "wins": 0,
+  "losses": 0,
+  "profitUnits": 0,
+  "roiPct": null,
+  "avgEntryEdgePct": 3.1,
+  "avgEdgeVsClosePct": 3.1,
+  "beatClosePct": 100.0,
+  "note": "Judge after 100+ graded bets. Beating the close on average is the earliest sign of a real edge."
+ },
+ "bets": [
+  {
+   "id": "40a69bfe7d0a391985e1ca60741d208e_spread_vcurams_-4.5",
+   "gameId": "40a69bfe7d0a391985e1ca60741d208e",
+   "homeTeam": "VCU Rams",
+   "awayTeam": "Washington Huskies",
+   "startTime": "2026-11-26T03:00:00Z",
+   "type": "spread",
+   "side": "VCU Rams",
+   "line": -4.5,
+   "label": "VCU Rams -4.5",
+   "tradeUrl": "https://polymarket.us/sports/cbb/cbb-wash-vcu-2026-11-25",
+   "firstSeenAt": "2026-11-25T19:13:46.361580+00:00",
+   "entryPrice": 0.47,
+   "entryFair": 0.501,
+   "entryEdge": 0.031,
+   "books": 2,
+   "closeFair": 0.501,
+   "closePrice": 0.47,
+   "closeAt": "2026-11-25T19:13:46.361580+00:00",
+   "result": null
+  }
+ ]
+}
