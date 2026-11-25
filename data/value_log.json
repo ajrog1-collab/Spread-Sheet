@@ -1,15 +1,15 @@
 {
- "updatedAt": "2026-11-25T21:58:22.847586+00:00",
+ "updatedAt": "2026-11-25T23:03:06.916396+00:00",
  "minEdge": 0.02,
  "summary": {
-  "flagged": 7,
+  "flagged": 8,
   "graded": 0,
   "wins": 0,
   "losses": 0,
   "profitUnits": 0,
   "roiPct": null,
-  "avgEntryEdgePct": 2.59,
-  "avgEdgeVsClosePct": 2.46,
+  "avgEntryEdgePct": 2.54,
+  "avgEdgeVsClosePct": 2.3,
   "beatClosePct": 100.0,
   "note": "Judge after 100+ graded bets. Beating the close on average is the earliest sign of a real edge."
  },
@@ -51,9 +51,30 @@
    "entryFair": 0.502,
    "entryEdge": 0.022,
    "books": 2,
-   "closeFair": 0.493,
-   "closePrice": 0.47,
-   "closeAt": "2026-11-25T21:58:22.847586+00:00",
+   "closeFair": 0.485,
+   "closePrice": 0.46,
+   "closeAt": "2026-11-25T23:03:06.916396+00:00",
+   "result": null
+  },
+  {
+   "id": "8cdf0f9df5b4480c117a9455b60b067b_spread_smumustangs_4.5",
+   "gameId": "8cdf0f9df5b4480c117a9455b60b067b",
+   "homeTeam": "LSU Tigers",
+   "awayTeam": "SMU Mustangs",
+   "startTime": "2026-11-27T00:00:00Z",
+   "type": "spread",
+   "side": "SMU Mustangs",
+   "line": 4.5,
+   "label": "SMU Mustangs +4.5",
+   "tradeUrl": "https://polymarket.us/sports/cbb/cbb-smu-lsu-2026-11-26",
+   "firstSeenAt": "2026-11-25T23:03:06.916396+00:00",
+   "entryPrice": 0.48,
+   "entryFair": 0.502,
+   "entryEdge": 0.022,
+   "books": 4,
+   "closeFair": 0.502,
+   "closePrice": 0.48,
+   "closeAt": "2026-11-25T23:03:06.916396+00:00",
    "result": null
   },
   {
@@ -93,9 +114,9 @@
    "entryFair": 0.489,
    "entryEdge": 0.029,
    "books": 2,
-   "closeFair": 0.489,
-   "closePrice": 0.46,
-   "closeAt": "2026-11-25T21:58:22.847586+00:00",
+   "closeFair": 0.487,
+   "closePrice": 0.47,
+   "closeAt": "2026-11-25T23:03:06.916396+00:00",
    "result": null
   },
   {
@@ -137,7 +158,7 @@
    "books": 6,
    "closeFair": 0.062,
    "closePrice": 0.039,
-   "closeAt": "2026-11-25T21:58:22.847586+00:00",
+   "closeAt": "2026-11-25T23:03:06.916396+00:00",
    "result": null
   },
   {
