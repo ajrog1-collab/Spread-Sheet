@@ -37,7 +37,10 @@ def get(path, params=None, timeout=90, tries=3):
     last = None
     for i in range(tries):
         try:
-            with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "spreadsheet-refresh"}), timeout=timeout) as r:
+            hdrs = {"User-Agent": "spreadsheet-refresh"}
+            if os.environ.get("ADMIN_TOKEN"):
+                hdrs["X-Admin-Token"] = os.environ["ADMIN_TOKEN"]
+            with urllib.request.urlopen(urllib.request.Request(url, headers=hdrs), timeout=timeout) as r:
                 return json.loads(r.read().decode())
         except urllib.error.HTTPError as e:
             body = e.read().decode(errors="ignore")[:300]
