@@ -1,15 +1,15 @@
 {
- "updatedAt": "2026-11-25T21:47:58.764790+00:00",
+ "updatedAt": "2026-11-25T21:58:22.847586+00:00",
  "minEdge": 0.02,
  "summary": {
-  "flagged": 6,
+  "flagged": 7,
   "graded": 0,
   "wins": 0,
   "losses": 0,
   "profitUnits": 0,
   "roiPct": null,
-  "avgEntryEdgePct": 2.53,
-  "avgEdgeVsClosePct": 2.53,
+  "avgEntryEdgePct": 2.59,
+  "avgEdgeVsClosePct": 2.46,
   "beatClosePct": 100.0,
   "note": "Judge after 100+ graded bets. Beating the close on average is the earliest sign of a real edge."
  },
@@ -51,9 +51,9 @@
    "entryFair": 0.502,
    "entryEdge": 0.022,
    "books": 2,
-   "closeFair": 0.502,
-   "closePrice": 0.48,
-   "closeAt": "2026-11-25T21:47:58.764790+00:00",
+   "closeFair": 0.493,
+   "closePrice": 0.47,
+   "closeAt": "2026-11-25T21:58:22.847586+00:00",
    "result": null
   },
   {
@@ -75,6 +75,27 @@
    "closeFair": 0.501,
    "closePrice": 0.47,
    "closeAt": "2026-11-25T20:28:37.901697+00:00",
+   "result": null
+  },
+  {
+   "id": "56c64c09e294eb0dcb834c215fe90251_spread_loyolamarymountlions_-8.5",
+   "gameId": "56c64c09e294eb0dcb834c215fe90251",
+   "homeTeam": "Loyola Marymount Lions",
+   "awayTeam": "Eastern Washington Eagles",
+   "startTime": "2026-11-26T02:00:00Z",
+   "type": "spread",
+   "side": "Loyola Marymount Lions",
+   "line": -8.5,
+   "label": "Loyola Marymount Lions -8.5",
+   "tradeUrl": "https://polymarket.us/sports/cbb/cbb-ewash-loymry-2026-11-25",
+   "firstSeenAt": "2026-11-25T21:58:22.847586+00:00",
+   "entryPrice": 0.46,
+   "entryFair": 0.489,
+   "entryEdge": 0.029,
+   "books": 2,
+   "closeFair": 0.489,
+   "closePrice": 0.46,
+   "closeAt": "2026-11-25T21:58:22.847586+00:00",
    "result": null
   },
   {
@@ -116,7 +137,7 @@
    "books": 6,
    "closeFair": 0.062,
    "closePrice": 0.039,
-   "closeAt": "2026-11-25T21:47:58.764790+00:00",
+   "closeAt": "2026-11-25T21:58:22.847586+00:00",
    "result": null
   },
   {
