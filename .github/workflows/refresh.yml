@@ -33,6 +33,17 @@ jobs:
           SITE_DIR: ${{ vars.SITE_DIR || '.' }}
         run: python scripts/snapshot.py
 
+      - name: Install hidden browser (for the shared model record)
+        run: |
+          pip install playwright==1.47.0
+          python -m playwright install --with-deps chromium
+
+      - name: Record model picks and grade results
+        env:
+          PROXY_URL: ${{ vars.PROXY_URL }}
+          SITE_DIR: ${{ vars.SITE_DIR || '.' }}
+        run: python scripts/capture_model.py
+
       - name: Save to repo
         env:
           SITE_DIR: ${{ vars.SITE_DIR || '.' }}
