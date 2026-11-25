@@ -9974,6 +9974,29 @@
             background: var(--orange-hover);
         }
 
+        /* Honest model notice + Value tab */
+        .honest-note { margin-top: 0.4rem; font-size: 0.72rem; line-height: 1.4; color: var(--text-secondary);
+            background: var(--accent-yellow-dim); border: 1px solid rgba(234,179,8,0.3); border-radius: 6px; padding: 0.4rem 0.6rem; max-width: 720px; }
+        .value-page { max-width: 900px; margin: 0 auto; }
+        .value-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin: 0; color: var(--text-primary); }
+        .value-subtitle { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.45; margin: 0.25rem 0 0.75rem; }
+        .value-section-title { font-size: 1.05rem; margin: 1.5rem 0 0.25rem; color: var(--text-primary); }
+        .value-summary { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
+        .value-summary strong { color: var(--text-primary); }
+        .value-caution { color: var(--accent-yellow); }
+        .value-card { display: grid; grid-template-columns: 1fr auto auto; gap: 1rem; align-items: center; padding: 0.7rem 1rem;
+            background: var(--bg-card); border: 1px solid var(--border-color); border-left: 4px solid var(--accent-green); border-radius: 10px; margin-bottom: 0.5rem; }
+        .value-card-tracked { border-left-color: var(--accent-blue); }
+        .value-bet { font-weight: 700; color: var(--text-primary); }
+        .value-game { font-size: 0.72rem; color: var(--text-muted); }
+        .value-nums { display: flex; gap: 1.1rem; text-align: center; }
+        .value-num { display: block; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--text-primary); }
+        .value-lbl { font-size: 0.6rem; text-transform: uppercase; color: var(--text-muted); }
+        .value-edge { color: var(--accent-green); }
+        .value-neg { color: var(--accent-red); }
+        .value-actions { display: flex; gap: 0.4rem; align-items: center; }
+        .value-trade { text-decoration: none; }
+        @media (max-width: 700px) { .value-card { grid-template-columns: 1fr; } }
         /* Polymarket price chip */
         .poly-chip { font-size: 0.62rem; color: var(--text-secondary); margin-top: 0.2rem; white-space: nowrap; }
         .poly-chip a { color: var(--accent-blue); font-weight: 600; text-decoration: none; }
@@ -10135,7 +10158,8 @@
 
         <div class="tabs-container" role="tablist" aria-label="Main navigation">
             <button class="tab active" onclick="switchTab('games')" id="tabGames" role="tab" aria-selected="true" aria-controls="gamesTab">Games <span class="tab-badge" id="tabGamesCount"></span></button>
-            <button class="tab" onclick="switchTab('bestbets')" id="tabBestbets" role="tab" aria-selected="false" aria-controls="bestbetsTab">Best Bets <span class="tab-badge" id="tabBetsCount"></span></button>
+            <button class="tab" onclick="switchTab('bestbets')" id="tabBestbets" role="tab" aria-selected="false" aria-controls="bestbetsTab">Leans <span class="tab-badge" id="tabBetsCount"></span></button>
+            <button class="tab" onclick="switchTab('value')" id="tabValue" role="tab" aria-selected="false" aria-controls="valueTab">Value <span class="tab-badge" id="tabValueCount"></span></button>
             <button class="tab" onclick="switchTab('tracked')" id="tabTracked" role="tab" aria-selected="false" aria-controls="trackedTab">Tracked <span class="tab-badge" id="tabTrackedCount"></span></button>
             <span class="tab-divider"></span>
             <button class="tab" onclick="switchTab('validation')" id="tabValidation" role="tab" aria-selected="false" aria-controls="validationTab">Record</button>
@@ -10146,29 +10170,8 @@
 
         <!-- Unified Win% Legend - Shared across Games and Best Bets tabs -->
         <div class="confidence-legend confidence-legend--global" id="globalConfidenceLegend" role="region" aria-label="Win probability legend">
-            <span class="confidence-legend-title">Win Probability Tiers</span>
-            <div class="confidence-legend-items">
-                <div class="confidence-legend-item">
-                    <span class="confidence-legend-dot topplay"></span>
-                    <span class="confidence-legend-label">🏆 Top Play</span>
-                    <span class="confidence-legend-range">60%+ · 2u</span>
-                </div>
-                <div class="confidence-legend-item">
-                    <span class="confidence-legend-dot strong"></span>
-                    <span class="confidence-legend-label">🔥 Strong</span>
-                    <span class="confidence-legend-range">55-60% · 1.5u</span>
-                </div>
-                <div class="confidence-legend-item">
-                    <span class="confidence-legend-dot play"></span>
-                    <span class="confidence-legend-label">✅ Play</span>
-                    <span class="confidence-legend-range">52.4-55% · 1u</span>
-                </div>
-                <div class="confidence-legend-item">
-                    <span class="confidence-legend-dot pass"></span>
-                    <span class="confidence-legend-label">Pass</span>
-                    <span class="confidence-legend-range">&lt;52.4%</span>
-                </div>
-            </div>
+            <span class="confidence-legend-title">Model leans</span>
+            <div class="confidence-legend-items"><span class="confidence-legend-label">"Lean" = the model disagrees with the line. In testing these did not beat the market; the number shown is points of disagreement, not a win chance.</span></div>
         </div>
 
         <div id="gamesTab" class="tab-content">
@@ -10251,6 +10254,7 @@
                         <div class="games-title-section">
                             <h2>Today's Games</h2>
                             <div class="games-subtitle">NCAA College Basketball matchups with spread & total analysis.</div>
+                            <div class="honest-note">⚠️ Model picks are informational only. Tested on all of last season, they won 50.3% against closing spreads and 50.2% on totals (52.4% is needed to profit). For price-based edges, see the <strong>Value</strong> tab.</div>
                         </div>
                         <div class="games-header-controls">
                             <!-- Team Search -->
@@ -10347,8 +10351,9 @@
                     <!-- Header -->
                     <div class="bb-header">
                         <div class="bb-title-section">
-                            <h2>CBB Best Bets</h2>
-                            <div class="bb-subtitle">Advanced Spread & Total analytics for NCAA College Basketball.</div>
+                            <h2>Model Leans</h2>
+                            <div class="bb-subtitle">Model leans for NCAA College Basketball.</div>
+                            <div class="honest-note">⚠️ Model picks are informational only. Tested on all of last season, they won 50.3% against closing spreads and 50.2% on totals (52.4% is needed to profit). For price-based edges, see the <strong>Value</strong> tab.</div>
                         </div>
                         <div class="bb-header-controls">
                             <!-- Today's Card Generator -->
@@ -10380,6 +10385,23 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- ====== VALUE TAB ====== -->
+        <div id="valueTab" class="tab-content" style="display:none;">
+            <div class="value-page">
+                <div class="value-header">
+                    <h2>Value Finder</h2>
+                    <div class="value-subtitle">Bets where Polymarket's price is cheaper than what the sportsbooks' consensus says the bet is worth.
+                        Only compared when books post the exact same line. Prices come from Polymarket's public data, so <strong>confirm the price on Polymarket US before trading</strong>.</div>
+                </div>
+                <div class="value-summary" id="valueSummary"></div>
+                <div id="valueList"><div class="bb-empty-state"><div class="bb-empty-icon">💲</div><div class="bb-empty-title">Click Refresh Data to load prices</div></div></div>
+                <h3 class="value-section-title">My Value Bets</h3>
+                <div class="value-subtitle">Track a bet to record its price. Results grade automatically. "Close" is the books' fair value at the last refresh before tip-off: beating it consistently is the best early sign of a real edge.</div>
+                <div class="value-summary" id="valueTrackedSummary"></div>
+                <div id="valueTrackedList"></div>
             </div>
         </div>
 
@@ -17765,17 +17787,14 @@ Example format:
         }
 
         function getWinProbIcon(winProb) {
-            if (winProb >= TIER_THRESHOLDS.TOP_PLAY) return '🏆';
-            if (winProb >= TIER_THRESHOLDS.STRONG) return '🔥';
-            if (winProb >= TIER_THRESHOLDS.PLAY) return '✅';
-            return '';
+            return ''; // tier icons removed: model tiers did not predict results in testing
         }
 
         function getTierLabel(tierClass) {
             switch(tierClass) {
-                case 'topplay': return 'Top Play';
-                case 'strong': return 'Strong';
-                case 'play': return 'Play';
+                case 'topplay':
+                case 'strong':
+                case 'play': return 'Lean';
                 default: return '';
             }
         }
@@ -17808,7 +17827,7 @@ Example format:
             const icon = getWinProbIcon(winProb);
             const units = getRecommendedUnitsV2(winProb);
             if (tierClass === 'pass') return '';
-            return `<span class="tier-badge tier-${tierClass}" title="${winProb.toFixed(1)}% win probability · ${units.recommended}u">${icon} ${label} · ${units.recommended}u</span>`;
+            return `<span class="tier-badge tier-${tierClass}" title="Model lean (unproven)">Lean</span>`;
         }
 
         // Compact tier badge for grid/card views
@@ -17817,7 +17836,7 @@ Example format:
             const icon = getWinProbIcon(winProb);
             const units = getRecommendedUnitsV2(winProb);
             if (tierClass === 'pass') return '';
-            return `<span class="tier-badge-mini tier-${tierClass}" title="${winProb.toFixed(1)}%">${icon} ${units.recommended}u</span>`;
+            return `<span class="tier-badge-mini tier-${tierClass}" title="Model lean (unproven)">Lean</span>`;
         }
         
         // Generate bullet points for why a spread bet should win
@@ -18022,7 +18041,7 @@ Example format:
                                 ${hasSpreadPick ? `
                                     <div class="game-pick-value">${a.spreadPick.team.split(' ').pop()} ${a.spreadPick.line > 0 ? '+' : ''}${a.spreadPick.line}</div>
                                     <div class="game-pick-prob-row">
-                                        <span class="game-pick-winprob ${spreadClass}">${spreadWinProb.toFixed(0)}%</span>
+                                        <span class="game-pick-winprob ${spreadClass}" title="Points the model disagrees with the line">+${a.spreadEdge.toFixed(1)}pt</span>
                                         <span class="game-pick-tier ${spreadClass}">${getTierLabel(spreadClass)}</span>
                                     </div>
                                     ${polyChip(g, 'spread')}
@@ -18035,7 +18054,7 @@ Example format:
                                 ${hasTotalPick ? `
                                     <div class="game-pick-value">${a.totalPick.pick} ${a.totalPick.line}</div>
                                     <div class="game-pick-prob-row">
-                                        <span class="game-pick-winprob ${totalClass}">${totalWinProb.toFixed(0)}%</span>
+                                        <span class="game-pick-winprob ${totalClass}" title="Points the model disagrees with the line">+${a.totalEdge.toFixed(1)}pt</span>
                                         <span class="game-pick-tier ${totalClass}">${getTierLabel(totalClass)}</span>
                                     </div>
                                     ${polyChip(g, 'total')}
@@ -18380,7 +18399,7 @@ Example format:
                         <div class="confidence-circle-bg" style="background: conic-gradient(var(--conf-elite) ${bestWinProb * 3.6}deg, var(--bg-secondary) ${bestWinProb * 3.6}deg);">
                             <div class="confidence-circle-inner">
                                 <span class="confidence-circle-value">${bestWinProb.toFixed(0)}%</span>
-                                <span class="confidence-circle-label">MODEL<br>CONFIDENCE</span>
+                                <span class="confidence-circle-label">UNPROVEN<br>ESTIMATE</span>
                             </div>
                         </div>
                     </div>
@@ -18834,11 +18853,11 @@ Example format:
 
                     <!-- Model Confidence -->
                     <div class="bb-pick-confidence">
-                        <div class="bb-pick-confidence-label">MODEL CONFIDENCE</div>
+                        <div class="bb-pick-confidence-label">MODEL VS LINE</div>
                         <div class="bb-pick-confidence-bar">
                             <div class="bb-pick-confidence-fill ${cc}" style="width: ${p.winProb}%;"></div>
                         </div>
-                        <div class="bb-pick-confidence-value">${p.winProb.toFixed(0)}%</div>
+                        <div class="bb-pick-confidence-value" title="Points the model disagrees with the line">+${p.edge.toFixed(1)}pt</div>
                         ${cc !== 'pass' ? `<div class="bb-pick-rating">${renderTierBadgeMini(p.winProb)}</div>` : ''}
                     </div>
 
@@ -19042,7 +19061,7 @@ Example format:
                         <div class="confidence-circle-bg" style="background: conic-gradient(var(--conf-elite) ${spreadWinProb * 3.6}deg, var(--bg-secondary) ${spreadWinProb * 3.6}deg);">
                             <div class="confidence-circle-inner">
                                 <span class="confidence-circle-value">${spreadWinProb.toFixed(0)}%</span>
-                                <span class="confidence-circle-label">MODEL<br>CONFIDENCE</span>
+                                <span class="confidence-circle-label">UNPROVEN<br>ESTIMATE</span>
                             </div>
                         </div>
                     </div>
@@ -19204,7 +19223,7 @@ Example format:
                         <div class="confidence-circle-bg" style="background: conic-gradient(${isOver ? 'var(--accent-green)' : 'var(--accent-blue)'} ${totalWinProb * 3.6}deg, var(--bg-secondary) ${totalWinProb * 3.6}deg);">
                             <div class="confidence-circle-inner">
                                 <span class="confidence-circle-value" style="color: ${isOver ? 'var(--accent-green)' : 'var(--accent-blue)'};">${totalWinProb.toFixed(0)}%</span>
-                                <span class="confidence-circle-label">MODEL<br>CONFIDENCE</span>
+                                <span class="confidence-circle-label">UNPROVEN<br>ESTIMATE</span>
                             </div>
                         </div>
                     </div>
@@ -19373,7 +19392,8 @@ Example format:
         // IndexedDB-based prediction storage with auto-resolution
         
         const PREDICTIONS_DB_NAME = 'SpreadSheetPredictions';
-        const PREDICTIONS_DB_VERSION = 1;
+        const PREDICTIONS_DB_VERSION = 2;
+        const VALUE_STORE_NAME = 'valueBets';
         const PREDICTIONS_STORE_NAME = 'predictions';
         let predictionsDB = null;
         let currentTrackerFilter = 'bestBet';
@@ -19397,6 +19417,9 @@ Example format:
                         store.createIndex('status', 'status', { unique: false });
                         store.createIndex('capturedAt', 'capturedAt', { unique: false });
                         store.createIndex('gameDate', 'gameDate', { unique: false });
+                    }
+                    if (!db.objectStoreNames.contains(VALUE_STORE_NAME)) {
+                        db.createObjectStore(VALUE_STORE_NAME, { keyPath: 'id' });
                     }
                 };
             });
@@ -25135,6 +25158,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
 
             // Header
             lines.push(`🏀 THE SPREAD SHEET — ${dateStr}`);
+            lines.push(`Model leans — unproven (50.3% ATS in last season's test). Not betting advice.`);
             lines.push(`━━━━━━━━━━━━━━━━━━━━━━━`);
 
             // Hot / Streak callouts at the top
@@ -25374,6 +25398,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             if (tab === 'validation') renderPredictionTracker();
             if (tab === 'diagnostics') renderDiagnosticsTab();
             if (tab === 'tracked') renderTrackedBetsTab();
+            if (tab === 'value') renderValueTab();
         }
 
         // [RECOVERED] navigateToGameAnalysis
@@ -25772,6 +25797,185 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             } catch (e) { /* silent */ }
         }
 
+        // ===== Value finder (Polymarket price vs sportsbook consensus) =====
+        async function valueStore(mode) {
+            if (!predictionsDB) await initPredictionsDB();
+            return predictionsDB.transaction([VALUE_STORE_NAME], mode).objectStore(VALUE_STORE_NAME);
+        }
+        async function getAllValueBets() {
+            const st = await valueStore('readonly');
+            return new Promise((res, rej) => { const r = st.getAll(); r.onsuccess = () => res(r.result || []); r.onerror = () => rej(r.error); });
+        }
+        async function saveValueBet(bet) {
+            const st = await valueStore('readwrite');
+            return new Promise((res, rej) => { const r = st.put(bet); r.onsuccess = () => res(); r.onerror = () => rej(r.error); });
+        }
+        async function deleteValueBet(id) {
+            const st = await valueStore('readwrite');
+            return new Promise((res, rej) => { const r = st.delete(id); r.onsuccess = () => res(); r.onerror = () => rej(r.error); });
+        }
+
+        async function fetchValue() {
+            const proxyUrl = document.getElementById('proxyUrl').value.trim();
+            if (!proxyUrl) throw new Error('Enter proxy URL');
+            return fetchWithRetry(`${proxyUrl}/api/value`, { headers: { 'ngrok-skip-browser-warning': 'true' } }, 1);
+        }
+
+        // Keep each tracked bet's latest fair value until tip-off (that becomes its "close")
+        async function updateTrackedValueFromLatest() {
+            const opps = state.value?.opportunities || [];
+            const byId = new Map(opps.map(o => [o.id, o]));
+            const now = Date.now();
+            for (const b of await getAllValueBets()) {
+                if (b.status !== 'pending' || new Date(b.startTime).getTime() <= now) continue;
+                const o = byId.get(b.id);
+                if (o) {
+                    b.lastFair = o.fairProb; b.lastPrice = o.polyPrice; b.lastCheckedAt = new Date().toISOString();
+                    await saveValueBet(b);
+                }
+            }
+        }
+
+        function findFinalGame(home, away, gameDate) {
+            const t = new Date(gameDate).getTime();
+            const same = (hist, odds) => hist === odds || normalizeTeamName(hist) === normalizeTeamName(odds) ||
+                normalizeTeamName(hist) === toRatingsName(odds) || toRatingsName(hist) === toRatingsName(odds);
+            for (const hg of state.historicalGames || []) {
+                const ht = new Date(hg.date).getTime();
+                if (isNaN(ht) || Math.abs(ht - t) > 30 * 3600 * 1000) continue;
+                if (same(hg.homeTeam, home) && same(hg.awayTeam, away)) return { home: hg.homeScore, away: hg.awayScore };
+                if (same(hg.homeTeam, away) && same(hg.awayTeam, home)) return { home: hg.awayScore, away: hg.homeScore };
+            }
+            return null;
+        }
+
+        async function gradeValueBets() {
+            let graded = 0;
+            for (const b of await getAllValueBets()) {
+                if (b.status !== 'pending') continue;
+                const f = findFinalGame(b.homeTeam, b.awayTeam, b.startTime);
+                if (!f) continue;
+                let result;
+                if (b.type === 'total') {
+                    const tot = f.home + f.away;
+                    result = tot === b.line ? 'push' : ((tot > b.line) === (b.side === 'over') ? 'win' : 'loss');
+                } else {
+                    const isHome = b.side === b.homeTeam;
+                    const diff = (isHome ? f.home - f.away : f.away - f.home) + (b.type === 'spread' ? b.line : 0);
+                    result = diff === 0 ? 'push' : (diff > 0 ? 'win' : 'loss');
+                }
+                b.status = 'graded'; b.result = result; b.homeScore = f.home; b.awayScore = f.away;
+                b.resolvedAt = new Date().toISOString();
+                await saveValueBet(b);
+                graded++;
+            }
+            return graded;
+        }
+
+        async function trackValueBet(id, btn) {
+            try {
+                const existing = (await getAllValueBets()).find(b => b.id === id);
+                if (existing) {
+                    if (existing.status === 'pending') await deleteValueBet(id);
+                    return renderValueTab();
+                }
+                const o = (state.value?.opportunities || []).find(x => x.id === id);
+                if (!o) return;
+                await saveValueBet({
+                    ...o, entryPrice: o.polyPrice, entryFair: o.fairProb, entryEdge: o.edge,
+                    lastFair: o.fairProb, lastPrice: o.polyPrice, lastCheckedAt: new Date().toISOString(),
+                    trackedAt: new Date().toISOString(), status: 'pending', result: null
+                });
+                renderValueTab();
+            } catch (e) {
+                console.error('Track value bet error:', e);
+                if (btn) btn.textContent = '⚠ Error';
+            }
+        }
+
+        function fmtPct(x, d = 1) { return (x * 100).toFixed(d) + '%'; }
+        function fmtGameTime(t) {
+            const d = new Date(t);
+            return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }) + ' • ' +
+                   d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+        }
+
+        async function renderValueTab() {
+            const list = document.getElementById('valueList');
+            if (!list) return;
+            const v = state.value;
+            const tracked = await getAllValueBets();
+            const trackedIds = new Set(tracked.map(b => b.id));
+
+            const sum = document.getElementById('valueSummary');
+            if (!v) {
+                sum.innerHTML = '';
+            } else {
+                sum.innerHTML = `<span><strong>${v.opportunities.length}</strong> value bets</span>
+                    <span><strong>${v.compared}</strong> Polymarket prices compared</span>
+                    <span>Minimum edge <strong>${fmtPct(v.minEdge, 0)}</strong></span>`;
+                const badge = document.getElementById('tabValueCount');
+                if (badge) badge.textContent = v.opportunities.length || '';
+                list.innerHTML = v.opportunities.length ? v.opportunities.map(o => `
+                    <div class="value-card">
+                        <div class="value-main">
+                            <div class="value-bet">${o.label}</div>
+                            <div class="value-game">${o.awayTeam} @ ${o.homeTeam} · ${fmtGameTime(o.startTime)}</div>
+                        </div>
+                        <div class="value-nums">
+                            <div><span class="value-num">${Math.round(o.polyPrice * 100)}¢</span><span class="value-lbl">Polymarket</span></div>
+                            <div><span class="value-num">${fmtPct(o.fairProb)}</span><span class="value-lbl">Books fair (${o.books})</span></div>
+                            <div><span class="value-num value-edge">+${fmtPct(o.edge)}</span><span class="value-lbl">Edge</span></div>
+                        </div>
+                        <div class="value-actions">
+                            <button class="bb-track-btn ${trackedIds.has(o.id) ? 'tracked' : ''}" onclick="trackValueBet('${o.id}', this)">${trackedIds.has(o.id) ? '✓ Tracked' : '🔒 Track'}</button>
+                            ${o.tradeUrl ? `<a class="bb-track-btn value-trade" href="${o.tradeUrl}" target="_blank" rel="noopener">Trade ↗</a>` : ''}
+                        </div>
+                    </div>`).join('')
+                : `<div class="bb-empty-state"><div class="bb-empty-icon">🔍</div><div class="bb-empty-title">No value right now</div>
+                    <div class="bb-empty-text">Polymarket prices currently match the sportsbooks. Check again closer to game time.</div></div>`;
+            }
+
+            // Tracked value bets
+            const tsum = document.getElementById('valueTrackedSummary');
+            const tlist = document.getElementById('valueTrackedList');
+            const graded = tracked.filter(b => b.status === 'graded' && b.result !== 'push');
+            const wins = graded.filter(b => b.result === 'win').length;
+            const staked = graded.length;
+            const profit = graded.reduce((acc, b) => acc + (b.result === 'win' ? (1 / b.entryPrice - 1) : -1), 0);
+            const withClose = tracked.filter(b => b.lastFair != null);
+            const avgClv = withClose.length ? withClose.reduce((acc, b) => acc + (b.lastFair - b.entryPrice), 0) / withClose.length : null;
+            const beatClose = withClose.filter(b => b.lastFair > b.entryPrice).length;
+            tsum.innerHTML = tracked.length ? `
+                <span>Record <strong>${wins}-${staked - wins}</strong></span>
+                <span>Profit <strong>${profit >= 0 ? '+' : ''}${profit.toFixed(2)}u</strong> (1u per bet)</span>
+                <span>ROI <strong>${staked ? (profit / staked * 100).toFixed(1) + '%' : '--'}</strong></span>
+                ${avgClv != null ? `<span>Avg edge vs close <strong>${avgClv >= 0 ? '+' : ''}${fmtPct(avgClv)}</strong> (${beatClose}/${withClose.length} beat it)</span>` : ''}
+                ${staked < 100 ? `<span class="value-caution">Under 100 graded bets: too early to judge.</span>` : ''}` : '';
+            tlist.innerHTML = tracked.length ? tracked
+                .sort((a, b) => new Date(b.startTime) - new Date(a.startTime))
+                .map(b => {
+                    const clv = b.lastFair != null ? b.lastFair - b.entryPrice : null;
+                    const res = b.status === 'graded'
+                        ? `<span class="tracked-result-locked ${b.result}">${b.result === 'win' ? 'W' : b.result === 'loss' ? 'L' : 'P'}</span>`
+                        : `<span class="tracked-result-source">Pending</span>`;
+                    return `<div class="value-card value-card-tracked">
+                        <div class="value-main">
+                            <div class="value-bet">${b.label}</div>
+                            <div class="value-game">${b.awayTeam} @ ${b.homeTeam} · ${fmtGameTime(b.startTime)}</div>
+                        </div>
+                        <div class="value-nums">
+                            <div><span class="value-num">${Math.round(b.entryPrice * 100)}¢</span><span class="value-lbl">Entry</span></div>
+                            <div><span class="value-num">+${fmtPct(b.entryEdge)}</span><span class="value-lbl">Edge at entry</span></div>
+                            <div><span class="value-num ${clv != null && clv < 0 ? 'value-neg' : 'value-edge'}">${clv != null ? (clv >= 0 ? '+' : '') + fmtPct(clv) : '--'}</span><span class="value-lbl">vs close</span></div>
+                        </div>
+                        <div class="value-actions">${res}
+                            ${b.status === 'pending' ? `<button class="bb-track-btn" onclick="trackValueBet('${b.id}', this)">✕</button>` : ''}</div>
+                    </div>`;
+                }).join('')
+                : `<div class="bb-empty-text" style="padding:0.75rem 0;">No value bets tracked yet.</div>`;
+        }
+
         // ===== Polymarket prices =====
         // Prices come from Polymarket's free data via the proxy. Trade links go to Polymarket US.
         function polySameTeam(a, b) {
@@ -26159,6 +26363,15 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 console.warn('[Polymarket] Skipped:', e.message);
             }
 
+            // Value finder (optional)
+            try {
+                state.value = await fetchValue();
+                await updateTrackedValueFromLatest();
+            } catch (e) {
+                state.value = null;
+                console.warn('[Value] Skipped:', e.message);
+            }
+
             // Step 3: Analyze & capture predictions
             setStepActive('analyze');
             try {
@@ -26199,6 +26412,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             let resolvedCount = 0;
             try {
                 resolvedCount = await resolvePredictions();
+                try { await gradeValueBets(); } catch (e) { console.warn('[Value] Grading skipped:', e.message); }
                 if (resolvedCount > 0) {
                     setStepDone('grade', `${resolvedCount} resolved`);
                 } else {
@@ -26270,6 +26484,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             // Count best bets for the completion toast
             const finalBestBets = document.querySelectorAll('#bestBetsList .best-bets-grid-row, #bestBetsList .bb-pick-card').length;
 
+            renderValueTab();
             setStepDone('render', 'complete');
 
             document.getElementById('lastUpdate').textContent = `Updated ${new Date().toLocaleTimeString()}`; 
