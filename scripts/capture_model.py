@@ -21,6 +21,7 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 sys.path.insert(0, os.path.dirname(__file__))
 from snapshot import get, load_json, name_score, parse_dt, save_json  # noqa: E402
+from snapshot import find_final as find_final_bet, grade as grade_bet  # noqa: E402
 
 SITE_DIR = os.environ.get("SITE_DIR", ".")
 DATA_DIR = os.path.join(SITE_DIR, "data")
@@ -65,12 +66,17 @@ def capture_picks():
             if not page.evaluate("window.__snapshotLoaded === true"):
                 raise RuntimeError("Site could not load data/snapshot.json")
             picks = page.evaluate("getAllPredictions()")
+            top10 = page.evaluate("""(typeof ssTop10 === 'function' ? ssTop10() : []).map(t => ({
+                id: t.o.id, gameId: t.o.gameId, homeTeam: t.o.homeTeam, awayTeam: t.o.awayTeam, startTime: t.o.startTime,
+                type: t.o.type, side: t.o.side, line: t.o.line, label: t.o.label, entryPrice: t.o.polyPrice,
+                entryWorth: t.o.fairProb, edge: t.o.edge, books: t.o.books, score: t.score, scoreLabel: t.label,
+                rank: t.rank, best: !!t.best, model: t.model }))""")
             browser.close()
     finally:
         server.shutdown()
     if errors:
         print("Page errors:", errors[:5])
-    return picks
+    return picks, top10
 
 
 # ------------------------------------------------------------------
@@ -166,7 +172,8 @@ def main():
 
     # 1-2. New picks
     added = 0
-    for p in capture_picks():
+    picks_now, top10_now = capture_picks()
+    for p in picks_now:
         if p.get("id") in picks or p.get("tracked"):
             continue
         st = parse_dt(p.get("gameDate"))
@@ -229,6 +236,25 @@ def main():
     ordered = sorted(picks.values(), key=lambda p: p.get("gameDate") or "", reverse=True)
     save_json(log_path, {"updatedAt": t.isoformat(), "picks": ordered,
                          "notes": log.get("notes", "")}, pretty=False)
+    # Top 10 log: first time a bet makes the list is its entry; graded like value bets
+    t_path = os.path.join(DATA_DIR, "top10_log.json")
+    tlog = load_json(t_path, {"bets": []})
+    tb = {b["id"]: b for b in tlog.get("bets", [])}
+    for b in top10_now:
+        st = parse_dt(b.get("startTime"))
+        if b["id"] not in tb and st and st > t:
+            tb[b["id"]] = {**b, "firstSeenAt": t.isoformat(), "result": None}
+    t_graded = 0
+    for b in tb.values():
+        st = parse_dt(b.get("startTime"))
+        if b.get("result") is None and st and st < t - timedelta(hours=3):
+            final = find_final_bet(b, games)
+            if final:
+                b["result"], b["finalHome"], b["finalAway"] = grade_bet(b, final), final[0], final[1]
+                t_graded += 1
+    save_json(t_path, {"updatedAt": t.isoformat(), "bets": sorted(tb.values(), key=lambda b: b.get("startTime") or "", reverse=True)}, pretty=True)
+    print(f"Top 10 log: {len(top10_now)} on today's list, {len(tb)} logged, {t_graded} graded")
+
     counts = {}
     for p in ordered:
         counts[p.get("status")] = counts.get(p.get("status"), 0) + 1
