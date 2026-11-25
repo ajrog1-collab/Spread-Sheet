@@ -10398,6 +10398,11 @@
                 </div>
                 <div class="value-summary" id="valueSummary"></div>
                 <div id="valueList"><div class="bb-empty-state"><div class="bb-empty-icon">💲</div><div class="bb-empty-title">Click Refresh Data to load prices</div></div></div>
+                <h3 class="value-section-title">Automatic Log (every flagged bet)</h3>
+                <div class="value-subtitle">Recorded twice a day by the scheduled refresh, whether or not anyone tracked it, so this is the unbiased test of the value finder.
+                    Entry = first price seen; close = last price seen before tip-off.</div>
+                <div class="value-summary" id="valueLogSummary"></div>
+                <div id="valueLogList"></div>
                 <h3 class="value-section-title">My Value Bets</h3>
                 <div class="value-subtitle">Track a bet to record its price. Results grade automatically. "Close" is the books' fair value at the last refresh before tip-off: beating it consistently is the best early sign of a real edge.</div>
                 <div class="value-summary" id="valueTrackedSummary"></div>
@@ -14973,7 +14978,6 @@ Example format:
             if (proxy) document.getElementById('proxyUrl').value = proxy;
             loadTheme();
             initHamburgerMenu();
-            if (!proxy) setTimeout(() => showSettingsModal(), 300);
         }
         
         // ========== HAMBURGER MENU CONTROLLER ==========
@@ -15640,12 +15644,14 @@ Example format:
         }
 
         async function fetchOddsGames() {
+            if (SNAPSHOT) return SNAPSHOT.odds;
             const proxyUrl = document.getElementById('proxyUrl').value.trim();
             if (!proxyUrl) throw new Error('Enter proxy URL');
             return fetchWithRetry(`${proxyUrl}/api/odds`, { headers: { 'ngrok-skip-browser-warning': 'true' } });
         }
 
         async function fetchRatings() {
+            if (SNAPSHOT) return SNAPSHOT.ratings;
             const proxyUrl = document.getElementById('proxyUrl').value.trim();
             if (!proxyUrl) throw new Error('Enter proxy URL');
             // No season param: the proxy uses the current season (and falls back one season preseason)
@@ -15653,6 +15659,7 @@ Example format:
         }
 
         async function fetchHistoricalGames() {
+            if (SNAPSHOT) return SNAPSHOT.games;
             const proxyUrl = document.getElementById('proxyUrl').value.trim();
             if (!proxyUrl) throw new Error('Enter proxy URL');
             const hdr = { headers: { 'ngrok-skip-browser-warning': 'true' } };
@@ -15680,6 +15687,7 @@ Example format:
         }
 
         async function fetchPolymarket() {
+            if (SNAPSHOT) return SNAPSHOT.polymarket;
             const proxyUrl = document.getElementById('proxyUrl').value.trim();
             if (!proxyUrl) throw new Error('Enter proxy URL');
             return fetchWithRetry(`${proxyUrl}/api/polymarket`, { headers: { 'ngrok-skip-browser-warning': 'true' } }, 1);
@@ -25816,6 +25824,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
         }
 
         async function fetchValue() {
+            if (SNAPSHOT) return SNAPSHOT.value;
             const proxyUrl = document.getElementById('proxyUrl').value.trim();
             if (!proxyUrl) throw new Error('Enter proxy URL');
             return fetchWithRetry(`${proxyUrl}/api/value`, { headers: { 'ngrok-skip-browser-warning': 'true' } }, 1);
@@ -25900,9 +25909,51 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                    d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
         }
 
+        async function renderValueLog() {
+            const sum = document.getElementById('valueLogSummary');
+            const list = document.getElementById('valueLogList');
+            if (!sum || !list) return;
+            let log;
+            try {
+                const r = await fetch('data/value_log.json', { cache: 'no-store' });
+                if (!r.ok) throw new Error('none');
+                log = await r.json();
+            } catch (e) {
+                sum.innerHTML = '<span>No automatic log yet. It starts after the first scheduled refresh.</span>';
+                list.innerHTML = '';
+                return;
+            }
+            const s = log.summary || {};
+            sum.innerHTML = `
+                <span><strong>${s.flagged ?? 0}</strong> flagged</span>
+                <span>Record <strong>${s.wins ?? 0}-${s.losses ?? 0}</strong></span>
+                <span>ROI <strong>${s.roiPct != null ? s.roiPct + '%' : '--'}</strong></span>
+                <span>Avg edge vs close <strong>${s.avgEdgeVsClosePct != null ? (s.avgEdgeVsClosePct >= 0 ? '+' : '') + s.avgEdgeVsClosePct + '%' : '--'}</strong></span>
+                <span>Beat close <strong>${s.beatClosePct != null ? s.beatClosePct + '%' : '--'}</strong></span>
+                ${(s.graded || 0) < 100 ? '<span class="value-caution">Under 100 graded: too early to judge.</span>' : ''}
+                <span>Updated ${new Date(log.updatedAt).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}</span>`;
+            list.innerHTML = (log.bets || []).slice(0, 25).map(b => {
+                const clv = b.closeFair != null ? b.closeFair - b.entryPrice : null;
+                const res = b.result
+                    ? `<span class="tracked-result-locked ${b.result}">${b.result === 'win' ? 'W' : b.result === 'loss' ? 'L' : 'P'}</span>`
+                    : `<span class="tracked-result-source">Pending</span>`;
+                return `<div class="value-card value-card-tracked">
+                    <div class="value-main"><div class="value-bet">${b.label}</div>
+                        <div class="value-game">${b.awayTeam} @ ${b.homeTeam} · ${fmtGameTime(b.startTime)}</div></div>
+                    <div class="value-nums">
+                        <div><span class="value-num">${Math.round(b.entryPrice * 100)}¢</span><span class="value-lbl">Entry</span></div>
+                        <div><span class="value-num">+${fmtPct(b.entryEdge)}</span><span class="value-lbl">Edge at entry</span></div>
+                        <div><span class="value-num ${clv != null && clv < 0 ? 'value-neg' : 'value-edge'}">${clv != null ? (clv >= 0 ? '+' : '') + fmtPct(clv) : '--'}</span><span class="value-lbl">vs close</span></div>
+                    </div>
+                    <div class="value-actions">${res}</div>
+                </div>`;
+            }).join('');
+        }
+
         async function renderValueTab() {
             const list = document.getElementById('valueList');
             if (!list) return;
+            renderValueLog();
             const v = state.value;
             const tracked = await getAllValueBets();
             const trackedIds = new Set(tracked.map(b => b.id));
@@ -26487,7 +26538,9 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             renderValueTab();
             setStepDone('render', 'complete');
 
-            document.getElementById('lastUpdate').textContent = `Updated ${new Date().toLocaleTimeString()}`; 
+            document.getElementById('lastUpdate').textContent = SNAPSHOT
+                ? `Auto-updated ${new Date(SNAPSHOT.updatedAt).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}`
+                : `Updated ${new Date().toLocaleTimeString()}`; 
             document.getElementById('statusDot').style.background = 'var(--accent-green)';
             document.getElementById('settingsPanel').classList.remove('expanded'); 
             
@@ -27419,6 +27472,23 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             });
         }
 
+        // ===== Scheduled snapshot (written twice a day by GitHub Actions) =====
+        let SNAPSHOT = null;
+        async function loadSnapshotAndRender() {
+            try {
+                const r = await fetch('data/snapshot.json', { cache: 'no-store' });
+                if (!r.ok) return false;
+                SNAPSHOT = await r.json();
+                await refreshAllData();
+                return true;
+            } catch (e) {
+                console.warn('[Snapshot] Not loaded:', e.message);
+                return false;
+            } finally {
+                SNAPSHOT = null; // a manual Refresh Data click always pulls live data
+            }
+        }
+
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', async function() {
             loadConfig();
@@ -27429,6 +27499,8 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 await migrateTrackedPicks();
                 await renderPredictionTracker();
                 updateTrackedBadge();
+                const loaded = await loadSnapshotAndRender();
+                if (!loaded && !localStorage.getItem('spreadsheet_proxy')) setTimeout(() => showSettingsModal(), 300);
                 // Check for weekly backup reminder
                 checkWeeklyBackup();
                 // Initialize Google Drive sync
