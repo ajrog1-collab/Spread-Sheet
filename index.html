@@ -10083,6 +10083,21 @@
         .ss-ml a { font-weight: 700; font-size: 12px; color: var(--ss-navy); }
         .ss-ml { flex-wrap: nowrap; white-space: nowrap; overflow: hidden; }
         .ss-ml-pick { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+        .hw-n { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: #E8742C; color: #FFFFFF; font: 800 11px Inter, sans-serif; flex: none; margin-left: 4px; box-shadow: 0 0 0 2px #FFFFFF; }
+        .hw-example { border-radius: 12px; overflow: hidden; border: 1px solid var(--ss-line); background: var(--ss-surface); margin: 6px 0 10px; }
+        .hw-ex-head { background: var(--ss-navy-dk); color: #FFFFFF; font-size: 12px; font-weight: 800; padding: 6px 14px; }
+        .hw-ex-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) 64px; gap: 14px; align-items: center; padding: 14px; }
+        .hw-ex-match { display: flex; flex-direction: column; gap: 8px; }
+        .hw-ex-team { display: grid; grid-template-columns: 26px auto auto 1fr auto; align-items: center; gap: 6px; font-size: 15px; color: var(--ss-ink); }
+        .hw-ex-team i { width: 26px; }
+        .hw-ex-team em { font-style: normal; font-size: 11px; color: var(--ss-faint); }
+        .hw-ex-team span:not(.ss-badge):not(.hw-n) { font: 700 14px 'JetBrains Mono', monospace; text-align: right; }
+        .hw-ex-card { height: auto !important; }
+        .hw-ex-bars-n { display: flex; justify-content: flex-end; margin-top: -6px; }
+        .hw-ex-why { display: flex; align-items: center; }
+        .hw-list, .hw-steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 8px; font-size: 14px; line-height: 1.5; color: var(--ss-ink2); }
+        .hw-list li::marker { color: #E8742C; font-weight: 800; }
+        @media (max-width: 640px) { .hw-ex-row { grid-template-columns: 1fr; } .hw-ex-why { justify-content: flex-start; } }
         .ss-t10-cards { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 6px; padding: 6px 6px 12px; margin: 0 -6px; }
         .ss-t10-card { flex: 0 0 262px; scroll-snap-align: start; background: var(--ss-surface); color: var(--ss-ink); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 14px rgba(8,18,38,0.22); }
         .ss-t10-card--best { box-shadow: 0 0 0 3px var(--ss-orange), 0 4px 14px rgba(8,18,38,0.22); }
@@ -10496,7 +10511,7 @@
                         
                         <button class="hamburger-dropdown-item" role="menuitem" data-action="how" tabindex="-1">
                             <span class="menu-icon">📐</span>
-                            <span>Methodology</span>
+                            <span>How to Use</span>
                         </button>
                         <button class="hamburger-dropdown-item" role="menuitem" data-action="glossary" tabindex="-1">
                             <span class="menu-icon">📚</span>
@@ -10596,7 +10611,6 @@
                             <button type="button" class="ss-seg-btn active" data-f="all" onclick="ssSetFilter('all')">All</button>
                             <button type="button" class="ss-seg-btn" data-f="value" onclick="ssSetFilter('value')">Value</button>
                             <button type="button" class="ss-seg-btn ss-seg-best" data-f="best" onclick="ssSetFilter('best')">★ Best Bets</button>
-                            <button type="button" class="ss-seg-btn ss-seg-ls" data-f="longshot" onclick="ssSetFilter('longshot')">Longshots</button>
                         </div>
                         <label class="ss-sr" for="ssConf">Conference</label>
                         <select id="ssConf" class="ss-select" onchange="ssConf = this.value; renderToday()"><option value="all">All conferences</option></select>
@@ -10848,12 +10862,8 @@
                     </div>
                 </section>
                 <div class="ss-table" id="vtRows"><div class="ss-empty">Click Refresh Data or wait for the next scheduled update.</div></div>
-                <div class="ss-ls-head">
-                    <h2>Longshots</h2>
-                    <p>Underdogs to win that cost less than they are worth and still have a real chance (15–40%). They lose more often than they win, so they are kept off the Top 10 and Best Bets and graded separately on the Scorecard.</p>
-                </div>
-                <div class="ss-table" id="lsRows"><div class="ss-empty">Loading…</div></div>
-                <p class="ss-foot">Biggest discount first. ★ Best Bet = 4¢+ off with 3+ books agreeing. Score = Bet Score (0–100, 50 = fair price). "Worth" is the sportsbooks' average odds with their fee removed, from books posting the same line. Confirm the price on Polymarket US before trading.</p>
+<div id="lsRows" hidden></div>
+                <p class="ss-foot">Biggest discount first, longshots last. ★ Best Bet = 4¢+ off with 3+ books agreeing. LONGSHOT = underdog with value and a 15–40% chance, kept off the Top 10 and Best Bets. Score = Bet Score (0–100, 50 = fair price). "Worth" is the sportsbooks' average odds with their fee removed, from books posting the same line. Confirm the price on Polymarket US before trading.</p>
                 <div id="valueList" hidden></div><div id="valueSummary" hidden></div><div id="valueLogSummary" hidden></div><div id="valueLogList" hidden></div>
             </div>
         </div>
@@ -27990,14 +28000,14 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             window.__scorecardStats = stats;
         }
 
-        function showInfoModal(id, title, html) {
+        function showInfoModal(id, title, html, wide) {
             document.getElementById(id)?.remove();
             const modal = document.createElement('div');
             modal.id = id;
             modal.className = 'glossary-modal-overlay';
             modal.setAttribute('role', 'dialog');
             modal.setAttribute('aria-modal', 'true');
-            modal.innerHTML = `<div class="glossary-modal" style="max-width:680px;">
+            modal.innerHTML = `<div class="glossary-modal" style="max-width:${wide ? 940 : 680}px;">
                 <div class="glossary-header"><h2>${title}</h2><button class="glossary-close" aria-label="Close">&times;</button></div>
                 <div class="glossary-content">${html}</div></div>`;
             document.body.appendChild(modal);
@@ -28039,26 +28049,55 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
         }
 
         function showHowItWorksModal() {
-            showInfoModal('howModal', '📐 How It Works', `
-                <div class="glossary-section"><h3>1. Data</h3>
-                <p class="how-p">Twice a day (about 9am and 5pm ET, plus 11:30am on weekends) the site saves fresh team ratings, sportsbook lines,
-                Polymarket prices and final scores. Visitors see that saved data; <em>Refresh Data</em> in the menu pulls live data instead.</p></div>
-                <div class="glossary-section"><h3>2. Value bets (the main tool)</h3>
-                <p class="how-p">For each bet, the site works out what it is <strong>worth</strong> from the sportsbooks' odds (their fee removed, same line only) and compares it to what it
-                <strong>costs</strong> on Polymarket. If it costs at least 2¢ less than it is worth, it is a <strong>value bet</strong>; 4¢+ off with 3+ books agreeing makes it a
-                <strong>★ Best Bet</strong>. This does not predict games; it finds prices that look cheap compared with the betting market.</p></div>
-                <div class="glossary-section"><h3>Bet Score and Top 10</h3>
-                <p class="how-p">Every bet with a Polymarket price gets a <strong>Bet Score</strong> from 0 to 100. 50 means it costs exactly what it is worth.
-                The score rises with the expected return (¢ off ÷ price), counts for more when more sportsbooks agree, and moves 5 points if the model agrees or disagrees.
-                <strong>Today's Top 10</strong> lists the ten highest scores; ★ marks Best Bets.</p></div>
-                <div class="glossary-section"><h3>3. Model leans</h3>
-                <p class="how-p">The model rates teams from efficiency data and projects each spread and total. Where its number differs from the line, that side is a
-                <strong>lean</strong>, and the difference is the <strong>edge (pts)</strong>. Tested on all of last season, leans won 50.3% against closing spreads and
-                50.2% on totals, below the 52.4% breakeven. They are shown for information only.</p></div>
-                <div class="glossary-section"><h3>4. Scorecard</h3>
-                <p class="how-p">Every value bet and every lean is logged before the game and graded automatically, so nothing is hand-picked. The Scorecard gives a
-                verdict once there are 100+ graded bets, using ROI with its 95% range and how often bets <strong>beat the close</strong>.</p></div>
-                <p class="how-note">For information and entertainment only. Not betting advice.</p>`);
+            const n = k => `<span class="hw-n">${k}</span>`;
+            const example = `
+                <div class="hw-example">
+                    <div class="hw-ex-head">7:00 PM</div>
+                    <div class="hw-ex-row">
+                        <div class="hw-ex-match">
+                            <div class="hw-ex-team">${ssBadge('Marquette', 26)}<b>Marquette</b><em>#41</em><span>+2.5</span></div>
+                            <div class="hw-ex-team">${ssBadge('Virginia', 26)}<b>Virginia</b><em>#22</em><span>−2.5</span>${n(1)}</div>
+                            <div class="hw-ex-team"><i></i><b>Total (O/U)</b><em></em><span>131.5</span></div>
+                        </div>
+                        <div class="ss-mkt ss-mkt--lean ss-mkt--hasv ss-mkt--vval hw-ex-card">
+                            <div class="ss-mkt-head"><span class="ss-mkt-label">SPREAD ${n(2)}</span><span class="ss-mkt-right"><b class="ss-edge">+3.3 pts</b></span></div>
+                            <div class="ss-chip-row"><span class="ss-chip ss-chip--lean">Model likes Virginia −2.5</span>${n(3)}<span class="ss-score-mini sc-good">69</span>${n(4)}</div>
+                            ${ssBarRows([{ label: 'Book', val: 56, color: 'var(--ss-gray-bar)', text: '−2.5' }, { label: 'Model', val: 56, gapW: 8, color: 'var(--ss-navy)', text: '−5.8' }])}
+                            <div class="hw-ex-bars-n">${n(5)}</div>
+                            <div class="ss-vcall"><span class="ss-vcall-tag">VALUE</span><span class="ss-vcall-pick">Virginia −2.5</span>${ssMeter(1, true)}<b>3.2¢ off</b>${n(6)}</div>
+                        </div>
+                        <div class="hw-ex-why"><span class="ss-why-btn"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6 L8 10 L12 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>${n(7)}</div>
+                    </div>
+                </div>
+                <ol class="hw-list">
+                    <li><b>The lines.</b> Each team's spread (Virginia −2.5 = Virginia must win by 3+) and the total points line.</li>
+                    <li><b>Which bet.</b> Every game has a Spread card and a Total card. Spread is always the middle card, Total the right.</li>
+                    <li><b>The model's lean.</b> "Model likes Virginia −2.5": our model's number differs from the book by 3.3 points. Leans are information only; they have not beaten the market in testing.</li>
+                    <li><b>Bet Score (0–100).</b> How good the price is on that side. 50 = costs exactly what it is worth. 80+ Strong, 60–79 Good, 50–59 Thin, under 50 No value. Hover it to see which bet and price it rates.</li>
+                    <li><b>Book vs Model bars.</b> Gray = sportsbook, navy = our model, orange = how far apart they are.</li>
+                    <li><b>The value callout.</b> Polymarket sells Virginia −2.5 for 47¢ but the sportsbooks say it is worth 50.2¢: you get it 3.2¢ off. The bars show strength; ★ BEST BET replaces VALUE when it is 4¢+ off with 3+ books agreeing.</li>
+                    <li><b>Why.</b> Opens head-to-head ratings, how the model built its number, and a price check for both the spread and the total, with Track buttons.</li>
+                </ol>`;
+            showInfoModal('howModal', '📘 How to Use The Spread Sheet', `
+                <div class="glossary-section"><h3>Start here</h3>
+                <ol class="hw-steps">
+                    <li><b>Today → Top 10.</b> The best-priced bets of the day, ranked by Bet Score. Swipe the cards or tap "Show all 10 as a list." ★ marks Best Bets.</li>
+                    <li><b>Scan the games.</b> Green cards have value, orange cards are Best Bets, blue cards are model leans only, clear cards have no edge. Use the Value or ★ Best Bets filter to shorten the list.</li>
+                    <li><b>Open "Why"</b> on a game to see the reasoning and a price check for each bet.</li>
+                    <li><b>Check the price on Polymarket US</b> with the Trade button. Prices move; the site updates around 9 AM and 5 PM ET.</li>
+                    <li><b>Track</b> bets you take. They appear in My Bets (saved in this browser).</li>
+                    <li><b>Scorecard</b> shows whether each kind of bet actually wins, graded automatically.</li>
+                </ol></div>
+                <div class="glossary-section"><h3>Reading a game</h3>${example}</div>
+                <div class="glossary-section"><h3>Purple LONGSHOT callouts</h3>
+                <p class="how-p">An underdog to win outright that costs less than it is worth and still has a real chance (15–40%). It loses more often than it wins, so it is kept off the Top 10 and Best Bets, listed last on the Value tab, and graded separately on the Scorecard.</p></div>
+                <div class="glossary-section"><h3>Methodology</h3>
+                <p class="how-p"><strong>Worth.</strong> For each bet we take the sportsbooks' odds at the exact same line, remove their built-in fee (vig), and average them. That is the bet's fair chance, shown in cents.</p>
+                <p class="how-p"><strong>Cost.</strong> The live Polymarket buy price. Stale prices, or gaps over 15¢ (usually mismatched lines), are ignored.</p>
+                <p class="how-p"><strong>Value, Best Bets, Bet Score.</strong> 2¢+ off = value bet. 4¢+ off with 3+ books = Best Bet. The Bet Score turns the expected return (¢ off ÷ price) into 0–100, counts it more when more books agree, and moves 5 points if the model agrees or disagrees.</p>
+                <p class="how-p"><strong>The model.</strong> Rates teams from efficiency data and projects each spread and total. Tested on all of last season, its leans won 50.3% against closing spreads (52.4% is needed to profit), so it is shown for information and only nudges the Bet Score.</p>
+                <p class="how-p"><strong>Grading.</strong> Every Top 10 bet, value bet and lean is logged before the game and graded from the final score, so the Scorecard cannot be hand-picked.</p></div>
+                <p class="how-note">For information and entertainment only. Not betting advice.</p>`, true);
         }
 
         function buildCardText(picks, stats, format) {
@@ -28594,6 +28633,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                         </div>
                     </div>`;
                 }).join('') : '<div class="ss-empty">No value bets right now. Polymarket prices currently match the sportsbooks. Check back after the next update.</div>';
+                rowsEl.innerHTML += '<div id="vtLsRows"></div>';
             }
             const statsEl = document.getElementById('vtStats');
             if (statsEl) ssValueLogSummary().then(s => { statsEl.innerHTML = ssStatTiles(s); }).catch(() => {});
@@ -28663,7 +28703,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
         }
 
         async function renderLongshots() {
-            const rowsEl = document.getElementById('lsRows');
+            const rowsEl = document.getElementById('vtLsRows');
             const ls = (state.value?.longshots || []).slice().sort((a, b) => b.edge - a.edge);
             const badge = document.getElementById('tabLongshotsCount');
             if (badge) badge.textContent = ls.length || '';
@@ -28676,7 +28716,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 const opp = g ? ssShortName(g, o.side === g.homeTeam ? 'away' : 'home') : '';
                 const when = new Date(o.startTime).toLocaleString('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' });
                 return `<div class="ss-vrow ss-vrow--ls">
-                    <div class="ss-vbet">${ssBadge(team, 32)}<div><span class="ss-tag-ls">LONGSHOT</span><div class="ss-vpick">${ssEsc(team)} to win</div><div class="ss-vsub">vs ${ssEsc(opp)} · ${o.books} books</div></div></div>
+                    <div class="ss-vbet">${ssBadge(team, 32)}<div><span class="ss-tag-ls" title="Underdog with value and a 15–40% chance. Kept off the Top 10 and Best Bets.">LONGSHOT</span><div class="ss-vpick">${ssEsc(team)} to win</div><div class="ss-vsub">Moneyline · vs ${ssEsc(opp)} · ${o.books} books</div></div></div>
                     <div class="ss-vgame"><div>Wins about <b>1 in ${(1 / o.fairProb).toFixed(1)}</b></div><div class="ss-vsub">${when}</div></div>
                     ${ssBarRows([{ label: 'Costs', val: o.polyPrice * 100, color: 'var(--ss-gray-bar)', text: ssCents(o.polyPrice) },
                                  { label: 'Worth', val: o.polyPrice * 100, gapW: o.edge * 100, color: 'var(--ss-purple)', text: ssCents1(o.fairProb) }])}
@@ -28686,7 +28726,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                         ${o.tradeUrl ? `<a class="ss-btn-green ss-btn-purple" href="${ssEsc(o.tradeUrl)}" target="_blank" rel="noopener">Trade</a>` : ''}
                     </div>
                 </div>`;
-            }).join('') : '<div class="ss-empty">No longshots right now.</div>';
+            }).join('') : '';
             const statsEl = document.getElementById('lsStats');
             if (statsEl) ssValueLogSummary().then(sm => {
                 const l = sm.longshot;
@@ -28750,10 +28790,6 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 updateTrackedBadge();
                 const loaded = await loadSnapshotAndRender();
                 if (!loaded && !localStorage.getItem('spreadsheet_proxy')) setTimeout(() => showSettingsModal(), 300);
-                // Check for weekly backup reminder
-                checkWeeklyBackup();
-                // Initialize Google Drive sync
-                initGoogleAuth();
             } catch (e) {
                 console.warn('Could not initialize prediction tracker:', e);
             }
