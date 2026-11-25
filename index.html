@@ -9974,6 +9974,43 @@
             background: var(--orange-hover);
         }
 
+        /* Scorecard */
+        #metricsBarWrapper { display: none !important; }
+        .sc-page { max-width: 920px; margin: 0 auto; }
+        .sc-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin: 0; color: var(--text-primary); }
+        .sc-sub { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.45; margin: 0.25rem 0 0.75rem; }
+        .sc-section { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem 1.1rem; margin-bottom: 1rem; }
+        .sc-title-row { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
+        .sc-title-row h3 { margin: 0; font-size: 1.1rem; color: var(--text-primary); }
+        .sc-verdict { display: flex; gap: 0.75rem; align-items: center; padding: 0.7rem 0.9rem; border-radius: 10px; margin-bottom: 0.9rem; border-left: 4px solid var(--text-muted); background: var(--bg-secondary); }
+        .sc-verdict-icon { font-size: 1.4rem; }
+        .sc-verdict-title { font-weight: 800; color: var(--text-primary); }
+        .sc-verdict-text { font-size: 0.8rem; color: var(--text-secondary); }
+        .sc-good { border-left-color: var(--accent-green); } .sc-bad { border-left-color: var(--accent-red); }
+        .sc-mid { border-left-color: var(--accent-yellow); } .sc-early { border-left-color: var(--accent-blue); }
+        .sc-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.5rem; margin-bottom: 0.9rem; }
+        .sc-stat { background: var(--bg-secondary); border-radius: 8px; padding: 0.6rem; text-align: center; display: flex; flex-direction: column; gap: 0.1rem; }
+        .sc-num { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 1.1rem; color: var(--text-primary); }
+        .sc-lbl { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); font-weight: 700; }
+        .sc-sm { font-size: 0.65rem; color: var(--text-muted); }
+        .pos { color: var(--accent-green) !important; } .neg { color: var(--accent-red) !important; }
+        .sc-table-wrap { overflow-x: auto; margin-bottom: 0.9rem; }
+        .sc-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; font-variant-numeric: tabular-nums; }
+        .sc-table th, .sc-table td { padding: 0.4rem 0.5rem; text-align: center; border-bottom: 1px solid var(--border-light); }
+        .sc-table th:first-child, .sc-table td:first-child { text-align: left; color: var(--text-muted); font-weight: 600; }
+        .sc-table th { font-size: 0.7rem; color: var(--text-secondary); }
+        .sc-chart { margin-bottom: 0.9rem; }
+        .sc-chart-title { font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 0.3rem; }
+        .sc-svg { width: 100%; height: 90px; display: block; background: var(--bg-secondary); border-radius: 8px; }
+        .sc-row { display: grid; grid-template-columns: 56px 1fr auto 28px; gap: 0.5rem; align-items: center; padding: 0.35rem 0; border-bottom: 1px solid var(--border-light); font-size: 0.8rem; }
+        .sc-row-date, .sc-row-size { color: var(--text-muted); font-size: 0.72rem; }
+        .sc-row-label { color: var(--text-primary); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .sc-row-res { font-weight: 800; text-align: center; border-radius: 4px; }
+        .sc-row-res.win { color: var(--accent-green); } .sc-row-res.loss { color: var(--accent-red); } .sc-row-res.push { color: var(--accent-yellow); }
+        .sc-empty, .sc-loading { color: var(--text-muted); font-size: 0.85rem; padding: 0.5rem 0; }
+        .sc-help { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 2rem; }
+        .sc-help summary { cursor: pointer; font-weight: 700; color: var(--text-primary); }
+        .sc-help li { margin: 0.35rem 0; }
         /* Honest model notice + Value tab */
         .honest-note { margin-top: 0.4rem; font-size: 0.72rem; line-height: 1.4; color: var(--text-secondary);
             background: var(--accent-yellow-dim); border: 1px solid rgba(234,179,8,0.3); border-radius: 6px; padding: 0.4rem 0.6rem; max-width: 720px; }
@@ -10079,14 +10116,8 @@
                             <span>Refresh Data</span>
                         </button>
                         <div class="hamburger-dropdown-divider" role="separator"></div>
-                        <button class="hamburger-dropdown-item" role="menuitem" data-action="diagnostics" tabindex="-1">
-                            <span class="menu-icon">📊</span>
-                            <span>Model Diagnostics</span>
-                        </button>
-                        <button class="hamburger-dropdown-item" role="menuitem" data-action="reportcard" tabindex="-1">
-                            <span class="menu-icon">🎓</span>
-                            <span>Report Card</span>
-                        </button>
+                        
+                        
                         <button class="hamburger-dropdown-item" role="menuitem" data-action="how" tabindex="-1">
                             <span class="menu-icon">📐</span>
                             <span>Methodology</span>
@@ -10162,8 +10193,7 @@
             <button class="tab" onclick="switchTab('value')" id="tabValue" role="tab" aria-selected="false" aria-controls="valueTab">Value <span class="tab-badge" id="tabValueCount"></span></button>
             <button class="tab" onclick="switchTab('tracked')" id="tabTracked" role="tab" aria-selected="false" aria-controls="trackedTab">Tracked <span class="tab-badge" id="tabTrackedCount"></span></button>
             <span class="tab-divider"></span>
-            <button class="tab" onclick="switchTab('validation')" id="tabValidation" role="tab" aria-selected="false" aria-controls="validationTab">Record</button>
-            <button class="tab" onclick="switchTab('diagnostics')" id="tabDiagnostics" role="tab" aria-selected="false" aria-controls="diagnosticsTab">Diagnostics</button>
+            <button class="tab" onclick="switchTab('validation')" id="tabValidation" role="tab" aria-selected="false" aria-controls="validationTab">Scorecard</button>
             <button class="tab-legend-toggle" onclick="document.getElementById('globalConfidenceLegend').classList.toggle('visible')" title="Toggle win probability legend" aria-label="Toggle legend">?</button>
         </div>
         </div>
@@ -10171,7 +10201,7 @@
         <!-- Unified Win% Legend - Shared across Games and Best Bets tabs -->
         <div class="confidence-legend confidence-legend--global" id="globalConfidenceLegend" role="region" aria-label="Win probability legend">
             <span class="confidence-legend-title">Model leans</span>
-            <div class="confidence-legend-items"><span class="confidence-legend-label">"Lean" = the model disagrees with the line. In testing these did not beat the market; the number shown is points of disagreement, not a win chance.</span></div>
+            <div class="confidence-legend-items"><span class="confidence-legend-label"><strong>Lean</strong>: the side the model prefers. <strong>Edge (pts)</strong>: how far the model's number is from the line. Bigger edge means bigger disagreement, not a higher chance. <strong>Value</strong> bets are on the Value tab. Full definitions: menu → Glossary.</span></div>
         </div>
 
         <div id="gamesTab" class="tab-content">
@@ -10449,190 +10479,23 @@
 
 
         <div id="validationTab" class="tab-content" style="display:none;">
-            <div class="section-header">
-                <h2 class="section-title">Model Record</h2>
-                <div class="tracker-actions">
-                    <select id="timeFrameSelect" class="styled-select" onchange="changeTimeFrame(this.value)" style="min-width:120px;">
-                        <option value="7">Last 7 Days</option>
-                        <option value="14">Last 14 Days</option>
-                        <option value="season" selected>This Season</option>
-                        <option value="30">Last 30 Days</option>
-                        <option value="90">Last 90 Days</option>
-                        <option value="v51">v5.1 Only (last season)</option>
-                        <option value="all">All Time</option>
-                    </select>
-                    <button class="tracker-btn" onclick="exportPredictionsBackup()" title="Export backup">📤</button>
-                    <button class="tracker-btn" onclick="importPredictionsBackup()" title="Import backup">📥</button>
-                    <div class="sync-divider"></div>
-                    <div class="cloud-sync-group">
-                        <button class="cloud-sync-btn google" id="googleSignInBtn" onclick="signInWithGoogle()" title="Sign in with Google">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-                            Sign In
-                        </button>
-                        <button class="cloud-sync-btn synced" id="cloudSyncBtn" onclick="syncToCloud()" title="Sync to Google Drive" style="display:none;">
-                            ☁️ Sync
-                        </button>
-                        <span class="cloud-sync-status" id="cloudSyncStatus"></span>
-                    </div>
+            <div class="sc-page">
+                <div class="sc-header">
+                    <h2>Scorecard</h2>
+                    <div class="sc-sub">Is it working? Every bet below was logged before the game and graded automatically from the final score.
+                        Nothing is hand-picked, so this is the honest test.</div>
                 </div>
-            </div>
-
-            <!-- ====== FILTER TABS ====== -->
-            <div class="record-filter-strip">
-                <button class="record-filter-btn active" data-filter="topplay" onclick="setRecordFilter('topplay', this)">🏆 Top Play</button>
-                <button class="record-filter-btn" data-filter="strong" onclick="setRecordFilter('strong', this)">🔥 Strong</button>
-                <button class="record-filter-btn" data-filter="play" onclick="setRecordFilter('play', this)">✅ Play</button>
-                <button class="record-filter-btn" data-filter="all" onclick="setRecordFilter('all', this)">📊 All Picks</button>
-            </div>
-
-            <!-- ====== HERO STATS ====== -->
-            <div class="val-hero" id="valHero">
-                <div class="val-hero-header">
-                    <div class="val-hero-title" id="valHeroTitle">🏀 Best Bets</div>
-                    <div class="val-hero-meta" id="valHeroMeta">--</div>
-                </div>
-                <div class="val-hero-stats">
-                    <div class="val-hero-stat primary">
-                        <div class="val-hero-stat-value" id="bbHeroRecord">0-0</div>
-                        <div class="val-hero-stat-label">Record</div>
-                    </div>
-                    <div class="val-hero-stat">
-                        <div class="val-hero-stat-value" id="bbHeroWinRate">--</div>
-                        <div class="val-hero-stat-label">Win Rate</div>
-                    </div>
-                    <div class="val-hero-stat">
-                        <div class="val-hero-stat-value" id="bbHeroROI">--</div>
-                        <div class="val-hero-stat-label">ROI</div>
-                    </div>
-                    <div class="val-hero-stat">
-                        <div class="val-hero-stat-value" id="bbHeroUnits">--</div>
-                        <div class="val-hero-stat-label">Units</div>
-                    </div>
-                    <div class="val-hero-stat">
-                        <div class="val-hero-stat-value" id="bbHeroStreak">--</div>
-                        <div class="val-hero-stat-label">Streak</div>
-                    </div>
-                </div>
-                <div class="val-hero-split" id="bbHeroSplit"></div>
-                <!-- Significance badge -->
-                <div class="val-hero-significance" id="valHeroSignificance"></div>
-                <!-- Trend indicator -->
-                <div class="val-hero-trend" id="valHeroTrend"></div>
-            </div>
-
-            <!-- ====== TREND CHARTS ====== -->
-            <div class="val-section">
-                <div class="val-section-header">
-                    <div class="val-section-title">Trend Charts</div>
-                    <div class="chart-tabs">
-                        <button class="chart-tab active" onclick="switchTrendChart('winrate', this)">Win Rate</button>
-                        <button class="chart-tab" onclick="switchTrendChart('brier', this)">Rolling Brier</button>
-                    </div>
-                </div>
-                <div class="val-section-subtitle" id="rollingChartSubtitle">7-pick rolling average</div>
-                <div class="chart-container" id="rollingWinRateChart">
-                    <div class="chart-placeholder">Loading chart data...</div>
-                </div>
-            </div>
-
-            <!-- ====== TIER PERFORMANCE BREAKDOWN ====== -->
-            <div class="val-section" id="valRatingSection">
-                <div class="val-section-header">
-                    <div class="val-section-title">Performance by Tier</div>
-                    <div class="val-section-subtitle">Higher tiers should have higher win rates — this validates calibration</div>
-                </div>
-                <div class="val-rating-grid" id="valRatingGrid"></div>
-            </div>
-
-            <!-- ====== ROI / CUMULATIVE CHART ====== -->
-            <div class="val-section">
-                <div class="val-section-header">
-                    <div class="val-section-title">Profit & Loss</div>
-                    <div class="chart-tabs">
-                        <button class="chart-tab active" onclick="switchChart('roi', this)">Daily ROI</button>
-                        <button class="chart-tab" onclick="switchChart('cumulative', this)">Cumulative Units</button>
-                    </div>
-                </div>
-                <div class="chart-container" id="performanceChart">
-                    <div class="chart-placeholder">Loading chart data...</div>
-                </div>
-            </div>
-
-            <!-- ====== SPREAD VS TOTAL BREAKDOWN ====== -->
-            <div class="val-section">
-                <div class="val-section-header">
-                    <div class="val-section-title">Type Breakdown</div>
-                </div>
-                <div class="record-type-breakdown" id="recordTypeBreakdown"></div>
-            </div>
-
-            <!-- ====== PROFIT BREAKDOWN (Conference / Team) ====== -->
-            <div class="val-section" id="profitBreakdownSection" style="display:none;">
-                <div class="val-section-header">
-                    <div class="val-section-title">Profit Breakdown</div>
-                    <div class="profit-breakdown-tabs" id="profitBreakdownTabs">
-                        <button class="trend-tab active" onclick="switchProfitView('conference', this)">Conference</button>
-                        <button class="trend-tab" onclick="switchProfitView('team', this)">Team</button>
-                    </div>
-                </div>
-                <div id="profitBreakdownContent"></div>
-            </div>
-
-            <!-- ====== A/B MODEL COMPARISON ====== -->
-            <div class="val-section" id="abComparisonSection" style="display:none;">
-                <div class="val-section-header">
-                    <div class="val-section-title">🔬 A/B Comparison</div>
-                    <div class="ab-split-controls">
-                        <label class="ab-split-label" for="abSplitDate">Split:</label>
-                        <select id="abSplitPreset" class="ab-split-select" onchange="handleABPresetChange(this.value)">
-                            <option value="v51">v5.1 (Feb 9)</option>
-                            <option value="midpoint">Midpoint</option>
-                            <option value="custom">Custom</option>
-                        </select>
-                        <input type="date" id="abSplitDate" class="ab-split-date" style="display:none;" onchange="renderABComparison()">
-                    </div>
-                </div>
-                <div id="abComparisonContent"></div>
-            </div>
-
-            <!-- ====== MODEL DIAGNOSTICS LINK ====== -->
-            <div class="val-section">
-                <button class="diag-tab-link" onclick="switchTab('diagnostics')">
-                    <span class="diag-tab-link-left">
-                        <span>📊</span>
-                        <span>Model Diagnostics</span>
-                    </span>
-                    <span class="diag-tab-link-right">
-                        <span class="adv-validation-badge" id="advValidationSampleSize">n=0</span>
-                        <span class="diag-tab-link-arrow">→</span>
-                    </span>
-                </button>
-            </div>
-
-            <!-- ====== RECENT PICKS ====== -->
-            <div class="val-section">
-                <div class="val-section-header">
-                    <div class="val-section-title">Recent Picks</div>
-                    <span class="val-picks-count" id="picksCountLabel">0 picks</span>
-                </div>
-                <div class="tracker-picks-list" id="trackerPicksList">
-                    <div class="tracker-empty">
-                        <div class="tracker-empty-icon">🎯</div>
-                        <div class="tracker-empty-title">No Predictions Yet</div>
-                        <div class="tracker-empty-text">Click "Refresh Data" to capture today's predictions. They'll automatically resolve when games complete.</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Day Detail Modal (keep) -->
-            <div class="day-detail-modal" id="dayDetailModal" style="display:none;">
-                <div class="day-detail-content">
-                    <div class="day-detail-header">
-                        <h3 id="dayDetailTitle">Day Details</h3>
-                        <button class="day-detail-close" onclick="closeDayDetail()">×</button>
-                    </div>
-                    <div class="day-detail-body" id="dayDetailBody"></div>
-                </div>
+                <section class="sc-section" id="scValue"><div class="sc-loading">Loading…</div></section>
+                <section class="sc-section" id="scLeans"><div class="sc-loading">Loading…</div></section>
+                <details class="sc-help">
+                    <summary>How to read this</summary>
+                    <ul>
+                        <li><strong>Verdict</strong> needs 100+ graded bets. Before that, results are mostly luck.</li>
+                        <li><strong>ROI</strong> is profit ÷ amount bet, at 1 unit per bet. The <strong>95% range</strong> is where the true ROI likely sits. If the whole range is above 0, the edge is real.</li>
+                        <li><strong>Beat the close</strong>: how often the line or price moved your way after the bet. Above 50% (and an average above 0) is the earliest sign of real skill, long before win-loss records settle.</li>
+                        <li><strong>By size</strong>: if bigger edges or value really matter, results should improve from left to right.</li>
+                    </ul>
+                </details>
             </div>
         </div>
 
@@ -15158,7 +15021,7 @@ Example format:
         }
         
         // How It Works Modal — Technical Methodology
-        function showHowItWorksModal() {
+        function showHowItWorksModalLegacy() {
             const existing = document.getElementById('howModal');
             if (existing) existing.remove();
 
@@ -15444,7 +15307,7 @@ Example format:
         }
         
         // Glossary Modal
-        function showGlossaryModal() {
+        function showGlossaryModalLegacy() {
             const existing = document.getElementById('glossaryModal');
             if (existing) existing.remove();
             
@@ -18404,10 +18267,10 @@ Example format:
 
                     <!-- Confidence Circle -->
                     <div class="confidence-circle-container">
-                        <div class="confidence-circle-bg" style="background: conic-gradient(var(--conf-elite) ${bestWinProb * 3.6}deg, var(--bg-secondary) ${bestWinProb * 3.6}deg);">
+                        <div class="confidence-circle-bg" style="background: conic-gradient(var(--conf-elite) ${Math.min((spreadIsBest ? spreadEdge : totalIsBest ? totalEdge : Math.max(spreadEdge, totalEdge)) / 8, 1) * 360}deg, var(--bg-secondary) ${Math.min((spreadIsBest ? spreadEdge : totalIsBest ? totalEdge : Math.max(spreadEdge, totalEdge)) / 8, 1) * 360}deg);">
                             <div class="confidence-circle-inner">
-                                <span class="confidence-circle-value">${bestWinProb.toFixed(0)}%</span>
-                                <span class="confidence-circle-label">UNPROVEN<br>ESTIMATE</span>
+                                <span class="confidence-circle-value">${(spreadIsBest ? spreadEdge : totalIsBest ? totalEdge : Math.max(spreadEdge, totalEdge)).toFixed(1)}</span>
+                                <span class="confidence-circle-label">EDGE<br>(PTS)</span>
                             </div>
                         </div>
                     </div>
@@ -18861,7 +18724,7 @@ Example format:
 
                     <!-- Model Confidence -->
                     <div class="bb-pick-confidence">
-                        <div class="bb-pick-confidence-label">MODEL VS LINE</div>
+                        <div class="bb-pick-confidence-label">EDGE (PTS)</div>
                         <div class="bb-pick-confidence-bar">
                             <div class="bb-pick-confidence-fill ${cc}" style="width: ${p.winProb}%;"></div>
                         </div>
@@ -19066,10 +18929,10 @@ Example format:
 
                     <!-- Confidence Circle -->
                     <div class="confidence-circle-container">
-                        <div class="confidence-circle-bg" style="background: conic-gradient(var(--conf-elite) ${spreadWinProb * 3.6}deg, var(--bg-secondary) ${spreadWinProb * 3.6}deg);">
+                        <div class="confidence-circle-bg" style="background: conic-gradient(var(--conf-elite) ${Math.min(spreadEdge / 8, 1) * 360}deg, var(--bg-secondary) ${Math.min(spreadEdge / 8, 1) * 360}deg);">
                             <div class="confidence-circle-inner">
-                                <span class="confidence-circle-value">${spreadWinProb.toFixed(0)}%</span>
-                                <span class="confidence-circle-label">UNPROVEN<br>ESTIMATE</span>
+                                <span class="confidence-circle-value">${spreadEdge.toFixed(1)}</span>
+                                <span class="confidence-circle-label">EDGE<br>(PTS)</span>
                             </div>
                         </div>
                     </div>
@@ -19228,10 +19091,10 @@ Example format:
 
                     <!-- Confidence Circle -->
                     <div class="confidence-circle-container">
-                        <div class="confidence-circle-bg" style="background: conic-gradient(${isOver ? 'var(--accent-green)' : 'var(--accent-blue)'} ${totalWinProb * 3.6}deg, var(--bg-secondary) ${totalWinProb * 3.6}deg);">
+                        <div class="confidence-circle-bg" style="background: conic-gradient(${isOver ? 'var(--accent-green)' : 'var(--accent-blue)'} ${Math.min(totalEdge / 8, 1) * 360}deg, var(--bg-secondary) ${Math.min(totalEdge / 8, 1) * 360}deg);">
                             <div class="confidence-circle-inner">
-                                <span class="confidence-circle-value" style="color: ${isOver ? 'var(--accent-green)' : 'var(--accent-blue)'};">${totalWinProb.toFixed(0)}%</span>
-                                <span class="confidence-circle-label">UNPROVEN<br>ESTIMATE</span>
+                                <span class="confidence-circle-value" style="color: ${isOver ? 'var(--accent-green)' : 'var(--accent-blue)'};">${totalEdge.toFixed(1)}</span>
+                                <span class="confidence-circle-label">EDGE<br>(PTS)</span>
                             </div>
                         </div>
                     </div>
@@ -21483,7 +21346,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
         }
 
         // Render the prediction tracker UI
-        async function renderPredictionTracker() {
+        async function renderPredictionTrackerLegacy() {
             const allPredictions = await getRecordPredictions();
             allPredictionsCache = allPredictions;
             
@@ -25152,7 +25015,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
         /**
          * Build the card text in the selected format
          */
-        function buildCardText(picks, stats, format) {
+        function buildCardTextLegacy(picks, stats, format) {
             const today = new Date();
             const dateStr = today.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 
@@ -25720,8 +25583,8 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                         <div class="tracked-card-meta">${p.pickType === 'spread' ? 'Spread' : 'Total'} · ${time}</div>
                     </div>
                     <div class="tracked-card-prob">
-                        <span class="tracked-card-prob-value">${(p.winProb || 0).toFixed(0)}%</span>
-                        <span class="tracked-card-type">model</span>
+                        <span class="tracked-card-prob-value">${(p.edge || 0).toFixed(1)}</span>
+                        <span class="tracked-card-type">edge pts</span>
                     </div>
                     <div class="tracked-card-result">${resultHTML}</div>
                 </div>`;
@@ -25928,7 +25791,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 <span><strong>${s.flagged ?? 0}</strong> flagged</span>
                 <span>Record <strong>${s.wins ?? 0}-${s.losses ?? 0}</strong></span>
                 <span>ROI <strong>${s.roiPct != null ? s.roiPct + '%' : '--'}</strong></span>
-                <span>Avg edge vs close <strong>${s.avgEdgeVsClosePct != null ? (s.avgEdgeVsClosePct >= 0 ? '+' : '') + s.avgEdgeVsClosePct + '%' : '--'}</strong></span>
+                <span>Avg vs close <strong>${s.avgEdgeVsClosePct != null ? (s.avgEdgeVsClosePct >= 0 ? '+' : '') + s.avgEdgeVsClosePct + '%' : '--'}</strong></span>
                 <span>Beat close <strong>${s.beatClosePct != null ? s.beatClosePct + '%' : '--'}</strong></span>
                 ${(s.graded || 0) < 100 ? '<span class="value-caution">Under 100 graded: too early to judge.</span>' : ''}
                 <span>Updated ${new Date(log.updatedAt).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}</span>`;
@@ -25942,7 +25805,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                         <div class="value-game">${b.awayTeam} @ ${b.homeTeam} · ${fmtGameTime(b.startTime)}</div></div>
                     <div class="value-nums">
                         <div><span class="value-num">${Math.round(b.entryPrice * 100)}¢</span><span class="value-lbl">Entry</span></div>
-                        <div><span class="value-num">+${fmtPct(b.entryEdge)}</span><span class="value-lbl">Edge at entry</span></div>
+                        <div><span class="value-num">+${fmtPct(b.entryEdge)}</span><span class="value-lbl">Value at entry</span></div>
                         <div><span class="value-num ${clv != null && clv < 0 ? 'value-neg' : 'value-edge'}">${clv != null ? (clv >= 0 ? '+' : '') + fmtPct(clv) : '--'}</span><span class="value-lbl">vs close</span></div>
                     </div>
                     <div class="value-actions">${res}</div>
@@ -25964,7 +25827,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             } else {
                 sum.innerHTML = `<span><strong>${v.opportunities.length}</strong> value bets</span>
                     <span><strong>${v.compared}</strong> Polymarket prices compared</span>
-                    <span>Minimum edge <strong>${fmtPct(v.minEdge, 0)}</strong></span>`;
+                    <span>Minimum value <strong>${fmtPct(v.minEdge, 0)}</strong></span>`;
                 const badge = document.getElementById('tabValueCount');
                 if (badge) badge.textContent = v.opportunities.length || '';
                 list.innerHTML = v.opportunities.length ? v.opportunities.map(o => `
@@ -25976,7 +25839,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                         <div class="value-nums">
                             <div><span class="value-num">${Math.round(o.polyPrice * 100)}¢</span><span class="value-lbl">Polymarket</span></div>
                             <div><span class="value-num">${fmtPct(o.fairProb)}</span><span class="value-lbl">Books fair (${o.books})</span></div>
-                            <div><span class="value-num value-edge">+${fmtPct(o.edge)}</span><span class="value-lbl">Edge</span></div>
+                            <div><span class="value-num value-edge">+${fmtPct(o.edge)}</span><span class="value-lbl">Value</span></div>
                         </div>
                         <div class="value-actions">
                             <button class="bb-track-btn ${trackedIds.has(o.id) ? 'tracked' : ''}" onclick="trackValueBet('${o.id}', this)">${trackedIds.has(o.id) ? '✓ Tracked' : '🔒 Track'}</button>
@@ -26001,7 +25864,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 <span>Record <strong>${wins}-${staked - wins}</strong></span>
                 <span>Profit <strong>${profit >= 0 ? '+' : ''}${profit.toFixed(2)}u</strong> (1u per bet)</span>
                 <span>ROI <strong>${staked ? (profit / staked * 100).toFixed(1) + '%' : '--'}</strong></span>
-                ${avgClv != null ? `<span>Avg edge vs close <strong>${avgClv >= 0 ? '+' : ''}${fmtPct(avgClv)}</strong> (${beatClose}/${withClose.length} beat it)</span>` : ''}
+                ${avgClv != null ? `<span>Avg vs close <strong>${avgClv >= 0 ? '+' : ''}${fmtPct(avgClv)}</strong> (${beatClose}/${withClose.length} beat it)</span>` : ''}
                 ${staked < 100 ? `<span class="value-caution">Under 100 graded bets: too early to judge.</span>` : ''}` : '';
             tlist.innerHTML = tracked.length ? tracked
                 .sort((a, b) => new Date(b.startTime) - new Date(a.startTime))
@@ -26017,7 +25880,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                         </div>
                         <div class="value-nums">
                             <div><span class="value-num">${Math.round(b.entryPrice * 100)}¢</span><span class="value-lbl">Entry</span></div>
-                            <div><span class="value-num">+${fmtPct(b.entryEdge)}</span><span class="value-lbl">Edge at entry</span></div>
+                            <div><span class="value-num">+${fmtPct(b.entryEdge)}</span><span class="value-lbl">Value at entry</span></div>
                             <div><span class="value-num ${clv != null && clv < 0 ? 'value-neg' : 'value-edge'}">${clv != null ? (clv >= 0 ? '+' : '') + fmtPct(clv) : '--'}</span><span class="value-lbl">vs close</span></div>
                         </div>
                         <div class="value-actions">${res}
@@ -27470,6 +27333,267 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 rcCurrentMonthIndex--;
                 renderMonthlyTab(body, preds);
             });
+        }
+
+        // =====================================================================
+        // SCORECARD, GLOSSARY, METHODOLOGY, TODAY'S CARD (one set of terms everywhere)
+        // =====================================================================
+        const SC_MIN_N = 100;
+        let scorecardScope = 'current';   // current | legacy | all
+
+        function scWilson(w, n) {
+            if (!n) return [null, null];
+            const z = 1.96, ph = w / n, d = 1 + z * z / n;
+            const c = (ph + z * z / (2 * n)) / d;
+            const h = z * Math.sqrt(ph * (1 - ph) / n + z * z / (4 * n * n)) / d;
+            return [c - h, c + h];
+        }
+        function scMeanCI(xs) {
+            const n = xs.length;
+            if (!n) return [null, null, null];
+            const m = xs.reduce((a, b) => a + b, 0) / n;
+            if (n < 2) return [m, null, null];
+            const sd = Math.sqrt(xs.reduce((a, b) => a + (b - m) ** 2, 0) / (n - 1));
+            const se = sd / Math.sqrt(n);
+            return [m, m - 1.96 * se, m + 1.96 * se];
+        }
+        function scSummarize(items, profitFn, clvFn) {
+            const g = items.filter(b => b.result === 'win' || b.result === 'loss')
+                           .sort((a, b) => new Date(a.date) - new Date(b.date));
+            const n = g.length, w = g.filter(b => b.result === 'win').length;
+            const profits = g.map(profitFn);
+            const [roi, roiLo, roiHi] = scMeanCI(profits);
+            const [wrLo, wrHi] = scWilson(w, n);
+            const moved = items.map(clvFn).filter(x => x != null && x !== 0);
+            let run = 0;
+            const curve = profits.map(x => (run += x));
+            return {
+                n, w, l: n - w, winRate: n ? w / n : null, wrLo, wrHi,
+                units: run, roi, roiLo, roiHi, curve,
+                clvN: moved.length,
+                clvAvg: moved.length ? moved.reduce((a, b) => a + b, 0) / moved.length : null,
+                beatPct: moved.length ? moved.filter(x => x > 0).length / moved.length : null,
+                pending: items.filter(b => !b.result).length
+            };
+        }
+        function scVerdict(st) {
+            if (st.n < SC_MIN_N) return { cls: 'early', icon: '⏳', title: 'Too early to tell',
+                text: `${st.n} of ${SC_MIN_N} graded bets so far. Until then, results are mostly luck.` };
+            if (st.roiLo > 0 && (st.clvAvg == null || st.clvAvg > 0)) return { cls: 'good', icon: '✅', title: 'Working',
+                text: 'Profitable, and even the low end of the 95% range is above zero.' };
+            if (st.roiHi < 0) return { cls: 'bad', icon: '❌', title: 'Not working',
+                text: 'Losing money, and even the high end of the 95% range is below zero.' };
+            if (st.clvN >= SC_MIN_N && st.clvAvg <= 0) return { cls: 'bad', icon: '❌', title: 'Not working',
+                text: 'It does not beat the close, so any profit so far is likely luck.' };
+            return { cls: 'mid', icon: '🟡', title: 'Not proven',
+                text: 'Results are within the range luck alone could produce. Keep collecting.' };
+        }
+        const scPct = (x, d = 1) => x == null ? '--' : (x * 100).toFixed(d) + '%';
+        const scSigned = (x, d = 1, suffix = '%', mult = 100) => x == null ? '--' : (x >= 0 ? '+' : '') + (x * mult).toFixed(d) + suffix;
+
+        function scSpark(curve) {
+            if (!curve || curve.length < 2) return '';
+            const W = 600, H = 90, min = Math.min(0, ...curve), max = Math.max(0, ...curve), rng = (max - min) || 1;
+            const x = i => (i / (curve.length - 1)) * W, y = v => H - ((v - min) / rng) * H;
+            const pts = curve.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+            const color = curve[curve.length - 1] >= 0 ? 'var(--accent-green)' : 'var(--accent-red)';
+            return `<div class="sc-chart"><div class="sc-chart-title">Units over time</div>
+                <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" class="sc-svg">
+                    <line x1="0" y1="${y(0)}" x2="${W}" y2="${y(0)}" stroke="var(--border-color)" stroke-dasharray="4,4" vector-effect="non-scaling-stroke"/>
+                    <polyline points="${pts}" fill="none" stroke="${color}" stroke-width="2" vector-effect="non-scaling-stroke"/>
+                </svg></div>`;
+        }
+
+        function scBuckets(items, getSize, edges, fmtLabel, profitFn) {
+            const rows = edges.map((lo, i) => {
+                const hi = edges[i + 1];
+                const sel = items.filter(b => { const v = getSize(b); return v != null && v >= lo && (hi == null || v < hi); });
+                return { label: fmtLabel(lo, hi), st: scSummarize(sel, profitFn, () => null) };
+            });
+            return `<div class="sc-table-wrap"><table class="sc-table">
+                <thead><tr><th>By size</th>${rows.map(r => `<th>${r.label}</th>`).join('')}</tr></thead>
+                <tbody>
+                    <tr><td>Graded</td>${rows.map(r => `<td>${r.st.n}</td>`).join('')}</tr>
+                    <tr><td>Win rate</td>${rows.map(r => `<td>${scPct(r.st.winRate)}</td>`).join('')}</tr>
+                    <tr><td>ROI</td>${rows.map(r => `<td class="${r.st.roi > 0 ? 'pos' : r.st.roi < 0 ? 'neg' : ''}">${r.st.n ? scSigned(r.st.roi) : '--'}</td>`).join('')}</tr>
+                </tbody></table></div>`;
+        }
+
+        function scSection({ title, subtitle, controls = '', st, statsExtra = '', buckets = '', recent = [], empty }) {
+            const v = scVerdict(st);
+            return `
+                <div class="sc-title-row"><h3>${title}</h3>${controls}</div>
+                <div class="sc-sub">${subtitle}</div>
+                <div class="sc-verdict sc-${v.cls}"><span class="sc-verdict-icon">${v.icon}</span>
+                    <div><div class="sc-verdict-title">${v.title}</div><div class="sc-verdict-text">${v.text}</div></div></div>
+                ${st.n === 0 && !st.pending ? `<div class="sc-empty">${empty}</div>` : `
+                <div class="sc-stats">
+                    <div class="sc-stat"><span class="sc-num">${st.w}-${st.l}</span><span class="sc-lbl">Record</span><span class="sc-sm">${st.pending} pending</span></div>
+                    <div class="sc-stat"><span class="sc-num">${scPct(st.winRate)}</span><span class="sc-lbl">Win rate</span><span class="sc-sm">${st.n ? `range ${scPct(st.wrLo, 0)}–${scPct(st.wrHi, 0)}` : ''}</span></div>
+                    <div class="sc-stat"><span class="sc-num ${st.roi > 0 ? 'pos' : st.roi < 0 ? 'neg' : ''}">${scSigned(st.roi)}</span><span class="sc-lbl">ROI</span><span class="sc-sm">${st.roiLo != null ? `range ${scSigned(st.roiLo, 0)} to ${scSigned(st.roiHi, 0)}` : ''}</span></div>
+                    <div class="sc-stat"><span class="sc-num ${st.units > 0 ? 'pos' : st.units < 0 ? 'neg' : ''}">${st.n ? (st.units >= 0 ? '+' : '') + st.units.toFixed(1) + 'u' : '--'}</span><span class="sc-lbl">Units</span><span class="sc-sm">1u per bet</span></div>
+                    <div class="sc-stat"><span class="sc-num">${scPct(st.beatPct, 0)}</span><span class="sc-lbl">Beat the close</span><span class="sc-sm">${st.clvN ? `${st.clvN} moved` : 'no data yet'}</span></div>
+                    ${statsExtra}
+                </div>
+                ${buckets}
+                ${scSpark(st.curve)}
+                ${recent.length ? `<div class="sc-recent"><div class="sc-chart-title">Latest results</div>${recent.join('')}</div>` : ''}`}`;
+        }
+
+        function scRecentRow(date, label, size, result) {
+            const r = result === 'win' ? 'W' : result === 'loss' ? 'L' : result === 'push' ? 'P' : '…';
+            return `<div class="sc-row"><span class="sc-row-date">${new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+                <span class="sc-row-label">${label}</span><span class="sc-row-size">${size}</span>
+                <span class="sc-row-res ${result || 'pending'}">${r}</span></div>`;
+        }
+
+        async function loadValueLog() {
+            try {
+                const r = await fetch('data/value_log.json', { cache: 'no-store' });
+                if (r.ok) return await r.json();
+            } catch (e) { /* none yet */ }
+            return null;
+        }
+
+        function setScorecardScope(v) { scorecardScope = v; renderPredictionTracker(); }
+
+        async function renderPredictionTracker() {
+            const all = await getRecordPredictions();
+            allPredictionsCache = all;
+            const valueEl = document.getElementById('scValue');
+            const leanEl = document.getElementById('scLeans');
+            const stats = {};
+
+            // ---- Value bets ----
+            const log = await loadValueLog();
+            const vb = (log?.bets || []).map(b => ({ ...b, date: b.startTime }));
+            const vProfit = b => b.result === 'win' ? (1 / b.entryPrice - 1) : -1;
+            const vClv = b => b.closeFair != null ? b.closeFair - b.entryPrice : null;
+            const vst = scSummarize(vb, vProfit, vClv);
+            stats.value = vst;
+            if (valueEl) valueEl.innerHTML = scSection({
+                title: '💲 Value Bets',
+                subtitle: 'Every bet the Value finder flagged: Polymarket price below the books\' fair chance. Profit uses the actual Polymarket price.',
+                st: vst,
+                statsExtra: `<div class="sc-stat"><span class="sc-num">${vst.clvAvg != null ? scSigned(vst.clvAvg) : '--'}</span><span class="sc-lbl">Avg vs close</span><span class="sc-sm">value gained after bet</span></div>`,
+                buckets: vst.n ? scBuckets(vb, b => b.entryEdge, [0.03, 0.05, 0.08], (lo, hi) => hi ? `${lo * 100}–${hi * 100}% value` : `${lo * 100}%+ value`, vProfit) : '',
+                recent: vb.filter(b => b.result).sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 10)
+                          .map(b => scRecentRow(b.date, b.label, `+${(b.entryEdge * 100).toFixed(1)}% value`, b.result)),
+                empty: 'No value bets logged yet. The scheduled refresh adds them twice a day.'
+            });
+
+            // ---- Leans ----
+            const inScope = p => scorecardScope === 'all' ? true
+                : scorecardScope === 'legacy' ? p.modelVersion === 'legacy-v5' : p.modelVersion && p.modelVersion !== 'legacy-v5';
+            const leans = all.filter(inScope).map(p => ({ ...p, date: p.gameDate }));
+            const lProfit = b => b.result === 'win' ? 100 / 110 : -1;
+            const lClv = b => b.clv != null ? b.clv : null;
+            const lst = scSummarize(leans, lProfit, lClv);
+            stats.leans = lst;
+            stats.leansScope = { current: 'current model', legacy: 'old model', all: 'all models' }[scorecardScope];
+            const byType = t => scSummarize(leans.filter(p => p.pickType === t), lProfit, () => null);
+            const sp = byType('spread'), to = byType('total');
+            if (leanEl) leanEl.innerHTML = scSection({
+                title: '📐 Model Leans',
+                subtitle: `Every lean the model made, graded against the line at the time. At standard −110 odds, a <strong>52.4%</strong> win rate is needed to break even.`,
+                controls: `<select class="styled-select" onchange="setScorecardScope(this.value)">
+                    <option value="current" ${scorecardScope === 'current' ? 'selected' : ''}>Current model</option>
+                    <option value="legacy" ${scorecardScope === 'legacy' ? 'selected' : ''}>Old model</option>
+                    <option value="all" ${scorecardScope === 'all' ? 'selected' : ''}>All</option></select>`,
+                st: lst,
+                statsExtra: `<div class="sc-stat"><span class="sc-num">${sp.n ? scPct(sp.winRate) : '--'} / ${to.n ? scPct(to.winRate) : '--'}</span><span class="sc-lbl">Spreads / Totals</span><span class="sc-sm">${sp.n} / ${to.n} graded</span></div>`,
+                buckets: lst.n ? scBuckets(leans, b => b.edge, [0, 2, 4, 6], (lo, hi) => hi ? `${lo}–${hi} pts` : `${lo}+ pts`, lProfit) : '',
+                recent: leans.filter(p => p.result).sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 10)
+                          .map(p => scRecentRow(p.date, p.pickDisplay || '', `${(p.edge || 0).toFixed(1)} pt edge`, p.result)),
+                empty: scorecardScope === 'current' ? 'No graded leans from the current model yet. The scheduled refresh records them twice a day.' : 'No leans found.'
+            });
+            window.__scorecardStats = stats;
+        }
+
+        function showInfoModal(id, title, html) {
+            document.getElementById(id)?.remove();
+            const modal = document.createElement('div');
+            modal.id = id;
+            modal.className = 'glossary-modal-overlay';
+            modal.setAttribute('role', 'dialog');
+            modal.setAttribute('aria-modal', 'true');
+            modal.innerHTML = `<div class="glossary-modal" style="max-width:680px;">
+                <div class="glossary-header"><h2>${title}</h2><button class="glossary-close" aria-label="Close">&times;</button></div>
+                <div class="glossary-content">${html}</div></div>`;
+            document.body.appendChild(modal);
+            const close = () => { modal.remove(); document.getElementById('hamburgerBtn')?.focus(); };
+            modal.querySelector('.glossary-close').addEventListener('click', close);
+            modal.addEventListener('click', e => { if (e.target === modal) close(); });
+            modal.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+            modal.querySelector('.glossary-close').focus();
+        }
+
+        const GLOSSARY_TERMS = [
+            ['Lean', 'The side the model prefers in a game, because its projected spread or total differs from the sportsbook line. Leans are tracked on the Scorecard; so far they have not beaten the market.'],
+            ['Edge (pts)', 'How many points the model\'s number differs from the line. Bigger means bigger disagreement, not a higher chance of winning.'],
+            ['Value bet', 'A bet where the Polymarket price is lower than the sportsbooks\' fair chance for the same bet at the same line.'],
+            ['Value (%)', 'Books\' fair chance minus the Polymarket price. Example: fair chance 51%, price 47¢ → +4% value.'],
+            ['Fair chance', 'The sportsbooks\' average probability with their built-in margin (vig) removed. Only books posting the exact same line are used, and at least 2 are required.'],
+            ['Price (¢)', 'What one Polymarket share costs. A share pays $1 if it wins, so the price is also the win rate needed to break even.'],
+            ['Close', 'The last line or price seen before tip-off.'],
+            ['Beat the close', 'The line or price moved your way after the bet. Doing this more than half the time is the earliest reliable sign of real skill.'],
+            ['Win rate', 'Wins ÷ (wins + losses). Pushes are ignored.'],
+            ['Breakeven (52.4%)', 'The win rate needed to profit at standard −110 sportsbook odds.'],
+            ['Units (u)', 'Profit counted at 1 unit risked per bet.'],
+            ['ROI', 'Profit ÷ amount risked.'],
+            ['95% range', 'Where the true result likely sits given the sample size. If the whole range is above zero, the edge is real; small samples have wide ranges.'],
+            ['Graded', 'A bet whose game is final and has been scored automatically.'],
+            ['Pending', 'A bet whose game has not finished or been scored yet.'],
+            ['Tracked', 'Bets you personally saved with the 🔒 Track button. Saved in your browser only.'],
+        ];
+
+        function showGlossaryModal() {
+            showInfoModal('glossaryModal', '📚 Glossary', `<dl class="glossary-list alphabetical">
+                ${GLOSSARY_TERMS.map(([t, d]) => `<dt>${t}</dt><dd>${d}</dd>`).join('')}</dl>`);
+        }
+
+        function showHowItWorksModal() {
+            showInfoModal('howModal', '📐 How It Works', `
+                <div class="glossary-section"><h3>1. Data</h3>
+                <p class="how-p">Twice a day (about 9am and 5pm ET, plus 11:30am on weekends) the site saves fresh team ratings, sportsbook lines,
+                Polymarket prices and final scores. Visitors see that saved data; <em>Refresh Data</em> pulls live data instead.</p></div>
+                <div class="glossary-section"><h3>2. Value bets (the main tool)</h3>
+                <p class="how-p">For each bet, the site averages the sportsbooks' <strong>fair chance</strong> (vig removed, same line only) and compares it to the
+                Polymarket <strong>price</strong>. When the price is at least 3% below the fair chance, it is a <strong>value bet</strong>.
+                This does not predict games; it finds prices that look cheap compared with the betting market.</p></div>
+                <div class="glossary-section"><h3>3. Model leans</h3>
+                <p class="how-p">The model rates teams from efficiency data and projects each spread and total. Where its number differs from the line, that side is a
+                <strong>lean</strong>, and the difference is the <strong>edge (pts)</strong>. Tested on all of last season, leans won 50.3% against closing spreads and
+                50.2% on totals, below the 52.4% breakeven. They are shown for information only.</p></div>
+                <div class="glossary-section"><h3>4. Scorecard</h3>
+                <p class="how-p">Every value bet and every lean is logged before the game and graded automatically, so nothing is hand-picked. The Scorecard gives a
+                verdict once there are 100+ graded bets, using ROI with its 95% range and how often bets <strong>beat the close</strong>.</p></div>
+                <p class="how-note">For information and entertainment only. Not betting advice.</p>`);
+        }
+
+        function buildCardText(picks, stats, format) {
+            const dateStr = new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+            const today = new Date().toDateString();
+            const L = [`🏀 THE SPREAD SHEET — ${dateStr}`, '━━━━━━━━━━━━━━━━━━━━━━━'];
+            const vals = (state.value?.opportunities || []).filter(o => new Date(o.startTime).toDateString() === today);
+            L.push('💲 VALUE BETS (Polymarket price below books\' fair chance)');
+            if (vals.length) {
+                vals.slice(0, 8).forEach(o => L.push(`  ${o.label} — ${Math.round(o.polyPrice * 100)}¢ vs ${Math.round(o.fairProb * 100)}% fair (+${(o.edge * 100).toFixed(1)}% value) [${fmtCardTime(new Date(o.startTime))}]`));
+            } else L.push('  None today');
+            L.push('');
+            const leans = [...picks].sort((a, b) => b.edge - a.edge).slice(0, 8);
+            L.push('📐 BIGGEST MODEL LEANS (unproven)');
+            if (leans.length) {
+                leans.forEach(p => L.push(`  ${p.pick} — ${p.edge.toFixed(1)} pt edge${format === 'detailed' ? ` · ${p.matchup}` : ''} [${p.gameTime ? fmtCardTime(p.gameTime) : ''}]`));
+            } else L.push('  None today');
+            const sc = window.__scorecardStats;
+            if (sc) {
+                L.push('━━━━━━━━━━━━━━━━━━━━━━━', '📊 SCORECARD');
+                if (sc.value) L.push(`  Value bets: ${sc.value.w}-${sc.value.l}, ROI ${scSigned(sc.value.roi)}`);
+                if (sc.leans) L.push(`  Model leans (${sc.leansScope}): ${sc.leans.w}-${sc.leans.l} (${scPct(sc.leans.winRate)}; 52.4% breaks even)`);
+            }
+            L.push('━━━━━━━━━━━━━━━━━━━━━━━', 'Info only, not betting advice.');
+            return L.join('\n');
         }
 
         // ===== Shared model record =====
