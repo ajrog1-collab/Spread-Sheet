@@ -10099,6 +10099,66 @@
         .hw-list li::marker { color: #E8742C; font-weight: 800; }
         @media (max-width: 640px) { .hw-ex-row { grid-template-columns: 1fr; } .hw-ex-why { justify-content: flex-start; } }
         .ss-hero--top { padding: 14px 18px; gap: 10px; }
+        /* Sticky control bar */
+        .ss-toolbar--sticky { position: sticky; top: 60px; z-index: 600; background: var(--ss-page); margin: 0 -16px; padding: 10px 16px; justify-content: flex-start; }
+        .ss-toolbar--sticky .ss-toolbar-controls { width: 100%; flex-wrap: nowrap; }
+        .ss-toolbar--sticky .ss-seg-btn { min-height: 38px; padding: 0 16px; }
+        .ss-toolbar--sticky .ss-filter-wrap { margin-left: auto; }
+        .ss-toolbar--sticky .ss-filter-btn { height: 46px; }
+        /* Collapsed rows */
+        .ss-games { display: flex; flex-direction: column; }
+        .ss-row { width: 100%; display: grid; grid-template-columns: minmax(0, 440px) 1fr 72px 120px 20px; gap: 14px; align-items: center; padding: 12px 20px; background: transparent; border: 0; text-align: left; cursor: pointer; color: var(--ss-ink); font-family: Inter, sans-serif; }
+        .ss-row:hover { background: var(--ss-surface2); }
+        .ss-row-time { display: none; }
+        .ss-games--sorted .ss-row { grid-template-columns: 96px minmax(0, 440px) 1fr 72px 120px 20px; }
+        .ss-games--sorted .ss-row-time { display: block; font-size: 12px; font-weight: 700; color: var(--ss-muted); }
+        .ss-row-total { grid-column: -4; }
+        .ss-row-teams { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+        .ss-row-team { display: grid; grid-template-columns: 24px minmax(0, 1fr) 54px; align-items: center; gap: 10px; }
+        .ss-row-name { font-size: 16px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .ss-row-name em { font-style: normal; font-size: 11px; font-weight: 700; color: var(--ss-faint); margin-left: 6px; }
+        .ss-row-team > b { font: 700 15px 'JetBrains Mono', monospace; text-align: right; color: var(--ss-muted); }
+        .ss-row-team > b.fav { color: var(--ss-ink); }
+        .ss-row-total { display: flex; flex-direction: column; align-items: flex-end; }
+        .ss-row-total small { font-size: 11px; font-weight: 700; color: var(--ss-muted); }
+        .ss-row-total b { font: 700 15px 'JetBrains Mono', monospace; }
+        .ss-row-chev { color: var(--ss-muted); transition: transform 0.2s; }
+        .ss-game--exp .ss-row-chev { transform: rotate(180deg); }
+        .ss-sig { display: inline-flex; align-items: center; justify-content: center; gap: 6px; justify-self: end; min-width: 104px; box-sizing: border-box; height: 32px; padding: 0 10px; border-radius: 8px; font: 800 12px Inter, sans-serif; letter-spacing: 0.03em; color: #FFFFFF; white-space: nowrap; }
+        .ss-sig b { font: 800 15px 'JetBrains Mono', monospace; }
+        .ss-sig--best { background: var(--ss-orange-dk); } .ss-sig--value { background: var(--ss-green); }
+        .ss-sig--lean { background: var(--ss-navy); } .ss-sig--ls { background: var(--ss-purple); }
+        .ss-sig--plain { min-width: 38px; justify-content: center; } .ss-sig--none { background: transparent; color: var(--ss-faint); font-weight: 600; }
+        .ss-game-body { padding: 0 20px 16px 54px; display: flex; flex-direction: column; gap: 12px; }
+        .ss-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+        .ss-cards--single { grid-template-columns: minmax(0, 1fr); max-width: 560px; }
+        .ss-why-open { align-self: flex-start; min-height: 40px; padding: 0 16px; border-radius: 10px; border: 1px solid var(--ss-line2); background: var(--ss-surface); color: var(--ss-navy); font: 700 13px Inter, sans-serif; cursor: pointer; }
+        .ss-game--open .ss-why-open { background: var(--ss-navy-dk); color: #FFFFFF; border-color: var(--ss-navy-dk); }
+        .ss-game-body .ss-ml { margin-left: 0; align-self: flex-start; max-width: 100%; }
+        .ss-noedge-btn { margin: 0; padding: 14px; border: 0; border-top: 1px solid var(--ss-line); background: var(--ss-surface); color: var(--ss-navy); font: 700 14px Inter, sans-serif; cursor: pointer; min-height: 48px; }
+        .ss-noedge-btn:hover { background: var(--ss-surface2); }
+        .ss-guide-modal { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+        /* Bottom sheet */
+        .ss-sheet-overlay { position: fixed; inset: 0; z-index: 2000; background: rgba(8,18,38,0); transition: background 0.2s; display: flex; align-items: flex-end; }
+        .ss-sheet-overlay.open { background: rgba(8,18,38,0.5); }
+        .ss-sheet { width: 100%; max-height: 88vh; background: var(--ss-page); border-radius: 18px 18px 0 0; display: flex; flex-direction: column; transform: translateY(100%); transition: transform 0.22s ease-out; padding-bottom: env(safe-area-inset-bottom); }
+        .ss-sheet-overlay.open .ss-sheet { transform: translateY(0); }
+        .ss-sheet-grab { display: flex; justify-content: center; padding: 8px 0 2px; }
+        .ss-sheet-grab span { width: 40px; height: 5px; border-radius: 3px; background: var(--ss-line2); }
+        .ss-sheet-head { display: flex; align-items: center; justify-content: space-between; padding: 4px 16px 8px; font-size: 16px; color: var(--ss-ink); }
+        .ss-sheet-close { width: 40px; height: 40px; border: 0; border-radius: 10px; background: var(--ss-surface2); color: var(--ss-ink); font-size: 22px; cursor: pointer; }
+        .ss-sheet-tabs { display: flex; gap: 4px; margin: 0 16px 10px; background: var(--ss-line2); border-radius: 10px; padding: 3px; }
+        .ss-sheet-tabs button { flex: 1; min-height: 38px; border: 0; border-radius: 8px; background: transparent; color: var(--ss-ink); font: 700 13px Inter, sans-serif; }
+        .ss-sheet-tabs button[aria-selected="true"] { background: var(--ss-navy-dk); color: #FFFFFF; }
+        .ss-sheet-body { overflow-y: auto; padding: 0 12px 16px; }
+        .ss-sheet-body .ss-why { display: flex; flex-direction: column; gap: 12px; padding: 0; border: 0; }
+        .ss-sheet-body .ss-why > * { display: none; }
+        .ss-sheet-body[data-tab="matchup"] .ss-why-h2h,
+        .ss-sheet-body[data-tab="spread"] .ss-why-s1, .ss-sheet-body[data-tab="spread"] .ss-why-s2,
+        .ss-sheet-body[data-tab="total"] .ss-why-t1, .ss-sheet-body[data-tab="total"] .ss-why-t2,
+        .ss-sheet-body .ss-why-foot { display: flex; }
+        .ss-sheet-body .ss-why-s2 > .ss-box, .ss-sheet-body .ss-why-t2 > .ss-box { width: 100%; }
+        .ss-sheet-body .ss-panel { background: var(--ss-surface); flex-direction: column; }
         .ss-filter-wrap { position: relative; }
         .ss-filter-btn { display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 16px; border-radius: 10px; border: 1px solid var(--ss-line2); background: var(--ss-surface); color: var(--ss-ink); font: 700 14px Inter, sans-serif; cursor: pointer; }
         .ss-filter-btn[aria-expanded="true"] { border-color: var(--ss-navy); box-shadow: 0 0 0 2px var(--ss-lean-line); }
@@ -10183,7 +10243,7 @@
         .ss-t10m-score { flex: none; min-width: 34px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #FFFFFF; font: 800 15px 'JetBrains Mono', monospace; }
         .ss-score-line { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--ss-ink2); margin-top: auto; }
         .ss-score-line > span:last-child { font-weight: 600; color: var(--ss-muted); }
-        .ss-game { scroll-margin-top: 76px; }
+        .ss-game { scroll-margin-top: 136px; }
         .ss-flash { animation: ssFlash 1.6s ease-out; }
         @keyframes ssFlash { 0% { box-shadow: inset 0 0 0 3px var(--ss-orange); } 100% { box-shadow: inset 0 0 0 0 transparent; } }
         .ss-t10-cards { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 4px; padding: 4px 4px 6px; margin: 0 -4px; }
@@ -10290,7 +10350,7 @@
         .ss-game--open .ss-why-btn { background: var(--ss-navy-dk); color: #FFFFFF; }
         .ss-game--open .ss-why-btn svg { transform: rotate(180deg); }
 
-        .ss-why { border-top: 1px solid var(--ss-line); padding: 16px 20px 20px; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr) 44px; grid-template-rows: auto auto; gap: 16px; align-items: stretch; }
+        .ss-why { border-top: 1px solid var(--ss-line); padding: 16px 20px 20px; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto auto; gap: 16px; align-items: stretch; }
         .ss-why-h2h { grid-column: 1; grid-row: 1 / span 2; }
         .ss-why-h2h .ss-h2h-names { font-size: 15px; font-weight: 800; }
         .ss-h2h-rows { flex: 1; display: flex; flex-direction: column; justify-content: space-around; gap: 12px; padding: 4px 0; border-top: 1px solid var(--ss-line); margin-top: 2px; }
@@ -10421,6 +10481,34 @@
             .ss-mob-only { display: inline; }
             .ss-t10-card { flex-basis: 268px; }
             .ss-hero--top { padding: 12px 12px; }
+            .ss-toolbar.ss-toolbar--sticky { position: sticky; top: calc(56px + env(safe-area-inset-top)); margin: 0 -10px; padding: 8px 10px; }
+            .ss-toolbar--sticky .ss-toolbar-controls { gap: 6px; }
+            .ss-toolbar--sticky .ss-seg { flex: 1; width: auto; }
+            .ss-toolbar--sticky .ss-seg-btn { padding: 0 6px; font-size: 13px; }
+            .ss-toolbar--sticky .ss-filter-wrap { width: auto; margin: 0; }
+            .ss-toolbar--sticky .ss-filter-btn { width: auto; height: 44px; padding: 0 12px; }
+            .ss-toolbar--sticky .ss-filter-btn > span:not(.ss-filter-count) { display: none; }
+            .ss-games { gap: 0; border-radius: 14px; overflow: hidden; background: var(--ss-surface); box-shadow: 0 1px 3px rgba(20,33,61,0.1); }
+            .ss-group-head { border-radius: 0; }
+            .ss-game { border-radius: 0; box-shadow: none; border-top: 1px solid var(--ss-line); }
+            .ss-game--best { box-shadow: inset 3px 0 0 var(--ss-orange); }
+            .ss-row { grid-template-columns: minmax(0, 1fr) auto 14px; gap: 10px; padding: 10px 12px; }
+            .ss-row-time, .ss-row-total, .ss-games--sorted .ss-row-time { display: none; }
+            .ss-games--sorted .ss-row { grid-template-columns: minmax(0, 1fr) auto 14px; }
+            .ss-row-team { grid-template-columns: 22px minmax(0, 1fr) 46px; gap: 8px; }
+            .ss-row-teams { gap: 4px; }
+            .ss-row-name { font-size: 15px; }
+            .ss-row-team > b { font-size: 14px; }
+            .ss-sig { height: 30px; padding: 0 8px; font-size: 11px; min-width: 76px; }
+            .ss-sig b { font-size: 14px; }
+            .ss-game-body { padding: 0 12px 12px; gap: 10px; }
+            .ss-cards { grid-template-columns: 1fr; gap: 8px; }
+            .ss-cards .ss-mkt { height: auto !important; border: 0 !important; padding: 10px 12px; }
+            .ss-cards .ss-bars, .ss-cards .ss-meter, .ss-cards .ss-say { display: none !important; }
+            .ss-cards .ss-mkt--none { flex-direction: row; align-items: center; height: auto !important; }
+            .ss-cards .ss-mkt-head .ss-edge { font-size: 12px; }
+            .ss-why-open { align-self: stretch; }
+            .ss-guide-modal { grid-template-columns: 1fr; }
             .ss-filter-wrap { position: static; width: 100%; }
             .ss-filter-btn { width: 100%; justify-content: center; height: 44px; }
             .ss-filter-panel { left: 10px; right: 10px; width: auto; top: auto; margin-top: 8px; position: absolute; }
@@ -10432,7 +10520,7 @@
             #hamburgerDropdown { min-width: 0; width: calc(100vw - 24px); max-width: 340px; }
             .ss-top-head .ss-hero-title { font-size: 18px; }
             .ss-t10-cards .ss-t10-mini { flex-basis: 220px; }
-            .ss-game { scroll-margin-top: 64px; }
+            .ss-game { scroll-margin-top: 124px; }
             .ss-t10-cards { margin: 0 -14px; padding: 6px 16px 12px; scroll-padding-left: 16px; }
             .ss-score-key { display: none; }
             .ss-mkt--none .ss-mkt-head { width: auto; gap: 8px; }
@@ -10597,6 +10685,10 @@
                             <span class="ss-menu-text"><span>Refresh Data</span><small>Pull live prices now</small></span>
                         </button>
 <div class="ss-menu-label">Learn</div>
+                        <button class="hamburger-dropdown-item ss-menu-item" role="menuitem" data-action="guide" tabindex="-1">
+                            <svg class="ss-menu-ico" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v6M12 7.5v.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+                            <span class="ss-menu-text"><span>Reading the Page</span><small>Bet Score, bars and callouts</small></span>
+                        </button>
                         <button class="hamburger-dropdown-item ss-menu-item" role="menuitem" data-action="how" tabindex="-1">
                             <svg class="ss-menu-ico" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5M9 7h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             <span class="ss-menu-text"><span>How to Use</span><small>Walkthrough and methodology</small></span>
@@ -10706,16 +10798,13 @@
                     <div id="ssHeroCards"></div>
                 </section>
 
-                <div class="ss-toolbar">
-                    <div class="ss-toolbar-title">
-                        <h2>All games</h2>
-                        <span id="ssCounts"></span>
-                    </div>
+                <div class="ss-toolbar ss-toolbar--sticky">
+                    <span id="ssCounts" hidden></span>
                     <div class="ss-toolbar-controls">
                         <div class="ss-seg" role="group" aria-label="Show">
                             <button type="button" class="ss-seg-btn active" data-f="all" onclick="ssSetFilter('all')">All</button>
                             <button type="button" class="ss-seg-btn" data-f="value" onclick="ssSetFilter('value')">Value</button>
-                            <button type="button" class="ss-seg-btn ss-seg-best" data-f="best" onclick="ssSetFilter('best')">★ Best Bets</button>
+                            <button type="button" class="ss-seg-btn ss-seg-best" data-f="best" onclick="ssSetFilter('best')">★ Best</button>
                         </div>
                         <div class="ss-filter-wrap">
                             <button type="button" class="ss-filter-btn" id="ssFilterBtn" aria-expanded="false" aria-controls="ssFilterPanel" onclick="ssToggleFilters()"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16l-6 7.5V19l-4 1.5v-8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Filters</span><span class="ss-filter-count" id="ssFilterCount"></span></button>
@@ -10757,7 +10846,7 @@
                     </div>
                 </div>
 
-                <details class="ss-guide">
+                <details class="ss-guide" id="ssGuide" hidden>
                     <summary><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v6M12 7.5v.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>How to read this page<svg class="ss-guide-chev" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6 L8 10 L12 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
                     <div class="ss-guide-body">
                         <div class="ss-guide-col">
@@ -15619,6 +15708,9 @@ Example format:
                     break;
                 case 'card':
                     showTodaysCard();
+                    break;
+                case 'guide':
+                    showInfoModal('guideModal', 'Reading the Page', `<div class="ss-guide-modal">${document.querySelector('#ssGuide .ss-guide-body')?.innerHTML || ''}</div>`, true);
                     break;
             }
         }
@@ -28312,6 +28404,9 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
         // One set of terms: Lean, Edge (pts), Value bet, Worth, ¢ off, Best Bet, Strength
         // =====================================================================
         let ssFilter = 'all', ssConf = 'all', ssSearch = '', ssTopExpanded = false, ssTop25 = false, ssMarketView = 'all', ssSort = 'time';
+        let ssShowNoEdge = false;
+        const ssExpanded = new Set();
+        const ssIsPhone = () => window.matchMedia('(max-width: 640px)').matches;
         function ssToggleFilters(force) {
             const p = document.getElementById('ssFilterPanel'), b = document.getElementById('ssFilterBtn');
             if (!p) return;
@@ -28637,6 +28732,95 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 </div>`;
         }
 
+        // One game: a one-line summary row; tap to expand the Spread/Total cards
+        function ssSignal(r) {
+            const sc = r.topScore >= 0 ? r.topScore : null;
+            const cls = sc == null ? 'na' : sc >= 80 ? 'strong' : sc >= 60 ? 'good' : sc >= 50 ? 'thin' : 'none';
+            if (r.best) return `<span class="ss-sig ss-sig--best">★ <b>${sc ?? ''}</b></span>`;
+            if (r.hasValue) return `<span class="ss-sig ss-sig--value">VALUE <b>${sc ?? ''}</b></span>`;
+            if (r.longshot) return `<span class="ss-sig ss-sig--ls">LONGSHOT</span>`;
+            if (r.hasLean) return `<span class="ss-sig ss-sig--lean">LEAN <b>${sc ?? '–'}</b></span>`;
+            return sc != null ? `<span class="ss-sig ss-sig--plain sc-${cls}"><b>${sc}</b></span>` : '<span class="ss-sig ss-sig--none">No edge</span>';
+        }
+        function ssRowHtml(r) {
+            const { g, spread, total, best, ml, types } = r;
+            const exp = ssExpanded.has(g.id), open = ssOpen.has(g.id) && !ssIsPhone();
+            const aN = ssShortName(g, 'away'), hN = ssShortName(g, 'home');
+            const aSp = g.spread != null ? ssLineText(-g.spread) : '—', hSp = g.spread != null ? ssLineText(g.spread) : '—';
+            const rank = rr => rr && rr.rank && rr.rank <= 25 ? `<em>#${rr.rank}</em>` : '';
+            const when = g.commenceTime.toLocaleString('en-US', ssSort === 'time' ? { hour: 'numeric', minute: '2-digit' } : { weekday: 'short', hour: 'numeric', minute: '2-digit' });
+            const mlStrip = ml ? `<div class="ss-ml${ml.best ? ' ss-ml--best' : ''}${ml.longshot ? ' ss-ml--ls' : ''}"><span class="ss-ml-label">${ml.longshot ? 'LONGSHOT' : 'MONEYLINE'}</span><span class="ss-ml-pick">${ml.best ? '★ ' : ''}${ssEsc(ml.pick)}${ml.longshot ? ` · ${ssCents(ml.o.polyPrice)}` : ''}</span><b title="Costs ${ssCents(ml.o.polyPrice)}, worth ${ssCents1(ml.o.fairProb)}, ${ml.o.books} books">${ssCents1(ml.o.edge)} off</b>${ml.o.tradeUrl ? `<a href="${ssEsc(ml.o.tradeUrl)}" target="_blank" rel="noopener">Trade</a>` : ''}</div>` : '';
+            return `<article id="game-${g.id}" class="ss-game${best ? ' ss-game--best' : ''}${exp ? ' ss-game--exp' : ''}${open ? ' ss-game--open' : ''}">
+                <button type="button" class="ss-row" onclick="ssToggleRow('${g.id}')" aria-expanded="${exp}">
+                    <span class="ss-row-time">${when}</span>
+                    <span class="ss-row-teams">
+                        <span class="ss-row-team">${ssBadge(aN, 24)}<span class="ss-row-name">${ssEsc(aN)}${rank(g.awayRating)}</span><b class="${g.spread > 0 ? 'fav' : ''}">${aSp}</b></span>
+                        <span class="ss-row-team">${ssBadge(hN, 24)}<span class="ss-row-name">${ssEsc(hN)}${rank(g.homeRating)}</span><b class="${g.spread < 0 ? 'fav' : ''}">${hSp}</b></span>
+                    </span>
+                    <span class="ss-row-total"><small>O/U</small><b>${g.total ?? '—'}</b></span>
+                    ${ssSignal(r)}
+                    <svg class="ss-row-chev" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6 L8 10 L12 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                ${exp ? `<div class="ss-game-body">
+                    ${mlStrip}
+                    <div class="ss-cards${types.length === 1 ? ' ss-cards--single' : ''}">
+                        ${types.includes('spread') ? spread.html : ''}
+                        ${types.includes('total') ? total.html : ''}
+                    </div>
+                    <button type="button" class="ss-why-open" onclick="ssWhyOpen('${g.id}')" aria-expanded="${open}">${open ? 'Hide details' : 'Why? See the details'}</button>
+                </div>` : ''}
+                ${open ? ssWhy(g) : ''}
+            </article>`;
+        }
+        function ssToggleRow(id) {
+            if (ssExpanded.has(id)) { ssExpanded.delete(id); ssOpen.delete(id); } else ssExpanded.add(id);
+            renderToday();
+            restoreTrackedButtonStates();
+        }
+        function ssWhyOpen(id) {
+            if (ssIsPhone()) return ssOpenSheet(id);
+            ssToggle(id);
+        }
+
+        // ---- 5. "Why" in a bottom sheet on phones ----
+        function ssOpenSheet(id, tab = 'spread') {
+            const g = (state.games || []).find(x => x.id === id);
+            if (!g) return;
+            document.getElementById('ssSheet')?.remove();
+            const aN = ssShortName(g, 'away'), hN = ssShortName(g, 'home');
+            const el = document.createElement('div');
+            el.id = 'ssSheet';
+            el.className = 'ss-sheet-overlay';
+            el.innerHTML = `<div class="ss-sheet" role="dialog" aria-modal="true" aria-label="Details for ${ssEsc(aN)} at ${ssEsc(hN)}">
+                <div class="ss-sheet-grab"><span></span></div>
+                <div class="ss-sheet-head"><b>${ssEsc(aN)} @ ${ssEsc(hN)}</b><button type="button" class="ss-sheet-close" aria-label="Close">×</button></div>
+                <div class="ss-sheet-tabs" role="tablist">
+                    <button type="button" role="tab" data-t="matchup">Matchup</button>
+                    <button type="button" role="tab" data-t="spread">Spread</button>
+                    <button type="button" role="tab" data-t="total">Total</button>
+                </div>
+                <div class="ss-sheet-body" data-tab="${tab}">${ssWhy(g)}</div>
+            </div>`;
+            document.body.appendChild(el);
+            document.body.style.overflow = 'hidden';
+            const body = el.querySelector('.ss-sheet-body');
+            const setTab = t => { body.dataset.tab = t; el.querySelectorAll('.ss-sheet-tabs button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.t === t))); body.scrollTop = 0; };
+            setTab(tab);
+            el.querySelectorAll('.ss-sheet-tabs button').forEach(b => b.addEventListener('click', () => setTab(b.dataset.t)));
+            const close = () => { el.classList.remove('open'); document.body.style.overflow = ''; setTimeout(() => el.remove(), 220); };
+            el.querySelector('.ss-sheet-close').addEventListener('click', close);
+            el.addEventListener('click', e => { if (e.target === el) close(); });
+            let y0 = null;
+            const grab = el.querySelector('.ss-sheet-grab'), head = el.querySelector('.ss-sheet-head');
+            [grab, head].forEach(h => {
+                h.addEventListener('touchstart', e => { y0 = e.touches[0].clientY; }, { passive: true });
+                h.addEventListener('touchend', e => { if (y0 != null && e.changedTouches[0].clientY - y0 > 70) close(); y0 = null; });
+            });
+            document.addEventListener('keydown', function esc(e) { if (e.key === 'Escape') { close(); document.removeEventListener('keydown', esc); } });
+            requestAnimationFrame(() => el.classList.add('open'));
+            restoreTrackedButtonStates();
+        }
+
         function ssSetFilter(f) {
             ssFilter = f;
             document.querySelectorAll('.ss-seg-btn').forEach(b => b.classList.toggle('active', b.dataset.f === f));
@@ -28650,7 +28834,9 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 document.querySelectorAll('.ss-seg-btn').forEach(b => b.classList.toggle('active', b.dataset.f === 'all'));
                 const si = document.getElementById('ssSearch'); if (si) si.value = '';
             }
-            ssOpen.add(id);
+            ssShowNoEdge = true;
+            ssExpanded.add(id);
+            if (!ssIsPhone()) ssOpen.add(id);
             renderToday();
             restoreTrackedButtonStates();
             const el = document.getElementById('game-' + id);
@@ -28747,7 +28933,8 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                          hasValue: shown.some(m => m.kind === 'value') || (ssMarketView === 'all' && !!ml && !ml.longshot),
                          best: shown.some(m => m.best) || (ssMarketView === 'all' && !!ml?.best),
                          longshot: !!ml?.longshot, hasLean: spread.kind === 'lean' || total.kind === 'lean',
-                         topScore: scoreVals.length ? Math.max(...scoreVals) : -1, topEdge: edgeVals.length ? Math.max(...edgeVals) : -1 };
+                         topScore: scoreVals.length ? Math.max(...scoreVals) : -1, topEdge: edgeVals.length ? Math.max(...edgeVals) : -1,
+                         worth: shown.some(m => m.kind !== 'none') || !!ml };
             }).filter(r => {
                 if (ssFilter === 'value' && !r.hasValue) return false;
                 if (ssFilter === 'best' && !r.best) return false;
@@ -28760,11 +28947,16 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             const counts = document.getElementById('ssCounts');
             if (counts) counts.textContent = `${games.length} games · ${built.filter(r => r.hasLean).length} with leans · ${opps.length} value`;
             if (!games.length) { wrap.innerHTML = '<div class="ss-empty">No games loaded yet. Data updates around 9 AM and 5 PM ET, or use Refresh Data in the menu.</div>'; return; }
-            if (!built.length) { wrap.innerHTML = '<div class="ss-empty">No games match these filters.</div>'; return; }
+            if (!built.length && !noEdge.length) { wrap.innerHTML = '<div class="ss-empty">No games match these filters.</div>'; return; }
 
+            // Games with no edge sit behind one button
+            const noEdge = built.filter(r => !r.worth);
+            const visible = ssShowNoEdge ? built : built.filter(r => r.worth);
+            built.length = 0; visible.forEach(r => built.push(r));
             // Active-filter badge
             const nActive = (ssConf !== 'all') + (!!ssSearch) + ssTop25 + (ssMarketView !== 'all') + (ssSort !== 'time');
             const fc = document.getElementById('ssFilterCount'); if (fc) fc.textContent = nActive || '';
+            wrap.classList.toggle('ss-games--sorted', ssSort !== 'time');
             const groups = [];
             if (ssSort === 'time') {
                 built.forEach(r => {
@@ -28779,27 +28971,8 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             }
             wrap.innerHTML = groups.map(gr => `
                 <div class="ss-group-head"><span>${gr.label}</span><span>${gr.rows.length} game${gr.rows.length === 1 ? '' : 's'}</span></div>
-                ${gr.rows.map(({ g, spread, total, best, ml, types }) => {
-                    const open = ssOpen.has(g.id);
-                    const aN = ssShortName(g, 'away'), hN = ssShortName(g, 'home');
-                    const aSp = g.spread != null ? ssLineText(-g.spread) : '—', hSp = g.spread != null ? ssLineText(g.spread) : '—';
-                    const rank = r => r && r.rank && r.rank < 400 ? `<em>#${r.rank}</em>` : '';
-                    const timeTag = ssSort !== 'time' ? `<span class="ss-time-tag">${g.commenceTime.toLocaleString('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' })}</span>` : '';
-                    return `<article id="game-${g.id}" class="ss-game${best ? ' ss-game--best' : ''}${open ? ' ss-game--open' : ''}">
-                        <div class="ss-game-main${types.length === 1 ? ' ss-game-main--single' : ''}">
-                            <div class="ss-matchup">${timeTag}
-                                <div class="ss-team">${ssBadge(aN, 30)}<span class="ss-name"><span title="${ssEsc(aN)}">${ssEsc(aN)}</span>${rank(g.awayRating)}</span><b class="${g.spread > 0 ? 'fav' : ''}">${aSp}</b></div>
-                                <div class="ss-team">${ssBadge(hN, 30)}<span class="ss-name"><span title="${ssEsc(hN)}">${ssEsc(hN)}</span>${rank(g.homeRating)}</span><b class="${g.spread < 0 ? 'fav' : ''}">${hSp}</b></div>
-                                <div class="ss-team ss-team--total"><span></span><span class="ss-name"><span>Total (O/U)</span></span><b class="fav">${g.total ?? '—'}</b></div>
-                                ${ml ? `<div class="ss-ml${ml.best ? ' ss-ml--best' : ''}${ml.longshot ? ' ss-ml--ls' : ''}"><span class="ss-ml-label">${ml.longshot ? 'LONGSHOT' : 'MONEYLINE'}</span>${ml.longshot ? '' : ssMeter(ml.bars, true)}<span class="ss-ml-pick">${ml.best ? '★ ' : ''}${ssEsc(ml.pick)}${ml.longshot ? ` · ${ssCents(ml.o.polyPrice)}` : ''}</span><b title="Costs ${ssCents(ml.o.polyPrice)}, worth ${ssCents1(ml.o.fairProb)}, ${ml.o.books} books">${ssCents1(ml.o.edge)} off</b>${ml.o.tradeUrl ? `<a href="${ssEsc(ml.o.tradeUrl)}" target="_blank" rel="noopener">Trade</a>` : ''}</div>` : ''}
-                            </div>
-                            ${types.includes('spread') ? spread.html : ''}
-                            ${types.includes('total') ? total.html : ''}
-                            <button type="button" class="ss-why-btn" onclick="ssToggle('${g.id}')" aria-expanded="${open}" aria-label="${open ? 'Hide' : 'Show'} why for ${ssEsc(aN)} at ${ssEsc(hN)}"><span class="ss-why-text">${open ? 'Hide why' : 'Why'}</span><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6 L8 10 L12 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                        </div>
-                        ${open ? ssWhy(g) : ''}
-                    </article>`;
-                }).join('')}`).join('');
+                ${gr.rows.map(r => ssRowHtml(r)).join('')}`).join('')
+                + (noEdge.length ? `<button type="button" class="ss-noedge-btn" onclick="ssShowNoEdge = !ssShowNoEdge; renderToday()">${ssShowNoEdge ? `Hide the ${noEdge.length} game${noEdge.length === 1 ? '' : 's'} with no edge` : `Show ${noEdge.length} game${noEdge.length === 1 ? '' : 's'} with no edge`}</button>` : '');
         }
 
         // ---- Value tab (new layout); tracked value bets render on My Bets ----
