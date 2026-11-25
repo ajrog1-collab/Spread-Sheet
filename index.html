@@ -9984,6 +9984,7 @@
             --ss-green: #1A7F4B; --ss-good-text: #13603A; --ss-green-bg: #EAF6EF; --ss-green-line: #A7D7B9;
             --ss-lean-bg: #EEF2F8; --ss-lean-line: #C9D5E6;
             --ss-orange: #E8742C; --ss-orange-dk: #C2531A; --ss-orange-bg: #FFF4EC; --ss-orange-row: #FFFAF6; --ss-orange-text: #B4511A;
+            --ss-purple: #6B3FA0; --ss-purple-bg: #F3EEFA; --ss-purple-line: #C9B4E6; --ss-purple-text: #5A3290;
         }
         [data-theme="dark"] {
             --ss-page: #0E1524; --ss-surface: #172133; --ss-surface2: #1D2A40; --ss-row-alt: #1A2538;
@@ -9993,6 +9994,7 @@
             --ss-green: #2FA36A; --ss-good-text: #7FE0A8; --ss-green-bg: #13301F; --ss-green-line: #2F6B4A;
             --ss-lean-bg: #1B2A44; --ss-lean-line: #34496E;
             --ss-orange-bg: #3A2416; --ss-orange-row: #2A1E17; --ss-orange-text: #F6A56F;
+            --ss-purple: #8A5CC8; --ss-purple-bg: #2A2140; --ss-purple-line: #5B4387; --ss-purple-text: #C9AEF0;
         }
         body { background: var(--ss-page) !important; color: var(--ss-ink); }
         #legacyHeader, #globalConfidenceLegend, .metrics-bar-wrapper, .tab-legend-toggle { display: none !important; }
@@ -10073,6 +10075,24 @@
         .ss-badge { position: relative; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-family: Inter, sans-serif; font-weight: 800; flex: none; overflow: hidden; letter-spacing: -0.02em; }
         .ss-badge img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #FFFFFF; padding: 2px; box-sizing: border-box; }
 
+        .ss-ml { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-left: 40px; padding: 5px 10px; border-radius: 8px; background: var(--ss-green-bg); border: 1px solid var(--ss-green-line); font-size: 12px; color: var(--ss-ink2); }
+        .ss-ml--best { background: var(--ss-orange-bg); border-color: var(--ss-orange); }
+        .ss-ml-label { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; color: var(--ss-muted); }
+        .ss-ml-pick { font-weight: 800; color: var(--ss-ink); }
+        .ss-ml b { font: 700 12px 'JetBrains Mono', monospace; color: var(--ss-good-text); margin-left: auto; }
+        .ss-ml a { font-weight: 700; font-size: 12px; color: var(--ss-navy); }
+        .ss-ml { flex-wrap: nowrap; white-space: nowrap; overflow: hidden; }
+        .ss-ml-pick { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+        .ss-ml--ls { background: var(--ss-purple-bg); border-color: var(--ss-purple-line); }
+        .ss-ml--ls b { color: var(--ss-purple-text); }
+        .ss-tag-ls { display: inline-block; background: var(--ss-purple); color: #FFFFFF; font-size: 11px; font-weight: 800; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 5px; margin-bottom: 4px; }
+        .ss-vrow--ls:nth-child(even) { background: var(--ss-row-alt); }
+        .ss-pill.ss-pill--ls { background: var(--ss-purple); }
+        .ss-btn-purple { background: var(--ss-purple) !important; }
+        .ss-seg-btn.ss-seg-ls { color: var(--ss-purple-text); font-weight: 700; }
+        .ss-seg-btn.ss-seg-ls.active { color: #FFFFFF; }
+        .ss-nav .ss-badge-ls { background: #7C4DBD; }
+        .ss-hero--ls { background: #2E2350; }
         .ss-mkt { height: 156px; box-sizing: border-box; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; min-width: 0; overflow: hidden; border: 1px solid var(--ss-line); background: var(--ss-row-alt); }
         .ss-mkt > * { flex: none; }
         .ss-mkt--lean { background: var(--ss-lean-bg); border-color: var(--ss-lean-line); }
@@ -10193,8 +10213,8 @@
             .ss-top-inner { padding: 0 14px; gap: 12px; justify-content: space-between; }
             .ss-brand { font-size: 18px; }
             .ss-top-right .header-status { font-size: 11px; }
-            .ss-nav { position: fixed !important; top: auto !important; left: 0; right: 0; bottom: 0; height: auto !important; z-index: 950; background: #14213D !important; display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 6px 4px calc(10px + env(safe-area-inset-bottom)) !important; gap: 0; }
-            .ss-nav .tab { flex-direction: column; gap: 3px; font-size: 12px; padding: 6px 2px; min-height: 54px; border-radius: 0; position: relative; }
+            .ss-nav { position: fixed !important; top: auto !important; left: 0; right: 0; bottom: 0; height: auto !important; z-index: 950; background: #14213D !important; display: grid !important; grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 6px 2px calc(10px + env(safe-area-inset-bottom)) !important; gap: 0; }
+            .ss-nav .tab { flex-direction: column; gap: 3px; font-size: 11px; padding: 6px 2px; min-height: 54px; border-radius: 0; position: relative; }
             .ss-nav .tab svg { display: block; }
             .ss-nav .tab.active { background: transparent; color: #FFFFFF; }
             .ss-nav .tab.active::before { content: ''; position: absolute; bottom: 2px; width: 20px; height: 3px; border-radius: 2px; background: #E8742C; }
@@ -10223,6 +10243,7 @@
             .ss-mkt .ss-chip { font-size: 12px; padding: 3px 8px; }
             .ss-mkt .ss-say { display: none; }
             .ss-mkt--none { height: 36px; flex-direction: row; align-items: center; padding: 0 12px; }
+            .ss-ml { margin-left: 0; }
             .ss-mkt--none .ss-none { justify-content: flex-start; font-size: 12px; }
             .ss-bars { grid-template-columns: 44px 1fr 42px; font-size: 11px; }
             .ss-track { height: 6px; }
@@ -10313,6 +10334,7 @@
             <nav class="ss-nav tabs-container" role="tablist" aria-label="Main navigation">
                 <button class="tab active" onclick="switchTab('today')" id="tabToday" role="tab" aria-selected="true" aria-controls="todayTab"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 10h16M9 3v4M15 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Today</span></button>
                 <button class="tab" onclick="switchTab('value')" id="tabValue" role="tab" aria-selected="false" aria-controls="valueTab"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M16 7.5c0-1.9-1.8-3-4-3s-4 1.1-4 3 1.8 2.6 4 3.2 4 1.3 4 3.3-1.8 3-4 3-4-1.1-4-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Value</span><span class="tab-badge" id="tabValueCount"></span></button>
+                <button class="tab" onclick="switchTab('longshots')" id="tabLongshots" role="tab" aria-selected="false" aria-controls="longshotsTab"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Longshots</span><span class="tab-badge ss-badge-ls" id="tabLongshotsCount"></span></button>
                 <button class="tab" onclick="switchTab('validation')" id="tabValidation" role="tab" aria-selected="false" aria-controls="validationTab"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Scorecard</span></button>
                 <button class="tab" onclick="switchTab('tracked')" id="tabTracked" role="tab" aria-selected="false" aria-controls="trackedTab"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>My Bets</span><span class="tab-badge" id="tabTrackedCount"></span></button>
             </nav>
@@ -10491,6 +10513,7 @@
                             <button type="button" class="ss-seg-btn active" data-f="all" onclick="ssSetFilter('all')">All</button>
                             <button type="button" class="ss-seg-btn" data-f="value" onclick="ssSetFilter('value')">Value</button>
                             <button type="button" class="ss-seg-btn ss-seg-best" data-f="best" onclick="ssSetFilter('best')">★ Best Bets</button>
+                            <button type="button" class="ss-seg-btn ss-seg-ls" data-f="longshot" onclick="ssSetFilter('longshot')">Longshots</button>
                         </div>
                         <label class="ss-sr" for="ssConf">Conference</label>
                         <select id="ssConf" class="ss-select" onchange="ssConf = this.value; renderToday()"><option value="all">All conferences</option></select>
@@ -10742,8 +10765,24 @@
                     </div>
                 </section>
                 <div class="ss-table" id="vtRows"><div class="ss-empty">Click Refresh Data or wait for the next scheduled update.</div></div>
-                <p class="ss-foot">Biggest discount first. ★ Best Bet = 4¢+ off with 3+ books agreeing. Bars show strength: 1 bar 3–4¢ off, 2 bars 4–6¢, 3 bars 6¢+. "Worth" is the sportsbooks' average odds with their fee removed, from books posting the same line. Confirm the price on Polymarket US before trading.</p>
+                <p class="ss-foot">Biggest discount first. ★ Best Bet = 4¢+ off with 3+ books agreeing. Bars show strength: 1 bar 2–4¢ off, 2 bars 4–6¢, 3 bars 6¢+. "Worth" is the sportsbooks' average odds with their fee removed, from books posting the same line. Confirm the price on Polymarket US before trading.</p>
                 <div id="valueList" hidden></div><div id="valueSummary" hidden></div><div id="valueLogSummary" hidden></div><div id="valueLogList" hidden></div>
+            </div>
+        </div>
+
+        <div id="longshotsTab" class="tab-content" style="display:none;">
+            <div class="ss-wrap">
+                <section class="ss-hero ss-hero--slim ss-hero--ls">
+                    <div class="ss-hero-head">
+                        <div style="max-width: 660px">
+                            <h1 class="ss-hero-title">Longshots</h1>
+                            <div class="ss-hero-sub">Underdogs to win outright that cost less on Polymarket than they are worth, and still win often enough to matter: the books give them a <strong>15–40% chance</strong>. They lose more often than they win, so they are kept apart from Value Bets and Best Bets, with their own record.</div>
+                        </div>
+                        <div class="ss-hero-stats" id="lsStats"></div>
+                    </div>
+                </section>
+                <div class="ss-table" id="lsRows"><div class="ss-empty">Loading…</div></div>
+                <p class="ss-foot">A Longshot needs: moneyline, worth between 15¢ and 40¢ (a 15–40% chance), at least 2¢ off, and 3+ books agreeing. Underdogs under 15% are left out: sportsbook odds on big longshots are too imprecise to trust. "Pays" is what $1 returns if it wins.</p>
             </div>
         </div>
 
@@ -10799,6 +10838,7 @@
                 </div>
                 <section class="sc-section" id="scBest"><div class="sc-loading">Loading…</div></section>
                 <section class="sc-section" id="scValue"><div class="sc-loading">Loading…</div></section>
+                <section class="sc-section" id="scLongshots"><div class="sc-loading">Loading…</div></section>
                 <section class="sc-section" id="scLeans"><div class="sc-loading">Loading…</div></section>
                 <details class="sc-help">
                     <summary>How to read this</summary>
@@ -25584,6 +25624,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             if (tab === 'tracked') { renderTrackedBetsTab(); renderValueTab(); }
             if (tab === 'value') renderValueTab();
             if (tab === 'today') renderToday();
+            if (tab === 'longshots') renderLongshots();
         }
 
         // [RECOVERED] navigateToGameAnalysis
@@ -26003,14 +26044,15 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
         async function fetchValue() {
             if (SNAPSHOT) {
                 const ok = o => Math.abs(o.edge) <= 0.15;
-                return { ...SNAPSHOT.value, opportunities: (SNAPSHOT.value?.opportunities || []).filter(ok),
-                         all: (SNAPSHOT.prices || SNAPSHOT.value?.opportunities || []).filter(ok) };
+                const all = (SNAPSHOT.prices || SNAPSHOT.value?.opportunities || []).filter(ok);
+                return { ...SNAPSHOT.value, minEdge: 0.02, all,
+                         opportunities: SNAPSHOT.prices ? all.filter(o => o.edge >= 0.02) : (SNAPSHOT.value?.opportunities || []).filter(ok) };
             }
             const proxyUrl = document.getElementById('proxyUrl').value.trim();
             if (!proxyUrl) throw new Error('Enter proxy URL');
             const v = await fetchWithRetry(`${proxyUrl}/api/value?minEdge=-1`, { headers: { 'ngrok-skip-browser-warning': 'true' } }, 1);
             const all = (v.opportunities || []).filter(o => Math.abs(o.edge) <= 0.15);
-            return { ...v, minEdge: 0.03, all, opportunities: all.filter(o => o.edge >= 0.03) };
+            return { ...v, minEdge: 0.02, all, opportunities: all.filter(o => o.edge >= 0.02) };
         }
 
         // Keep each tracked bet's latest fair value until tip-off (that becomes its "close")
@@ -26071,7 +26113,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                     if (existing.status === 'pending') await deleteValueBet(id);
                     return renderValueTab();
                 }
-                const o = (state.value?.opportunities || []).find(x => x.id === id);
+                const o = [...(state.value?.opportunities || []), ...(state.value?.longshots || [])].find(x => x.id === id);
                 if (!o) return;
                 await saveValueBet({
                     ...o, entryPrice: o.polyPrice, entryFair: o.fairProb, entryEdge: o.edge,
@@ -26599,7 +26641,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
 
             // Value finder (optional)
             try {
-                state.value = await fetchValue();
+                state.value = ssSplitLongshots(await fetchValue());
                 await updateTrackedValueFromLatest();
             } catch (e) {
                 state.value = null;
@@ -26720,6 +26762,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
 
             renderValueTab();
             renderToday();
+            renderLongshots();
             setStepDone('render', 'complete');
 
             document.getElementById('lastUpdate').textContent = SNAPSHOT
@@ -27787,11 +27830,24 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
 
             // ---- Value bets ----
             const log = await loadValueLog();
-            const vb = (log?.bets || []).map(b => ({ ...b, date: b.startTime }));
+            const allLogged = (log?.bets || []).map(b => ({ ...b, date: b.startTime }));
+            const vb = allLogged.filter(b => ssCategory(b) === 'value');
+            const lsb = allLogged.filter(b => ssCategory(b) === 'longshot');
             const vProfit = b => b.result === 'win' ? (1 / b.entryPrice - 1) : -1;
             const vClv = b => b.closeFair != null ? b.closeFair - b.entryPrice : null;
             const vst = scSummarize(vb, vProfit, vClv);
             stats.value = vst;
+            const lsEl = document.getElementById('scLongshots');
+            const lsst = scSummarize(lsb, b => b.result === 'win' ? (1 / b.entryPrice - 1) : -1, b => b.closeFair != null ? b.closeFair - b.entryPrice : null);
+            stats.longshot = lsst;
+            if (lsEl) lsEl.innerHTML = scSection({
+                title: '🎯 Longshots',
+                subtitle: 'Underdog moneylines with value and a 15–40% chance. Expect more losses than wins: they only work if the wins pay enough. Judge them on ROI and beating the close, not win rate.',
+                st: lsst,
+                recent: lsb.filter(b => b.result).sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 10)
+                          .map(b => scRecentRow(b.date, b.label, `${(b.entryEdge * 100).toFixed(1)}¢ off · pays ${(1 / b.entryPrice).toFixed(1)}×`, b.result)),
+                empty: 'No longshots logged yet. The scheduled refresh adds them twice a day.'
+            });
             const bb = vb.filter(b => ssStrength(b.entryEdge, b.books || 0).best);
             const bst = scSummarize(bb, vProfit, vClv);
             stats.best = bst;
@@ -27810,7 +27866,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 subtitle: 'Every value bet flagged: it cost less on Polymarket than the sportsbooks said it was worth. Profit uses the actual Polymarket price.',
                 st: vst,
                 statsExtra: `<div class="sc-stat"><span class="sc-num">${vst.clvAvg != null ? (vst.clvAvg >= 0 ? '+' : '') + (vst.clvAvg * 100).toFixed(1) + '¢' : '--'}</span><span class="sc-lbl">Avg vs close</span><span class="sc-sm">value gained after bet</span></div>`,
-                buckets: vst.n ? scBuckets(vb, b => b.entryEdge, [0.03, 0.04, 0.06], (lo, hi) => hi ? `${lo * 100}–${hi * 100}¢ off` : `${lo * 100}¢+ off`, vProfit) : '',
+                buckets: vst.n ? scBuckets(vb, b => b.entryEdge, [0.02, 0.03, 0.04, 0.06], (lo, hi) => hi ? `${lo * 100}–${hi * 100}¢ off` : `${lo * 100}¢+ off`, vProfit) : '',
                 recent: vb.filter(b => b.result).sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 10)
                           .map(b => scRecentRow(b.date, b.label, `${(b.entryEdge * 100).toFixed(1)}¢ off`, b.result)),
                 empty: 'No value bets logged yet. The scheduled refresh adds them twice a day.'
@@ -27868,7 +27924,9 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             ['Costs', 'The Polymarket price for one share. A share pays $1 if it wins, so 47¢ means you risk 47¢ to win 53¢.'],
             ['Worth', 'What the sportsbooks say the bet should cost: their average odds with their built-in fee (vig) removed, using only books that post the exact same line.'],
             ['¢ off', 'Worth minus cost. Worth 50¢, costs 47¢ → 3¢ off. This is your edge on a value bet.'],
-            ['Strength', 'The 3-bar meter on value bets. 1 bar: 3–4¢ off. 2 bars: 4–6¢ off with 3+ books. 3 bars: 6¢+ off with 3+ books.'],
+            ['Strength', 'The 3-bar meter on value bets. 1 bar: 2–4¢ off. 2 bars: 4–6¢ off with 3+ books. 3 bars: 6¢+ off with 3+ books.'],
+            ['Longshot', 'An underdog to win outright that costs at least 2¢ less than it is worth, with a 15–40% chance (worth 15¢–40¢) and 3+ books agreeing. Kept separate from Value Bets and Best Bets, with its own record. Underdogs under 15% are left out because sportsbook odds on them are too imprecise.'],
+            ['Pays', 'What $1 returns if a bet wins: 1 ÷ price. A 25¢ longshot pays 4.0×.'],
             ['Lean', 'The side the model prefers because its number differs from the sportsbook line. Leans have not beaten the market in testing, so they are shown for information only.'],
             ['Edge (pts)', 'How many points the model\'s number differs from the line. Bigger means bigger disagreement, not a higher chance of winning.'],
             ['Model agrees', 'The model\'s lean points the same way as a value bet. Shown as extra information; it does not make a bet a Best Bet.'],
@@ -27895,7 +27953,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 Polymarket prices and final scores. Visitors see that saved data; <em>Refresh Data</em> in the menu pulls live data instead.</p></div>
                 <div class="glossary-section"><h3>2. Value bets (the main tool)</h3>
                 <p class="how-p">For each bet, the site works out what it is <strong>worth</strong> from the sportsbooks' odds (their fee removed, same line only) and compares it to what it
-                <strong>costs</strong> on Polymarket. If it costs at least 3¢ less than it is worth, it is a <strong>value bet</strong>; 4¢+ off with 3+ books agreeing makes it a
+                <strong>costs</strong> on Polymarket. If it costs at least 2¢ less than it is worth, it is a <strong>value bet</strong>; 4¢+ off with 3+ books agreeing makes it a
                 <strong>★ Best Bet</strong>. This does not predict games; it finds prices that look cheap compared with the betting market.</p></div>
                 <div class="glossary-section"><h3>3. Model leans</h3>
                 <p class="how-p">The model rates teams from efficiency data and projects each spread and total. Where its number differs from the line, that side is a
@@ -27919,6 +27977,12 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             L.push('');
             L.push('💲 OTHER VALUE BETS');
             if (restV.length) restV.slice(0, 6).forEach(o => L.push(vLine(o))); else L.push('  None today');
+            const lsT = (state.value?.longshots || []).filter(o => new Date(o.startTime).toDateString() === today).sort((a, b) => b.edge - a.edge);
+            if (lsT.length) {
+                L.push('');
+                L.push('🎯 LONGSHOTS (underdogs with value, 15–40% chance)');
+                lsT.slice(0, 4).forEach(o => L.push(`  ${o.label} — costs ${Math.round(o.polyPrice * 100)}¢, worth ${(o.fairProb * 100).toFixed(1)}¢, pays ${(1 / o.polyPrice).toFixed(1)}x [${fmtCardTime(new Date(o.startTime))}]`));
+            }
             L.push('');
             const leans = [...picks].sort((a, b) => b.edge - a.edge).slice(0, 8);
             L.push('📐 BIGGEST MODEL LEANS (unproven)');
@@ -27988,10 +28052,10 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             return `<span class="ss-badge" style="width:${size}px;height:${size}px;background:${t.color};color:${t.fg};font-size:${fs}px" aria-hidden="true">${ssEsc(t.abbr)}${t.logo ? `<img src="${ssEsc(t.logo)}" alt="" loading="lazy" onerror="this.remove()">` : ''}</span>`;
         }
 
-        // Strength: 1 bar = 3–4¢ off; 2 bars = 4–6¢ with 3+ books; 3 bars = 6¢+ with 3+ books. Best Bet = 2+ bars.
+        // Strength: 1 bar = 2–4¢ off; 2 bars = 4–6¢ with 3+ books; 3 bars = 6¢+ with 3+ books. Best Bet = 2+ bars.
         function ssStrength(edge, books) {
             const c = edge * 100;
-            const bars = c >= 6 && books >= 3 ? 3 : c >= 4 && books >= 3 ? 2 : c >= 3 ? 1 : 0;
+            const bars = c >= 6 && books >= 3 ? 3 : c >= 4 && books >= 3 ? 2 : c >= 2 ? 1 : 0;
             return { bars, best: bars >= 2 };
         }
         function ssMeter(bars, small) {
@@ -28115,8 +28179,8 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                    { label: 'Worth', val: o.polyPrice * 100, gapW: o.edge * 100, color: 'var(--ss-green)', text: ssCents1(o.fairProb) }]
                 : [{ label: 'Costs', val: o.polyPrice * 100, color: 'var(--ss-gray-bar)', text: ssCents(o.polyPrice) },
                    { label: 'Worth', val: o.fairProb * 100, color: 'var(--ss-green)', text: ssCents1(o.fairProb) }];
-            const verdict = o.edge >= 0.03 ? `<b class="ss-good">${ssCents1(o.edge)} off</b>`
-                : off ? `<span class="ss-faint" title="Under 3¢ off: too small to count as value">${ssCents1(o.edge)} off</span>`
+            const verdict = o.edge >= 0.02 ? `<b class="ss-good">${ssCents1(o.edge)} off</b>`
+                : off ? `<span class="ss-faint" title="Under 2¢ off: too small to count as value">${ssCents1(o.edge)} off</span>`
                 : `<span class="ss-faint">No Discount</span>`;
             return `<div class="ss-panel ss-box">
                 <div class="ss-box-head"><h3 class="ss-box-title">Price Check: ${ssEsc(ssPickText(g, o))}</h3>${verdict}</div>
@@ -28149,7 +28213,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             const fav = margin => Math.abs(margin) < 0.05 ? 'Even' : `${margin > 0 ? hL.abbr : aL.abbr} by ${Math.abs(margin).toFixed(1)}`;
             const trackBtn = (type, l) => {
                 const v = type === 'spread' ? sv : tv;
-                if (!l && v && v.edge >= 0.03) {
+                if (!l && v && v.edge >= 0.02) {
                     return `<button type="button" class="ss-btn-outline" onclick="trackValueBet('${v.id}', this); this.textContent='✓ Tracked'">Track ${ssEsc(ssPickText(g, v))}</button>`;
                 }
                 let label = l ? l.label : null;
@@ -28162,7 +28226,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
 
             // Spread box: title = the lean, else the value bet, else the sportsbook favorite
             const favLine = g.spread == null ? '' : g.spread <= 0 ? `${hN} ${ssLineText(g.spread)}` : `${aN} ${ssLineText(-g.spread)}`;
-            const spreadTitle = sl ? sl.label : (sv && sv.edge >= 0.03 ? ssPickText(g, sv) : favLine);
+            const spreadTitle = sl ? sl.label : (sv && sv.edge >= 0.02 ? ssPickText(g, sv) : favLine);
             let spreadBody = '<p class="ss-muted">No model spread for this game.</p>';
             if (m.modelHomeSpread != null) {
                 const pace = ((hr.pace || 68) + (ar.pace || 68)) / 2;
@@ -28181,7 +28245,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             }
 
             // Total box: projected score and pace (the Book/Model bars are already on the card above)
-            const totalTitle = tl ? tl.label : (tv && tv.edge >= 0.03 ? ssPickText(g, tv) : (g.total != null ? `O/U ${g.total}` : 'O/U'));
+            const totalTitle = tl ? tl.label : (tv && tv.edge >= 0.02 ? ssPickText(g, tv) : (g.total != null ? `O/U ${g.total}` : 'O/U'));
             let totalBody = '<p class="ss-muted">No model total for this game.</p>';
             if (m.modelTotal != null) {
                 const sp = m.modelHomeSpread ?? 0;
@@ -28237,7 +28301,8 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 const clv = list.filter(b => b.closeFair != null).map(b => b.closeFair - b.entryPrice).filter(x => x !== 0);
                 return { n: g.length, w, l: g.length - w, units, beat: clv.length ? clv.filter(x => x > 0).length / clv.length : null };
             };
-            return { all: sumOf(bets), best: sumOf(bets.filter(b => ssStrength(b.entryEdge, b.books || 0).best)) };
+            const val = bets.filter(b => ssCategory(b) === 'value');
+            return { all: sumOf(val), best: sumOf(val.filter(b => ssStrength(b.entryEdge, b.books || 0).best)), longshot: sumOf(bets.filter(b => ssCategory(b) === 'longshot')) };
         }
         function ssStatTiles(s) {
             const verdict = s.all.n < 100 ? `Too early · ${s.all.n}/100` : 'See Scorecard';
@@ -28302,13 +28367,20 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             }
 
             // Rows
+            const lsByGame = {};
+            (state.value?.longshots || []).forEach(x => { (lsByGame[x.gameId] = lsByGame[x.gameId] || []).push(x); });
             const built = games.map(g => {
                 const o = by[g.id] || [];
                 const spread = ssMarket(g, 'spread', o), total = ssMarket(g, 'total', o);
-                return { g, spread, total, hasValue: o.length > 0, best: spread.best || total.best, hasLean: spread.kind === 'lean' || total.kind === 'lean' };
+                let mlo = o.filter(x => x.type === 'moneyline').sort((x, y) => y.edge - x.edge)[0];
+                let isLs = false;
+                if (!mlo) { mlo = (lsByGame[g.id] || []).sort((x, y) => y.edge - x.edge)[0]; isLs = !!mlo; }
+                const ml = mlo ? { o: mlo, ...(isLs ? { bars: 0, best: false } : ssStrength(mlo.edge, mlo.books)), longshot: isLs, pick: ssShortName(g, mlo.side === g.homeTeam ? 'home' : 'away') + ' to win' } : null;
+                return { g, spread, total, ml, hasValue: o.length > 0, best: spread.best || total.best || !!ml?.best, longshot: !!ml?.longshot, hasLean: spread.kind === 'lean' || total.kind === 'lean' };
             }).filter(r => {
                 if (ssFilter === 'value' && !r.hasValue) return false;
                 if (ssFilter === 'best' && !r.best) return false;
+                if (ssFilter === 'longshot' && !r.longshot) return false;
                 if (ssConf !== 'all' && r.g.homeRating?.conference !== ssConf && r.g.awayRating?.conference !== ssConf) return false;
                 if (ssSearch && !`${r.g.homeTeam} ${r.g.awayTeam}`.toLowerCase().includes(ssSearch)) return false;
                 return true;
@@ -28326,7 +28398,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             });
             wrap.innerHTML = groups.map(gr => `
                 <div class="ss-group-head"><span>${gr.label}</span><span>${gr.rows.length} game${gr.rows.length === 1 ? '' : 's'}</span></div>
-                ${gr.rows.map(({ g, spread, total, best }) => {
+                ${gr.rows.map(({ g, spread, total, best, ml }) => {
                     const open = ssOpen.has(g.id);
                     const aN = ssShortName(g, 'away'), hN = ssShortName(g, 'home');
                     const aSp = g.spread != null ? ssLineText(-g.spread) : '—', hSp = g.spread != null ? ssLineText(g.spread) : '—';
@@ -28337,6 +28409,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                                 <div class="ss-team">${ssBadge(aN, 30)}<span class="ss-name"><span title="${ssEsc(aN)}">${ssEsc(aN)}</span>${rank(g.awayRating)}</span><b class="${g.spread > 0 ? 'fav' : ''}">${aSp}</b></div>
                                 <div class="ss-team">${ssBadge(hN, 30)}<span class="ss-name"><span title="${ssEsc(hN)}">${ssEsc(hN)}</span>${rank(g.homeRating)}</span><b class="${g.spread < 0 ? 'fav' : ''}">${hSp}</b></div>
                                 <div class="ss-team ss-team--total"><span></span><span class="ss-name"><span>Total (O/U)</span></span><b class="fav">${g.total ?? '—'}</b></div>
+                                ${ml ? `<div class="ss-ml${ml.best ? ' ss-ml--best' : ''}${ml.longshot ? ' ss-ml--ls' : ''}"><span class="ss-ml-label">${ml.longshot ? 'LONGSHOT' : 'MONEYLINE'}</span>${ml.longshot ? '' : ssMeter(ml.bars, true)}<span class="ss-ml-pick">${ml.best ? '★ ' : ''}${ssEsc(ml.pick)}${ml.longshot ? ` · ${ssCents(ml.o.polyPrice)}` : ''}</span><b title="Costs ${ssCents(ml.o.polyPrice)}, worth ${ssCents1(ml.o.fairProb)}, ${ml.o.books} books">${ssCents1(ml.o.edge)} off</b>${ml.o.tradeUrl ? `<a href="${ssEsc(ml.o.tradeUrl)}" target="_blank" rel="noopener">Trade</a>` : ''}</div>` : ''}
                             </div>
                             ${spread.html}
                             ${total.html}
@@ -28390,6 +28463,56 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             if (right && menu) right.appendChild(menu);
             const legacy = document.getElementById('legacyHeader');
             if (legacy) legacy.style.display = 'none';
+        }
+
+        // ===== Longshots: moneyline underdogs with value and a real chance (15–40%) =====
+        const LS_MIN = 0.15, LS_MAX = 0.40;
+        function ssCategory(o) {
+            const type = o.type, worth = o.fairProb ?? o.entryFair, books = o.books || 0;
+            if (type !== 'moneyline' || worth == null) return 'value';
+            if (worth >= LS_MAX) return 'value';
+            if (worth >= LS_MIN && books >= 3) return 'longshot';
+            return 'skip';                      // under 15%: too imprecise to trust
+        }
+        function ssSplitLongshots(v) {
+            if (!v) return v;
+            const opps = v.opportunities || [];
+            return { ...v, opportunities: opps.filter(o => ssCategory(o) === 'value'), longshots: opps.filter(o => ssCategory(o) === 'longshot') };
+        }
+
+        async function renderLongshots() {
+            const rowsEl = document.getElementById('lsRows');
+            const ls = (state.value?.longshots || []).slice().sort((a, b) => b.edge - a.edge);
+            const badge = document.getElementById('tabLongshotsCount');
+            if (badge) badge.textContent = ls.length || '';
+            if (!rowsEl) return;
+            const gameById = Object.fromEntries((state.games || []).map(g => [g.id, g]));
+            const tracked = new Set((await getAllValueBets()).map(b => b.id));
+            rowsEl.innerHTML = ls.length ? ls.map(o => {
+                const g = gameById[o.gameId];
+                const team = g ? ssShortName(g, o.side === g.homeTeam ? 'home' : 'away') : o.side;
+                const opp = g ? ssShortName(g, o.side === g.homeTeam ? 'away' : 'home') : '';
+                const when = new Date(o.startTime).toLocaleString('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' });
+                return `<div class="ss-vrow ss-vrow--ls">
+                    <div class="ss-vbet">${ssBadge(team, 32)}<div><span class="ss-tag-ls">LONGSHOT</span><div class="ss-vpick">${ssEsc(team)} to win</div><div class="ss-vsub">vs ${ssEsc(opp)} · ${o.books} books</div></div></div>
+                    <div class="ss-vgame"><div>Wins about <b>1 in ${(1 / o.fairProb).toFixed(1)}</b></div><div class="ss-vsub">${when}</div></div>
+                    ${ssBarRows([{ label: 'Costs', val: o.polyPrice * 100, color: 'var(--ss-gray-bar)', text: ssCents(o.polyPrice) },
+                                 { label: 'Worth', val: o.polyPrice * 100, gapW: o.edge * 100, color: 'var(--ss-purple)', text: ssCents1(o.fairProb) }])}
+                    <div class="ss-vval"><span class="ss-pill ss-pill--ls">${ssCents1(o.edge)} off</span><span class="ss-vsub">Pays ${(1 / o.polyPrice).toFixed(1)}×</span></div>
+                    <div class="ss-actions">
+                        <button type="button" class="ss-btn-outline${tracked.has(o.id) ? ' is-on' : ''}" onclick="trackValueBet('${o.id}', this).then(() => renderLongshots())">${tracked.has(o.id) ? '✓ Tracked' : 'Track'}</button>
+                        ${o.tradeUrl ? `<a class="ss-btn-green ss-btn-purple" href="${ssEsc(o.tradeUrl)}" target="_blank" rel="noopener">Trade</a>` : ''}
+                    </div>
+                </div>`;
+            }).join('') : '<div class="ss-empty">No longshots right now. Underdogs with a 15–40% chance are priced in line with the sportsbooks.</div>';
+            const statsEl = document.getElementById('lsStats');
+            if (statsEl) ssValueLogSummary().then(sm => {
+                const l = sm.longshot;
+                statsEl.innerHTML = `
+                    <div class="ss-stat"><span>Longshot record</span><b>${l.w}–${l.l} <em class="${l.units >= 0 ? 'up' : 'down'}">${l.units >= 0 ? '+' : ''}${l.units.toFixed(1)}u</em></b></div>
+                    <div class="ss-stat"><span>Beat the close</span><b>${l.beat != null ? Math.round(l.beat * 100) + '%' : '--'}</b></div>
+                    <div class="ss-stat"><span>Verdict</span><b class="ss-stat-small">${l.n < 100 ? `Too early · ${l.n}/100` : 'See Scorecard'}</b></div>`;
+            }).catch(() => {});
         }
 
         // ===== Shared model record =====
