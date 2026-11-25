@@ -9974,6 +9974,10 @@
             background: var(--orange-hover);
         }
 
+        /* Polymarket price chip */
+        .poly-chip { font-size: 0.62rem; color: var(--text-secondary); margin-top: 0.2rem; white-space: nowrap; }
+        .poly-chip a { color: var(--accent-blue); font-weight: 600; text-decoration: none; }
+        .poly-chip a:hover { text-decoration: underline; }
     </style>
     
     <!-- Google Identity Services -->
@@ -10424,9 +10428,10 @@
                     <select id="timeFrameSelect" class="styled-select" onchange="changeTimeFrame(this.value)" style="min-width:120px;">
                         <option value="7">Last 7 Days</option>
                         <option value="14">Last 14 Days</option>
-                        <option value="30" selected>Last 30 Days</option>
+                        <option value="season" selected>This Season</option>
+                        <option value="30">Last 30 Days</option>
                         <option value="90">Last 90 Days</option>
-                        <option value="v51">v5.1 Only</option>
+                        <option value="v51">v5.1 Only (last season)</option>
                         <option value="all">All Time</option>
                     </select>
                     <button class="tracker-btn" onclick="exportPredictionsBackup()" title="Export backup">📤</button>
@@ -15564,7 +15569,7 @@ Example format:
         // ============================================================
 
         // Robust fetch with retry, timeout, and exponential backoff
-        async function fetchWithRetry(url, options = {}, maxRetries = 2, timeoutMs = 15000) {
+        async function fetchWithRetry(url, options = {}, maxRetries = 2, timeoutMs = 60000) {
             let lastError;
             for (let attempt = 0; attempt <= maxRetries; attempt++) {
                 try {
@@ -15578,14 +15583,13 @@ Example format:
                     clearTimeout(timeoutId);
 
                     if (!response.ok) {
-                        if (response.status === 429) {
-                            // Rate limited - wait and retry
-                            const retryAfter = parseInt(response.headers.get('Retry-After') || '5', 10);
-                            console.warn(`[API] Rate limited, waiting ${retryAfter}s...`);
-                            await new Promise(r => setTimeout(r, retryAfter * 1000));
-                            continue;
-                        }
-                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                        // Show the proxy's plain-English reason (e.g. expired key, quota reached)
+                        let msg = `HTTP ${response.status}`;
+                        try { const body = await response.json(); if (body && body.error) msg = body.error; } catch (_) {}
+                        const err = new Error(msg);
+                        // Auth, quota, and bad-request errors won't fix themselves on retry
+                        if ([400, 401, 403, 429].includes(response.status)) { err.noRetry = true; }
+                        throw err;
                     }
 
                     const text = await response.text();
@@ -15604,6 +15608,7 @@ Example format:
                         lastError = new Error(`Request timeout after ${timeoutMs}ms`);
                     }
                     console.warn(`[API] Attempt ${attempt + 1}/${maxRetries + 1} failed:`, lastError.message);
+                    if (err.noRetry) break;
                     if (attempt < maxRetries) {
                         await new Promise(r => setTimeout(r, 1000 * (attempt + 1)));
                     }
@@ -15621,13 +15626,41 @@ Example format:
         async function fetchRatings() {
             const proxyUrl = document.getElementById('proxyUrl').value.trim();
             if (!proxyUrl) throw new Error('Enter proxy URL');
-            return fetchWithRetry(`${proxyUrl}/api/ratings?season=2026`, { headers: { 'ngrok-skip-browser-warning': 'true' } });
+            // No season param: the proxy uses the current season (and falls back one season preseason)
+            return fetchWithRetry(`${proxyUrl}/api/ratings`, { headers: { 'ngrok-skip-browser-warning': 'true' } });
         }
 
         async function fetchHistoricalGames() {
             const proxyUrl = document.getElementById('proxyUrl').value.trim();
             if (!proxyUrl) throw new Error('Enter proxy URL');
-            return fetchWithRetry(`${proxyUrl}/api/games?season=2026`, { headers: { 'ngrok-skip-browser-warning': 'true' } });
+            const hdr = { headers: { 'ngrok-skip-browser-warning': 'true' } };
+            const games = await fetchWithRetry(`${proxyUrl}/api/games`, hdr);
+            // If any picks from last season are still pending, also pull last season's results to grade them
+            try {
+                const seasonStart = getCurrentSeasonStart();
+                const preds = await getAllPredictions();
+                const oldPending = preds.some(p => p.status === 'pending' && new Date(p.gameDate) < seasonStart);
+                if (oldPending) {
+                    const prev = await fetchWithRetry(`${proxyUrl}/api/games?season=${getCurrentSeason() - 1}`, hdr);
+                    return games.concat(prev || []);
+                }
+            } catch (e) { console.warn('[History] Previous-season fetch skipped:', e.message); }
+            return games;
+        }
+
+        // CBB seasons are named by ending year: Oct 2026 - Apr 2027 = 2027
+        function getCurrentSeason() {
+            const d = new Date();
+            return d.getMonth() >= 9 ? d.getFullYear() + 1 : d.getFullYear();
+        }
+        function getCurrentSeasonStart() {
+            return new Date(getCurrentSeason() - 1, 9, 1); // Oct 1
+        }
+
+        async function fetchPolymarket() {
+            const proxyUrl = document.getElementById('proxyUrl').value.trim();
+            if (!proxyUrl) throw new Error('Enter proxy URL');
+            return fetchWithRetry(`${proxyUrl}/api/polymarket`, { headers: { 'ngrok-skip-browser-warning': 'true' } }, 1);
         }
 
         // Static tempo fallback table (2025-26 Barttorvik adjusted tempo, possessions/40min)
@@ -16739,53 +16772,7 @@ Example format:
             // Save updated odds to localStorage
             saveStoredOdds(storedOdds);
             
-            // === LOOKAHEAD SECOND PASS ===
-            // Now that all games are built, detect teams facing a highly ranked
-            // opponent in this same batch (same day / next few days).
-            // A favorite playing a ranked team tomorrow is a classic lookahead spot.
-            {
-                const upcomingRankLookup = {}; // canonicalName → best (lowest) opponent rank in next 5 days
-                for (const game of state.games) {
-                    const homeRank = game.homeRating?.rank;
-                    const awayRank = game.awayRating?.rank;
-                    const homeKey = game.homeRating?.name || game.homeTeam;
-                    const awayKey = game.awayRating?.name || game.awayTeam;
-                    // Each team's upcoming opponent rank = the other team's rank
-                    if (awayRank && awayRank <= 50) {
-                        upcomingRankLookup[homeKey] = Math.min(upcomingRankLookup[homeKey] || 999, awayRank);
-                    }
-                    if (homeRank && homeRank <= 50) {
-                        upcomingRankLookup[awayKey] = Math.min(upcomingRankLookup[awayKey] || 999, homeRank);
-                    }
-                }
-
-                for (const game of state.games) {
-                    const homeKey = game.homeRating?.name || game.homeTeam;
-                    const awayKey = game.awayRating?.name || game.awayTeam;
-                    const homeNextRank = upcomingRankLookup[homeKey];
-                    const awayNextRank = upcomingRankLookup[awayKey];
-
-                    if (homeNextRank || awayNextRank) {
-                        // Re-analyze with lookahead context
-                        const ctx = {
-                            homeRestDays: game.homeRestDays,
-                            awayRestDays: game.awayRestDays,
-                            homeRecentGames: game.analysis?.featureDetails?.homeRecentGames || null,
-                            awayRecentGames: game.analysis?.featureDetails?.awayRecentGames || null,
-                            awayPreviousGame: game.analysis?.featureDetails?.travel?.previousLocation || null,
-                            homeNextOpponent: homeNextRank ? homeKey : null,
-                            homeNextOpponentRank: homeNextRank || 999,
-                            awayNextOpponent: awayNextRank ? awayKey : null,
-                            awayNextOpponentRank: awayNextRank || 999
-                        };
-                        game.analysis = analyzeGame(
-                            game.homeRating, game.awayRating,
-                            game.spread, game.total,
-                            game.homeTeam, game.awayTeam, ctx
-                        );
-                    }
-                }
-            }
+            // Lookahead second pass removed: it re-ran analysis without neutral-site/form inputs.
 
             state.games.sort((a, b) => (b.analysis?.confidence || 0) - (a.analysis?.confidence || 0));
             console.log('[processGames] Finished with', state.games.length, 'games in state');
@@ -18038,6 +18025,7 @@ Example format:
                                         <span class="game-pick-winprob ${spreadClass}">${spreadWinProb.toFixed(0)}%</span>
                                         <span class="game-pick-tier ${spreadClass}">${getTierLabel(spreadClass)}</span>
                                     </div>
+                                    ${polyChip(g, 'spread')}
                                 ` : `
                                     <div class="game-pick-value">${spreadDisplay}</div>
                                 `}
@@ -18050,6 +18038,7 @@ Example format:
                                         <span class="game-pick-winprob ${totalClass}">${totalWinProb.toFixed(0)}%</span>
                                         <span class="game-pick-tier ${totalClass}">${getTierLabel(totalClass)}</span>
                                     </div>
+                                    ${polyChip(g, 'total')}
                                 ` : `
                                     <div class="game-pick-value">O/U ${totalDisplay}</div>
                                 `}
@@ -18544,11 +18533,11 @@ Example format:
                 const awayB2B = g.awayRestDays <= 1;
                 if (homeB2B || awayB2B) {
                     const who = awayB2B ? g.awayTeam.split(' ').pop() : g.homeTeam.split(' ').pop();
-                    const pts = Math.abs(CONFIG.FEATURE_WEIGHTS.backToBack).toFixed(1);
+                    const pts = Math.abs(SpreadSheetV3Enhanced.getConfig().FEATURE_WEIGHTS.backToBack).toFixed(1);
                     factors.push({ icon: '⚡', text: `${who} B2B`, value: `−${pts}pt`, type: awayB2B ? 'positive' : 'negative' });
                 } else if (Math.abs(restDiff) >= 2) {
                     const who = restDiff > 0 ? 'Home' : 'Away';
-                    const pts = (Math.abs(restDiff) * CONFIG.FEATURE_WEIGHTS.restDays).toFixed(1);
+                    const pts = (Math.abs(restDiff) * SpreadSheetV3Enhanced.getConfig().FEATURE_WEIGHTS.restDays).toFixed(1);
                     factors.push({ icon: '🛏️', text: `${who} +${Math.abs(restDiff)}d Rest`, value: `+${pts}pt`, type: restDiff > 0 ? 'positive' : 'negative' });
                 } else {
                     factors.push({ icon: '🛏️', text: 'Rest', value: `${g.awayRestDays}d / ${g.homeRestDays}d`, type: 'neutral' });
@@ -18856,6 +18845,7 @@ Example format:
                     <!-- Actions -->
                     <div style="display:flex;align-items:center;gap:0.5rem;grid-column: 1 / -1;">
                         <button class="bb-track-btn" id="track-${g.id}-${p.type}" onclick="trackPick('${g.id}','${p.type}',this)">🔒 Track</button>
+                        ${polyChip(g, p.type)}
                         <div class="analytics-toggle" onclick="toggleDrillDown('bb-${g.id}-${p.type}')">
                             <span id="drill-arrow-bb-${g.id}-${p.type}">▼</span> Full Analysis
                         </div>
@@ -20408,13 +20398,13 @@ For detailed instructions, see the comments in the source code.
         }
         
         // Time frame filter state
-        let selectedTimeFrame = 30;
+        let selectedTimeFrame = 'season';
         let currentChartType = 'roi';
         let currentTrendChart = 'winrate';
         let allPredictionsCache = [];
         
         function changeTimeFrame(days) {
-            selectedTimeFrame = (days === 'all' || days === 'v51') ? days : parseInt(days);
+            selectedTimeFrame = (days === 'all' || days === 'v51' || days === 'season') ? days : parseInt(days);
             renderPredictionTracker();
         }
         
@@ -20449,6 +20439,10 @@ For detailed instructions, see the comments in the source code.
         // Filter predictions by time frame
         function filterByTimeFrame(predictions, days) {
             if (days === 'all') return predictions;
+            if (days === 'season') {
+                const start = getCurrentSeasonStart();
+                return predictions.filter(p => new Date(p.gameDate) >= start);
+            }
             if (days === 'v51') {
                 const v51Start = new Date('2026-02-09T00:00:00');
                 return predictions.filter(p => new Date(p.gameDate) >= v51Start);
@@ -25376,12 +25370,10 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             // Render content if needed
             if (tab === 'games') restoreGamesFilterUI();
             if (tab === 'bestbets') renderBestBets();
-            if (tab === 'rankings') renderRankings();
             if (tab === 'analytics') renderAnalytics();
             if (tab === 'validation') renderPredictionTracker();
             if (tab === 'diagnostics') renderDiagnosticsTab();
             if (tab === 'tracked') renderTrackedBetsTab();
-            if (tab === 'bracket') restoreBracketTab();
         }
 
         // [RECOVERED] navigateToGameAnalysis
@@ -25503,66 +25495,243 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             `;
         }
 
-        // [RECOVERED] trackPick
+        // ===== Tracked picks =====
+        // A tracked pick is the same record as the model's pick, flagged tracked=true.
+        // (Older versions saved a second "track_" copy, which double-counted it in the Record tab.)
+        let trackedWeekOffset = 0;
+        let trackedSelectedDate = null;
+        let trackedPicksCache = [];
+
+        function toLocalDateKey(d) {
+            d = new Date(d);
+            return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        }
+        function getTodayString() { return toLocalDateKey(new Date()); }
+
+        async function migrateTrackedPicks() {
+            const all = await getAllPredictions();
+            const legacy = all.filter(p => typeof p.id === 'string' && p.id.startsWith('track_'));
+            if (!legacy.length) return 0;
+            const byId = new Map(all.map(p => [p.id, p]));
+            for (const t of legacy) {
+                const canonId = t.id.slice('track_'.length);
+                const canon = byId.get(canonId);
+                if (canon) {
+                    canon.tracked = true;
+                    canon.trackedAt = canon.trackedAt || t.trackedAt || new Date().toISOString();
+                    await savePrediction(canon);
+                } else {
+                    await savePrediction({ ...t, id: canonId, tracked: true });
+                }
+                await deletePrediction(t.id);
+            }
+            console.log(`[Tracked] Merged ${legacy.length} duplicate tracked picks`);
+            return legacy.length;
+        }
+
         async function trackPick(gameId, pickType, btn) {
             try {
-                const predId = `track_${gameId}_${pickType}`;
-                
-                // Check if already tracked - if so, untrack
+                const id = generatePredictionId(gameId, pickType);
+                const all = await getAllPredictions();
+                let pred = all.find(p => p.id === id);
+
                 if (btn.classList.contains('tracked')) {
-                    await deletePrediction(predId);
+                    if (pred) { pred.tracked = false; await savePrediction(pred); }
                     btn.innerHTML = '🔒 Track';
                     btn.classList.remove('tracked');
-                    updateTrackedBadge();
+                    await updateTrackedBadge();
                     return;
                 }
-                
-                const game = state.games.find(g => g.id === gameId);
-                if (!game || !game.analysis) return;
-                const a = game.analysis;
-                const pick = pickType === 'spread' ? a.spreadPick : a.totalPick;
-                if (!pick) return;
-                
-                const wp = pickType === 'spread' ? (a.spreadWinProb || 50) : (a.totalWinProb || 50);
-                const edge = pickType === 'spread' ? (a.spreadEdge || 0) : (a.totalEdge || 0);
-                const isBB = wp >= (typeof TIER_THRESHOLDS !== 'undefined' ? TIER_THRESHOLDS.STRONG : 55);
-                
-                const prediction = {
-                    id: predId,
-                    gameId: gameId,
-                    gameDate: game.commenceTime ? game.commenceTime.toISOString() : new Date().toISOString(),
-                    homeTeam: game.homeTeam,
-                    awayTeam: game.awayTeam,
-                    pickType: pickType,
-                    pickTeam: pick.team || pick.pick || '',
-                    pickSide: pickType === 'spread' ? (pick.side || 'home') : (pick.pick || 'OVER').toLowerCase(),
-                    pickLine: pick.line || 0,
-                    vegasLine: pickType === 'spread' ? game.spread : game.total,
-                    pickDisplay: `${pick.team || pick.pick} ${pick.line || ''}`.trim(),
-                    winProb: wp,
-                    confidence: 50 + edge * 2,
-                    edge: edge,
-                    isBestBet: isBB,
-                    bestBetRating: isBB && typeof getEliteRating === 'function' ? getEliteRating(wp) : 0,
-                    status: 'pending',
-                    result: null,
-                    trackedAt: new Date().toISOString()
-                };
-                
-                if (typeof savePrediction === 'function') {
-                    await savePrediction(prediction);
+
+                if (!pred) {
+                    const game = state.games.find(g => g.id === gameId);
+                    if (!game || !game.analysis) return;
+                    const a = game.analysis;
+                    const isSpread = pickType === 'spread';
+                    const pick = isSpread ? a.spreadPick : a.totalPick;
+                    if (!pick) return;
+                    const wp = isSpread ? (a.spreadWinProb || 50) : (a.totalWinProb || 50);
+                    const pickTeam = isSpread ? (pick.side === 'home' ? game.homeTeam : game.awayTeam) : pick.pick;
+                    const line = isSpread ? pick.line : game.total;
+                    pred = {
+                        id, gameId, pickType,
+                        homeTeam: game.homeTeam, awayTeam: game.awayTeam,
+                        gameDate: game.commenceTime.toISOString(),
+                        capturedAt: new Date().toISOString(),
+                        vegasLine: isSpread ? game.spread : game.total,
+                        openingLine: isSpread ? game.spread : game.total,
+                        pickTeam,
+                        pickSide: isSpread ? pick.side : pick.pick.toLowerCase(),
+                        pickLine: line,
+                        pickDisplay: isSpread ? `${pickTeam} ${line > 0 ? '+' : ''}${line}` : `${pick.pick} ${line}`,
+                        confidence: isSpread ? a.spreadScore : a.totalScore,
+                        winProb: wp,
+                        rawWinProb: isSpread ? (a.rawSpreadProb ?? null) : (a.rawTotalProb ?? null),
+                        edge: isSpread ? a.spreadEdge : a.totalEdge,
+                        isBestBet: wp >= TIER_THRESHOLDS.STRONG,
+                        bestBetRating: 0,
+                        status: 'pending', result: null,
+                        homeScore: null, awayScore: null, resolvedAt: null
+                    };
                 }
-                
+
+                pred.tracked = true;
+                pred.trackedAt = new Date().toISOString();
+                await savePrediction(pred);
                 btn.innerHTML = '<span class="track-label">✓ Tracked</span><span class="untrack-label">✕ Untrack</span>';
                 btn.classList.add('tracked');
-                updateTrackedBadge();
+                await updateTrackedBadge();
             } catch (e) {
                 console.error('Track pick error:', e);
                 btn.textContent = '⚠ Error';
             }
         }
 
-        // [RECOVERED] shiftTrackedWeek
+        async function loadTrackedPicks() {
+            trackedPicksCache = (await getAllPredictions()).filter(p => p.tracked);
+            return trackedPicksCache;
+        }
+
+        function getPicksForDate(dateKey) {
+            return trackedPicksCache
+                .filter(p => toLocalDateKey(p.gameDate) === dateKey)
+                .sort((a, b) => (b.winProb || 0) - (a.winProb || 0));
+        }
+
+        function getTrackedStripDays() {
+            const end = new Date();
+            end.setDate(end.getDate() + 3 + trackedWeekOffset); // 3 days back, today, 3 days ahead
+            const days = [];
+            for (let i = 6; i >= 0; i--) {
+                const d = new Date(end);
+                d.setDate(end.getDate() - i);
+                days.push(d);
+            }
+            return days;
+        }
+
+        function renderDayStrip() {
+            const wrap = document.getElementById('trackedDayCards');
+            if (!wrap) return;
+            const days = getTrackedStripDays();
+            const keys = days.map(toLocalDateKey);
+            const today = getTodayString();
+            if (!trackedSelectedDate || !keys.includes(trackedSelectedDate)) {
+                const withPicks = keys.filter(k => getPicksForDate(k).length);
+                const upcoming = withPicks.filter(k => k >= today);
+                trackedSelectedDate = getPicksForDate(today).length ? today
+                    : (upcoming[0] || withPicks.pop() || (keys.includes(today) ? today : keys[keys.length - 1]));
+            }
+            const dows = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            wrap.innerHTML = days.map((d, i) => {
+                const k = keys[i];
+                const n = getPicksForDate(k).length;
+                const cls = ['tracked-day-card', k === trackedSelectedDate ? 'active' : '', k === today ? 'today' : ''].join(' ');
+                return `<div class="${cls}" onclick="selectTrackedDay('${k}')">
+                    ${n ? '<span class="tracked-day-card-dot"></span>' : ''}
+                    <span class="tracked-day-card-dow">${dows[d.getDay()]}</span>
+                    <span class="tracked-day-card-date">${d.getMonth() + 1}/${d.getDate()}</span>
+                    <span class="tracked-day-card-count">${n ? n + ' pick' + (n > 1 ? 's' : '') : '—'}</span>
+                </div>`;
+            }).join('');
+            const fwd = document.getElementById('trackedDayForward');
+            if (fwd) fwd.disabled = trackedWeekOffset >= 0;
+        }
+
+        function selectTrackedDay(key) {
+            trackedSelectedDate = key;
+            renderDayStrip();
+            renderTrackedPicksForDay();
+        }
+
+        function renderTrackedPicksForDay() {
+            const grid = document.getElementById('trackedBetsGrid');
+            const summary = document.getElementById('trackedDaySummary');
+            if (!grid) return;
+            const picks = getPicksForDate(trackedSelectedDate);
+            if (!picks.length) {
+                if (summary) summary.style.display = 'none';
+                grid.innerHTML = `<div class="bb-empty-state" style="grid-column:1/-1;">
+                    <div class="bb-empty-icon">📌</div>
+                    <div class="bb-empty-title">No tracked picks this day</div>
+                    <div class="bb-empty-text">Use the 🔒 Track button on any pick in the Games or Best Bets tab to add it here.</div>
+                </div>`;
+                return;
+            }
+            const w = picks.filter(p => p.result === 'win').length;
+            const l = picks.filter(p => p.result === 'loss').length;
+            const pu = picks.filter(p => p.result === 'push').length;
+            const pending = picks.filter(p => p.status !== 'graded').length;
+            const units = w * 0.909 - l;
+            if (summary) {
+                summary.style.display = 'flex';
+                summary.innerHTML = `
+                    <span class="tracked-summary-stat"><strong>${picks.length}</strong> picks</span>
+                    <span class="tracked-summary-stat">Record <strong>${w}-${l}${pu ? '-' + pu : ''}</strong></span>
+                    ${pending ? `<span class="tracked-summary-stat"><strong>${pending}</strong> pending</span>` : ''}
+                    ${(w + l) ? `<span class="tracked-summary-stat">Units <strong>${units >= 0 ? '+' : ''}${units.toFixed(2)}u</strong> <span style="opacity:.7">(1u each, −110)</span></span>` : ''}`;
+            }
+            grid.innerHTML = picks.map((p, i) => {
+                const tier = getWinProbClass(p.winProb || 0);
+                const time = new Date(p.gameDate).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+                const graded = p.status === 'graded' && p.result;
+                const resultHTML = graded
+                    ? `<span class="tracked-result-locked ${p.result}">${p.result === 'win' ? 'W' : p.result === 'loss' ? 'L' : 'P'}</span>`
+                    : `<span class="tracked-result-source">Pending</span>`;
+                return `<div class="tracked-card tier-${tier} ${graded ? 'result-' + p.result : ''}">
+                    <button class="tracked-card-remove" title="Untrack" onclick="untrackPickById('${p.id}')">✕</button>
+                    <div class="tracked-card-rank">#${i + 1}</div>
+                    <div class="tracked-card-body">
+                        <div class="tracked-card-pick">${p.pickDisplay || ''}</div>
+                        <div class="tracked-card-matchup">${p.awayTeam} @ ${p.homeTeam}</div>
+                        <div class="tracked-card-meta">${p.pickType === 'spread' ? 'Spread' : 'Total'} · ${time}</div>
+                    </div>
+                    <div class="tracked-card-prob">
+                        <span class="tracked-card-prob-value">${(p.winProb || 0).toFixed(0)}%</span>
+                        <span class="tracked-card-type">model</span>
+                    </div>
+                    <div class="tracked-card-result">${resultHTML}</div>
+                </div>`;
+            }).join('');
+        }
+
+        async function untrackPickById(id) {
+            const all = await getAllPredictions();
+            const pred = all.find(p => p.id === id);
+            if (pred) { pred.tracked = false; await savePrediction(pred); }
+            await loadTrackedPicks();
+            renderDayStrip();
+            renderTrackedPicksForDay();
+            await updateTrackedBadge();
+        }
+
+        async function updateTrackedBadge() {
+            try {
+                const all = await getAllPredictions();
+                // Badge = tracked picks still waiting on a result
+                const n = all.filter(p => p.tracked && p.status !== 'graded').length;
+                const el = document.getElementById('tabTrackedCount');
+                if (el) el.textContent = n || '';
+            } catch (e) { /* silent */ }
+        }
+
+        async function renderTrackedBetsTab() {
+            await loadTrackedPicks();
+            renderDayStrip();
+            renderTrackedPicksForDay();
+            await updateTrackedBadge();
+        }
+
+        function restoreGamesFilterUI() {
+            document.querySelectorAll('#gamesConfList .bb-conf-item').forEach(item => {
+                item.classList.toggle('active', item.getAttribute('data-conf') === (gamesFilters.conf || 'all'));
+            });
+            const slider = document.getElementById('gamesProbSlider');
+            const label = document.getElementById('gamesProbValue');
+            if (slider) slider.value = gamesFilters.minProb;
+            if (label) label.textContent = gamesFilters.minProb + '%';
+        }
+
         function shiftTrackedWeek(delta) {
             trackedWeekOffset += delta;
             if (trackedWeekOffset > 0) trackedWeekOffset = 0;
@@ -25571,35 +25740,28 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             renderTrackedPicksForDay();
         }
 
-        // [RECOVERED] clearTrackedBetsForDay
         async function clearTrackedBetsForDay() {
             const picks = getPicksForDate(trackedSelectedDate);
             if (!picks.length) return;
-            const isToday = trackedSelectedDate === getTodayString();
-            const label = isToday ? "today's" : 'this day\'s';
-            if (!confirm(`Clear ${label} ${picks.length} tracked pick${picks.length !== 1 ? 's' : ''}? This cannot be undone.`)) return;
+            if (!confirm(`Untrack ${picks.length} pick${picks.length !== 1 ? 's' : ''} for this day? They stay in the model Record.`)) return;
             try {
-                for (const p of picks) {
-                    await deletePrediction(p.id);
-                }
+                for (const p of picks) { p.tracked = false; await savePrediction(p); }
                 await loadTrackedPicks();
                 renderDayStrip();
                 renderTrackedPicksForDay();
-                updateTrackedBadge();
+                await updateTrackedBadge();
                 restoreTrackedButtonStates();
             } catch (e) {
                 console.error('Clear tracked bets error:', e);
             }
         }
 
-        // [RECOVERED] restoreTrackedButtonStates
         async function restoreTrackedButtonStates() {
             try {
                 const all = await getAllPredictions();
-                const trackedIds = new Set(all.filter(p => p.trackedAt).map(p => `${p.gameId}_${p.pickType}`));
+                const trackedIds = new Set(all.filter(p => p.tracked).map(p => `${p.gameId}_${p.pickType}`));
                 document.querySelectorAll('.bb-track-btn[id^="track-"]').forEach(btn => {
                     const parts = btn.id.replace('track-', '').split('-');
-                    // gameId may contain dashes, pickType is last segment
                     const pickType = parts.pop();
                     const gameId = parts.join('-');
                     if (trackedIds.has(`${gameId}_${pickType}`)) {
@@ -25608,6 +25770,84 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                     }
                 });
             } catch (e) { /* silent */ }
+        }
+
+        // ===== Polymarket prices =====
+        // Prices come from Polymarket's free data via the proxy. Trade links go to Polymarket US.
+        function polySameTeam(a, b) {
+            if (!a || !b) return false;
+            const x = toRatingsName(a), y = toRatingsName(b);
+            if (x && x === y) return true;
+            const ra = findTeamRating(a), rb = findTeamRating(b);
+            return !!(ra && rb && ra === rb);
+        }
+
+        function attachPolymarket() {
+            const events = state.polymarket || [];
+            let matched = 0;
+            for (const g of state.games) {
+                g.poly = null;
+                const t = g.commenceTime ? g.commenceTime.getTime() : null;
+                for (const ev of events) {
+                    const names = [ev.homeTeam, ev.awayTeam].filter(Boolean);
+                    let ok = false;
+                    if (names.length === 2) {
+                        ok = (polySameTeam(names[0], g.homeTeam) && polySameTeam(names[1], g.awayTeam)) ||
+                             (polySameTeam(names[0], g.awayTeam) && polySameTeam(names[1], g.homeTeam));
+                    } else if (ev.title) {
+                        const parts = ev.title.split(/\s+(?:vs\.?|@|at)\s+/i);
+                        ok = parts.length === 2 && parts.some(n => polySameTeam(n, g.homeTeam)) && parts.some(n => polySameTeam(n, g.awayTeam));
+                    }
+                    if (ok && t && ev.startTime) {
+                        ok = Math.abs(new Date(ev.startTime).getTime() - t) < 36 * 3600 * 1000;
+                    }
+                    if (ok) { g.poly = ev; matched++; break; }
+                }
+            }
+            console.log(`[Polymarket] Matched ${matched} of ${state.games.length} games (${events.length} Polymarket events)`);
+        }
+
+        function polyLineOf(m) {
+            if (m.line != null && !isNaN(+m.line)) return Math.abs(+m.line);
+            const nums = String(m.question || '').match(/\d+(?:\.\d+)?/g);
+            return nums ? Math.abs(parseFloat(nums[nums.length - 1])) : null;
+        }
+
+        function findPolyPrice(g, pickType) {
+            const ev = g.poly, a = g.analysis;
+            if (!ev || !a) return null;
+            let best = null;
+            if (pickType === 'spread' && a.spreadPick) {
+                const want = Math.abs(a.spreadPick.line);
+                for (const m of ev.markets.filter(m => m.type === 'spreads')) {
+                    const o = m.outcomes.find(o => polySameTeam(o.name, a.spreadPick.team));
+                    if (!o || o.price == null) continue;
+                    const line = polyLineOf(m);
+                    const diff = line == null ? 99 : Math.abs(line - want);
+                    if (!best || diff < best.diff) best = { price: o.price, line, diff };
+                }
+            } else if (pickType === 'total' && a.totalPick) {
+                const side = a.totalPick.pick.toLowerCase();
+                const want = +a.totalPick.line;
+                for (const m of ev.markets.filter(m => m.type === 'totals')) {
+                    const o = m.outcomes.find(o => String(o.name).toLowerCase() === side);
+                    if (!o || o.price == null) continue;
+                    const line = polyLineOf(m);
+                    const diff = line == null ? 99 : Math.abs(line - want);
+                    if (!best || diff < best.diff) best = { price: o.price, line, diff };
+                }
+            }
+            if (best) best.tradeUrl = ev.tradeUrl || 'https://polymarket.us';
+            return best;
+        }
+
+        function polyChip(g, pickType) {
+            const q = findPolyPrice(g, pickType);
+            if (!q) return '';
+            const cents = Math.round(q.price * 100);
+            const lineNote = q.diff > 0 && q.line != null ? ` @ ${q.line}` : '';
+            return `<div class="poly-chip" title="Polymarket price = breakeven win %. ${lineNote ? 'Polymarket line differs from the sportsbook line.' : ''}">
+                Poly ${cents}¢${lineNote} · <a href="${q.tradeUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Trade ↗</a></div>`;
         }
 
         // [RECOVERED] insertTimeGroupHeaders
@@ -25907,6 +26147,16 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 updateStatus('odds', 'error', `✗ ${e.message}`);
                 setStepError('odds', e.message.slice(0, 40));
                 errorCount++;
+            }
+
+            // Polymarket prices (optional)
+            try {
+                const pm = await fetchPolymarket();
+                state.polymarket = Array.isArray(pm) ? pm : [];
+                attachPolymarket();
+            } catch (e) {
+                state.polymarket = [];
+                console.warn('[Polymarket] Skipped:', e.message);
             }
 
             // Step 3: Analyze & capture predictions
@@ -26961,7 +27211,9 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             // Initialize prediction tracker
             try {
                 await initPredictionsDB();
+                await migrateTrackedPicks();
                 await renderPredictionTracker();
+                updateTrackedBadge();
                 // Check for weekly backup reminder
                 checkWeeklyBackup();
                 // Initialize Google Drive sync
