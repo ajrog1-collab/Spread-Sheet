@@ -10098,7 +10098,33 @@
         .hw-list, .hw-steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 8px; font-size: 14px; line-height: 1.5; color: var(--ss-ink2); }
         .hw-list li::marker { color: #E8742C; font-weight: 800; }
         @media (max-width: 640px) { .hw-ex-row { grid-template-columns: 1fr; } .hw-ex-why { justify-content: flex-start; } }
-        .ss-t10-cards { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 6px; padding: 6px 6px 12px; margin: 0 -6px; }
+        .ss-hero--top { padding: 14px 18px; gap: 10px; }
+        .ss-top-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .ss-top-head .ss-hero-title { margin: 0; font-size: 20px; }
+        .ss-top-spacer { flex: 1; }
+        .ss-info-btn { flex: none; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.6); background: transparent; color: #FFFFFF; font: italic 700 13px Georgia, serif; line-height: 1; cursor: pointer; padding: 0; }
+        .ss-info-btn[aria-expanded="true"] { background: #FFFFFF; color: #1E3A5F; }
+        .ss-top-info { background: rgba(255,255,255,0.08); border-radius: 10px; padding: 10px 12px; }
+        .ss-top-info p { margin: 0 0 6px; font-size: 13px; color: #D6DEEA; }
+        .ss-link-btn { background: none; border: 0; color: #FFFFFF; font: 700 13px Inter, sans-serif; text-decoration: underline; cursor: pointer; min-height: 32px; }
+        .ss-top-empty { font-size: 13px; color: #D6DEEA; }
+        .ss-t10-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; }
+        .ss-t10-mini { display: flex; align-items: center; gap: 10px; background: var(--ss-surface); color: var(--ss-ink); border: 0; border-radius: 12px; padding: 9px 10px; text-align: left; cursor: pointer; font-family: Inter, sans-serif; min-width: 0; box-shadow: 0 2px 8px rgba(8,18,38,0.18); }
+        .ss-t10-cards .ss-t10-mini { flex: 0 0 236px; scroll-snap-align: start; }
+        .ss-t10-mini:hover { transform: translateY(-1px); }
+        .ss-t10-mini--best { box-shadow: 0 0 0 2px var(--ss-orange), 0 2px 8px rgba(8,18,38,0.18); }
+        .ss-t10m-rank { font: 800 13px 'JetBrains Mono', monospace; color: var(--ss-muted); width: 14px; text-align: center; flex: none; }
+        .ss-t10m-text { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+        .ss-t10m-pick { font-size: 14px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .ss-t10m-star { color: var(--ss-orange-dk); margin-right: 3px; }
+        .ss-t10m-game { font-size: 11px; color: var(--ss-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .ss-t10m-score { flex: none; min-width: 34px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #FFFFFF; font: 800 15px 'JetBrains Mono', monospace; }
+        .ss-score-line { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--ss-ink2); margin-top: auto; }
+        .ss-score-line > span:last-child { font-weight: 600; color: var(--ss-muted); }
+        .ss-game { scroll-margin-top: 76px; }
+        .ss-flash { animation: ssFlash 1.6s ease-out; }
+        @keyframes ssFlash { 0% { box-shadow: inset 0 0 0 3px var(--ss-orange); } 100% { box-shadow: inset 0 0 0 0 transparent; } }
+        .ss-t10-cards { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 4px; padding: 4px 4px 6px; margin: 0 -4px; }
         .ss-t10-card { flex: 0 0 262px; scroll-snap-align: start; background: var(--ss-surface); color: var(--ss-ink); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 14px rgba(8,18,38,0.22); }
         .ss-t10-card--best { box-shadow: 0 0 0 3px var(--ss-orange), 0 4px 14px rgba(8,18,38,0.22); }
         .ss-t10c-top { display: flex; align-items: center; gap: 8px; }
@@ -10332,12 +10358,16 @@
             .ss-score-key { font-size: 11px; gap: 8px; }
             .ss-mob-only { display: inline; }
             .ss-t10-card { flex-basis: 268px; }
+            .ss-hero--top { padding: 12px 12px; }
+            .ss-top-head .ss-hero-title { font-size: 18px; }
+            .ss-t10-cards .ss-t10-mini { flex-basis: 220px; }
+            .ss-game { scroll-margin-top: 64px; }
             .ss-t10-cards { margin: 0 -14px; padding: 6px 16px 12px; scroll-padding-left: 16px; }
             .ss-score-key { display: none; }
             .ss-mkt--none .ss-mkt-head { width: auto; gap: 8px; }
             .ss-t10-pick { white-space: normal; }
             .ss-t10-pick .ss-tag-best { display: block; width: fit-content; margin-bottom: 3px; }
-            .ss-mkt--hasv { height: 136px; }
+            .ss-mkt--hasv { height: 144px; }
             .ss-mkt .ss-say { display: none; }
             .ss-mkt--none { height: 36px; flex-direction: row; align-items: center; padding: 0 12px; }
             .ss-ml { margin-left: 0; }
@@ -10588,17 +10618,20 @@
 
         <div id="todayTab" class="tab-content">
             <div class="ss-wrap">
-                <section class="ss-hero" id="ssHero">
-                    <div class="ss-hero-head">
-                        <div>
-                            <div class="ss-kicker" id="ssDate"></div>
-                            <h1 class="ss-hero-title">Today's Top 10</h1>
-                            <div class="ss-hero-sub" id="ssHeroSub">Loading today's prices…</div>
-                        </div>
-                        <div class="ss-hero-stats" id="ssHeroStats"></div>
+                <section class="ss-hero ss-hero--top" id="ssHero">
+                    <div class="ss-top-head">
+                        <h1 class="ss-hero-title">Today's Top 10</h1>
+                        <span class="ss-kicker" id="ssDate"></span>
+                        <button type="button" class="ss-info-btn" aria-label="What is the Top 10?" aria-expanded="false" onclick="const t=document.getElementById('ssTopInfo'); t.hidden=!t.hidden; this.setAttribute('aria-expanded', String(!t.hidden));">i</button>
+                        <span class="ss-top-spacer"></span>
+                        <span id="ssTopToggle"></span>
                     </div>
+                    <div class="ss-top-info" id="ssTopInfo" hidden>
+                        <p id="ssHeroSub">Every bet with a Polymarket price, ranked by Bet Score (0–100). 50 = it costs exactly what it is worth.</p>
+                        <div class="ss-score-key"><span><i class="sc-strong"></i>80+ Strong</span><span><i class="sc-good"></i>60–79 Good</span><span><i class="sc-thin"></i>50–59 Thin</span><span><i class="sc-none"></i>Under 50 No value</span><span>★ Best Bet = 4¢+ off, 3+ books</span><span>Tap a card to jump to the game.</span></div>
+                    </div>
+                    <div id="ssHeroStats" hidden></div>
                     <div id="ssHeroCards"></div>
-                    <div class="ss-score-key"><span>Bet Score:</span><span><i class="sc-strong"></i>80+ Strong</span><span><i class="sc-good"></i>60–79 Good</span><span><i class="sc-thin"></i>50–59 Thin</span><span><i class="sc-none"></i>Under 50 No value (costs more than it's worth)</span><span>★ Best Bet = 4¢+ off, 3+ books</span></div>
                 </section>
 
                 <div class="ss-toolbar">
@@ -28278,13 +28311,14 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             }
             const chipScore = l ? ssSideScore(g, type, l.side) : (o ? ssSideScore(g, type, type === 'total' ? o.side : (o.side === g.homeTeam ? 'home' : 'away')) : null);
             const chip = `<div class="ss-chip-row">${l ? `<span class="ss-chip ss-chip--lean">Model likes ${ssEsc(l.label)}</span>`
-                           : `<span class="ss-chip ss-chip--muted">No lean: model is close to the book</span>`}${ssScoreMini(chipScore, g)}</div>`;
+                           : `<span class="ss-chip ss-chip--muted">No lean: model is close to the book</span>`}${o ? ssScoreMini(chipScore, g) : ''}</div>`;
+            say = `<span class="ss-score-line">Bet Score: ${chipScore ? `${ssScoreMini(chipScore, g)}<span>${chipScore.label}</span>` : '<span class="ss-score-mini sc-na">–</span><span>no Polymarket price</span>'}</span>`;
             return { kind: o ? 'value' : 'lean', best, html: `
                 <div class="ss-mkt ${cls}">
                     <div class="ss-mkt-head"><span class="ss-mkt-label">${label}</span><span class="ss-mkt-right">${l ? `<b class="ss-edge">+${l.edge.toFixed(1)} pts</b>` : ''}</span></div>
                     ${chip}
                     ${rows ? ssBarRows(rows) : ''}
-                    ${callout || `<span class="ss-say">${say}</span>`}
+                    ${callout || say}
                 </div>` };
         }
 
@@ -28451,6 +28485,18 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             document.querySelectorAll('.ss-seg-btn').forEach(b => b.classList.toggle('active', b.dataset.f === f));
             renderToday();
         }
+        function ssGoToGame(id) {
+            if (ssFilter !== 'all' || ssConf !== 'all' || ssSearch) {
+                ssFilter = 'all'; ssConf = 'all'; ssSearch = '';
+                document.querySelectorAll('.ss-seg-btn').forEach(b => b.classList.toggle('active', b.dataset.f === 'all'));
+                const si = document.getElementById('ssSearch'); if (si) si.value = '';
+            }
+            ssOpen.add(id);
+            renderToday();
+            restoreTrackedButtonStates();
+            const el = document.getElementById('game-' + id);
+            if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); el.classList.add('ss-flash'); setTimeout(() => el.classList.remove('ss-flash'), 1600); }
+        }
         function ssToggle(id) { ssOpen.has(id) ? ssOpen.delete(id) : ssOpen.add(id); renderToday(); restoreTrackedButtonStates(); }
 
         async function ssValueLogSummary() {
@@ -28484,61 +28530,33 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             const bests = opps.filter(o => ssStrength(o.edge, o.books).best);
             const others = opps.length - bests.length;
             const dateEl = document.getElementById('ssDate');
-            if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+            if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 
-            // Hero: Today's Top 10 by Bet Score
+            // Hero: Today's Top 10 by Bet Score (compact: game, bet, score; tap to jump to the game)
             const top = ssTop10();
-            const sub = document.getElementById('ssHeroSub');
-            if (sub) sub.textContent = top.length
-                ? `Every bet with a Polymarket price, ranked by Bet Score (0–100). 50 = fair price. ${bests.length} Best Bet${bests.length === 1 ? '' : 's'} today.`
-                : 'No Polymarket prices to rank yet. Prices update around 9 AM and 5 PM ET.';
             const cards = document.getElementById('ssHeroCards');
+            const toggle = document.getElementById('ssTopToggle');
+            if (toggle) toggle.innerHTML = top.length > 5 ? `<button type="button" class="ss-link-btn" onclick="ssTopExpanded = !ssTopExpanded; renderToday()">${ssTopExpanded ? 'Show cards' : `See all ${top.length}`}</button>` : '';
             if (cards) {
                 const gameById = Object.fromEntries(games.map(g => [g.id, g]));
-                const info = t => {
+                const item = t => {
                     const o = t.o, g = gameById[o.gameId];
                     const teamName = o.type === 'total' ? (g ? ssShortName(g, 'home') : o.homeTeam) : (g ? ssShortName(g, o.side === o.homeTeam ? 'home' : 'away') : o.side);
-                    return { o, g, teamName,
-                        pick: ssPickText(g || { homeTeam: o.homeTeam, homeRating: null, awayRating: null }, o),
-                        when: new Date(o.startTime).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }),
-                        typeLabel: o.type === 'total' ? 'Total' : o.type === 'spread' ? 'Spread' : 'Moneyline',
-                        game: g ? ssShortName(g, 'away') + ' @ ' + ssShortName(g, 'home') : o.awayTeam + ' @ ' + o.homeTeam,
-                        disc: o.edge >= 0 ? `<b class="ss-good">${ssCents1(o.edge)} off</b>` : `<b class="ss-faint">${ssCents1(-o.edge)} over</b>`,
-                        model: t.model === 'agrees' ? '<span class="ss-t10-tag ss-t10-agree">Model agrees</span>' : t.model === 'disagrees' ? '<span class="ss-t10-tag ss-t10-disagree">Model disagrees</span>' : '' };
+                    return { o, teamName, pick: ssPickText(g || { homeTeam: o.homeTeam, homeRating: null, awayRating: null }, o),
+                             game: g ? ssShortName(g, 'away') + ' @ ' + ssShortName(g, 'home') : o.awayTeam + ' @ ' + o.homeTeam,
+                             when: new Date(o.startTime).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) };
                 };
-                if (!top.length) {
-                    cards.innerHTML = '<div class="ss-empty" style="color:#D6DEEA">Nothing to rank yet.</div>';
-                } else if (!ssTopExpanded) {
-                    cards.innerHTML = `<div class="ss-t10-cards">${top.slice(0, 5).map(t => {
-                        const x = info(t), o = x.o;
-                        return `<article class="ss-t10-card${t.best ? ' ss-t10-card--best' : ''}">
-                            <div class="ss-t10c-top"><span class="ss-t10c-rank">#${t.rank}</span>${t.best ? '<span class="ss-tag-best">★ BEST BET</span>' : `<span class="ss-t10c-type">${x.typeLabel}</span>`}<span class="ss-t10-score sc-${t.cls}"><b>${t.score}</b><span>${t.label}</span></span></div>
-                            <div class="ss-t10c-bet">${ssBadge(x.teamName, 32)}<div style="min-width:0"><div class="ss-t10c-pick">${ssEsc(x.pick)}</div><div class="ss-t10-sub">${ssEsc(x.game)} · ${x.when}</div></div></div>
-                            ${ssBarRows([{ label: 'Costs', val: o.polyPrice * 100, color: 'var(--ss-gray-bar)', text: ssCents(o.polyPrice) },
-                                         o.edge > 0 ? { label: 'Worth', val: o.polyPrice * 100, gapW: o.edge * 100, color: 'var(--ss-green)', text: ssCents1(o.fairProb) }
-                                                    : { label: 'Worth', val: o.fairProb * 100, color: 'var(--ss-green)', text: ssCents1(o.fairProb) }])}
-                            <div class="ss-t10c-meta"><span>${Math.round(o.fairProb * 100)}% chance</span>${x.disc}</div>
-                            <div class="ss-t10c-foot">${x.model || '<span></span>'}${o.tradeUrl ? `<a class="ss-btn-green" href="${ssEsc(o.tradeUrl)}" target="_blank" rel="noopener">Trade</a>` : ''}</div>
-                        </article>`;
+                const list = ssTopExpanded ? top : top.slice(0, 5);
+                cards.innerHTML = !top.length ? '<div class="ss-top-empty">Nothing to rank yet. Prices update around 9 AM and 5 PM ET.</div>'
+                    : `<div class="${ssTopExpanded ? 'ss-t10-list' : 'ss-t10-cards'}">${list.map(t => {
+                        const x = item(t);
+                        return `<button type="button" class="ss-t10-mini${t.best ? ' ss-t10-mini--best' : ''}" onclick="ssGoToGame('${t.o.gameId}')" title="Go to ${ssEsc(x.game)}">
+                            <span class="ss-t10m-rank">${t.rank}</span>
+                            ${ssBadge(x.teamName, 26)}
+                            <span class="ss-t10m-text"><span class="ss-t10m-pick">${t.best ? '<span class="ss-t10m-star">★</span>' : ''}${ssEsc(x.pick)}</span><span class="ss-t10m-game">${ssEsc(x.game)} · ${x.when}</span></span>
+                            <span class="ss-t10m-score sc-${t.cls}" title="${t.label}">${t.score}</span>
+                        </button>`;
                     }).join('')}</div>`;
-                } else {
-                    cards.innerHTML = `<div class="ss-top10">${top.map(t => {
-                        const x = info(t), o = x.o;
-                        return `<div class="ss-t10-row${t.best ? ' ss-t10-row--best' : ''}">
-                            <span class="ss-t10-rank">${t.rank}</span>
-                            <div class="ss-t10-bet">${ssBadge(x.teamName, 28)}<div class="ss-t10-text">
-                                <div class="ss-t10-pick">${t.best ? '<span class="ss-tag-best">★ BEST BET</span> ' : ''}${ssEsc(x.pick)}</div>
-                                <div class="ss-t10-sub">${x.typeLabel} · ${ssEsc(x.game)} · ${x.when}<span class="ss-mob-only"> · ${Math.round(o.fairProb * 100)}% chance · ${ssCents(o.polyPrice)}</span></div>
-                            </div></div>
-                            <div class="ss-t10-stat"><span>Chance</span><b>${Math.round(o.fairProb * 100)}%</b></div>
-                            <div class="ss-t10-stat"><span>Price</span><b>${ssCents(o.polyPrice)}</b>${x.disc}</div>
-                            <div class="ss-t10-tags">${x.model}</div>
-                            <div class="ss-t10-score sc-${t.cls}"><b>${t.score}</b><span>${t.label}</span></div>
-                            <div class="ss-t10-act">${o.tradeUrl ? `<a class="ss-btn-green" href="${ssEsc(o.tradeUrl)}" target="_blank" rel="noopener">Trade</a>` : ''}</div>
-                        </div>`;
-                    }).join('')}</div>`;
-                }
-                if (top.length) cards.innerHTML += `<div class="ss-t10-toggle"><button type="button" onclick="ssTopExpanded = !ssTopExpanded; renderToday()">${ssTopExpanded ? 'Show as cards' : `Show all ${top.length} as a list`}</button>${!ssTopExpanded && top.length > 1 ? '<span>Scroll for more →</span>' : ''}</div>`;
             }
             const stats = document.getElementById('ssHeroStats');
             if (stats) ssValueLogSummary().then(s => { stats.innerHTML = ssStatTiles(s); }).catch(() => {});
@@ -28588,7 +28606,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                     const aN = ssShortName(g, 'away'), hN = ssShortName(g, 'home');
                     const aSp = g.spread != null ? ssLineText(-g.spread) : '—', hSp = g.spread != null ? ssLineText(g.spread) : '—';
                     const rank = r => r && r.rank && r.rank < 400 ? `<em>#${r.rank}</em>` : '';
-                    return `<article class="ss-game${best ? ' ss-game--best' : ''}${open ? ' ss-game--open' : ''}">
+                    return `<article id="game-${g.id}" class="ss-game${best ? ' ss-game--best' : ''}${open ? ' ss-game--open' : ''}">
                         <div class="ss-game-main">
                             <div class="ss-matchup">
                                 <div class="ss-team">${ssBadge(aN, 30)}<span class="ss-name"><span title="${ssEsc(aN)}">${ssEsc(aN)}</span>${rank(g.awayRating)}</span><b class="${g.spread > 0 ? 'fav' : ''}">${aSp}</b></div>
