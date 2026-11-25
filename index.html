@@ -10083,6 +10083,20 @@
         .ss-ml a { font-weight: 700; font-size: 12px; color: var(--ss-navy); }
         .ss-ml { flex-wrap: nowrap; white-space: nowrap; overflow: hidden; }
         .ss-ml-pick { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+        .ss-mkt.ss-mkt--vval { background: var(--ss-green-bg); border-color: var(--ss-green-line); }
+        .ss-mkt.ss-mkt--vbest { background: var(--ss-orange-bg); border-color: var(--ss-orange); }
+        .ss-chip.ss-chip--muted { background: var(--ss-surface); color: var(--ss-ink2); font-weight: 600; border: 1px solid var(--ss-line2); }
+        .ss-vcall { display: flex; align-items: center; gap: 8px; min-width: 0; margin-top: auto; padding: 4px 8px; border-radius: 6px; background: var(--ss-green-bg); border: 1px solid var(--ss-green-line); font-size: 12px; white-space: nowrap; }
+        .ss-vcall--best { background: var(--ss-surface); border-color: var(--ss-orange); }
+        .ss-vcall-tag { flex: none; background: var(--ss-green); color: #FFFFFF; font-size: 10px; font-weight: 800; letter-spacing: 0.05em; padding: 2px 6px; border-radius: 4px; }
+        .ss-vcall--best .ss-vcall-tag, .ss-tag-on-best { background: var(--ss-orange-dk); }
+        .ss-vcall-pick { font-weight: 800; color: var(--ss-ink); overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+        .ss-vcall b { margin-left: auto; font: 700 12px 'JetBrains Mono', monospace; color: var(--ss-good-text); }
+        .ss-box--value { border: 2px solid var(--ss-green); background: var(--ss-green-bg); }
+        .ss-box--best { border: 2px solid var(--ss-orange); background: var(--ss-orange-bg); }
+        .ss-box-tagrow { margin-bottom: -4px; }
+        .ss-box-tagrow .ss-vcall-tag { display: inline-block; }
+        .ss-tag-on-value { background: var(--ss-green); }
         .ss-ml--ls { background: var(--ss-purple-bg); border-color: var(--ss-purple-line); }
         .ss-ml--ls b { color: var(--ss-purple-text); }
         .ss-tag-ls { display: inline-block; background: var(--ss-purple); color: #FFFFFF; font-size: 11px; font-weight: 800; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 5px; margin-bottom: 4px; }
@@ -10241,6 +10255,7 @@
             .ss-team > b { font-size: 15px; }
             .ss-mkt { height: 108px; padding: 10px 12px; gap: 6px; }
             .ss-mkt .ss-chip { font-size: 12px; padding: 3px 8px; }
+            .ss-mkt--hasv { height: 136px; }
             .ss-mkt .ss-say { display: none; }
             .ss-mkt--none { height: 36px; flex-direction: row; align-items: center; padding: 0 12px; }
             .ss-ml { margin-left: 0; }
@@ -28078,17 +28093,17 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
         }
 
         // Model lean for one market (null when the model is close to the line)
-        function ssLean(g, type) {
+        function ssLean(g, type, any = false) {
             const a = g.analysis;
             if (!a || !a.hasData) return null;
             if (type === 'spread') {
-                if (!a.spreadPick || !(a.spreadEdge >= 2) || g.spread == null) return null;
+                if (!a.spreadPick || !(any || a.spreadEdge >= 2) || g.spread == null) return null;
                 const side = a.spreadPick.side, book = a.spreadPick.line, edge = a.spreadEdge;
                 const model = book - edge;                    // pick team's model line
                 const name = ssShortName(g, side);
                 return { side, name, book, model, edge, label: `${name} ${ssLineText(book)}` };
             }
-            if (!a.totalPick || !(a.totalEdge >= 3) || g.total == null) return null;
+            if (!a.totalPick || !(any || a.totalEdge >= 3) || g.total == null) return null;
             const over = a.totalPick.pick === 'OVER', book = g.total, edge = a.totalEdge;
             return { side: over ? 'over' : 'under', name: over ? 'Over' : 'Under', book, model: over ? book + edge : book - edge, edge, label: `${over ? 'Over' : 'Under'} ${book}` };
         }
@@ -28104,44 +28119,44 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
         function ssMarket(g, type, opps) {
             const label = type === 'spread' ? 'SPREAD' : 'TOTAL (O/U)';
             const o = opps.filter(x => x.type === type).sort((x, y) => y.edge - x.edge)[0];
-            if (o) {
-                const st = ssStrength(o.edge, o.books);
-                const agrees = ssModelAgrees(o, g);
-                const pick = o.type === 'total' ? o.label : o.label.replace(o.side, ssShortName(g, o.side === g.homeTeam ? 'home' : 'away'));
-                return { kind: 'value', best: st.best, html: `
-                    <div class="ss-mkt ss-mkt--value${st.best ? ' ss-mkt--best' : ''}">
-                        <div class="ss-mkt-head"><span class="ss-mkt-label">${label}</span><span class="ss-mkt-right">${ssMeter(st.bars, true)}<b class="ss-good">${ssCents1(o.edge)} off</b></span></div>
-                        <span class="ss-chip ${st.best ? 'ss-chip--best' : 'ss-chip--value'}">${st.best ? '★ Best Bet: ' : 'Value: '}${ssEsc(pick)}</span>
-                        ${ssBarRows([{ label: 'Costs', val: o.polyPrice * 100, color: 'var(--ss-gray-bar)', text: ssCents(o.polyPrice) },
-                                     { label: 'Worth', val: o.polyPrice * 100, gapW: o.edge * 100, color: 'var(--ss-green)', text: ssCents1(o.fairProb) }])}
-                        <span class="ss-say">${st.best ? `${ssCents1(o.edge)} off · ${o.books} books agree${agrees ? ' · Model agrees' : ''}` : `You pay ${ssCents(o.polyPrice)} for a bet worth ${ssCents1(o.fairProb)}.`}</span>
-                    </div>` };
-            }
             const l = ssLean(g, type);
-            if (l) {
-                let bookV, modelV, bookTxt, modelTxt, say;
+            const lm = l || ssLean(g, type, true);        // model numbers even without a lean
+            if (!o && !l) return { kind: 'none', html: `<div class="ss-mkt ss-mkt--none"><span class="ss-mkt-label">${label}</span><span class="ss-none">No edge</span></div>` };
+
+            let rows = null, say = '';
+            if (lm) {
+                let bookV, modelV, bookTxt, modelTxt;
                 if (type === 'spread') {
-                    bookV = (-l.book + 20) / 40 * 100; modelV = (-l.model + 20) / 40 * 100;
-                    bookTxt = ssLineText(l.book); modelTxt = ssLineText(+l.model.toFixed(1));
-                    say = `Model has ${l.name} ${l.edge.toFixed(1)} pts better than the book.`;
+                    bookV = (-lm.book + 20) / 40 * 100; modelV = (-lm.model + 20) / 40 * 100;
+                    bookTxt = ssLineText(lm.book); modelTxt = ssLineText(+lm.model.toFixed(1));
+                    say = `Model has ${lm.name} ${lm.edge.toFixed(1)} pts better than the book.`;
                 } else {
-                    bookV = (l.book - 110) / 60 * 100; modelV = (l.model - 110) / 60 * 100;
-                    bookTxt = String(l.book); modelTxt = l.model.toFixed(1);
-                    say = `Model expects ${l.edge.toFixed(1)} ${l.side === 'over' ? 'more' : 'fewer'} points.`;
+                    bookV = (lm.book - 110) / 60 * 100; modelV = (lm.model - 110) / 60 * 100;
+                    bookTxt = String(lm.book); modelTxt = lm.model.toFixed(1);
+                    say = `Model expects ${lm.edge.toFixed(1)} ${lm.side === 'over' ? 'more' : 'fewer'} points.`;
                 }
                 const longer = Math.max(bookV, modelV), shorter = Math.min(bookV, modelV);
-                const rows = modelV >= bookV
-                    ? [{ label: 'Book', val: bookV, color: 'var(--ss-gray-bar)', text: bookTxt }, { label: 'Model', val: shorter, gapW: longer - shorter, color: 'var(--ss-navy)', text: modelTxt }]
-                    : [{ label: 'Book', val: shorter, gapW: longer - shorter, color: 'var(--ss-gray-bar)', text: bookTxt }, { label: 'Model', val: modelV, color: 'var(--ss-navy)', text: modelTxt }];
-                return { kind: 'lean', html: `
-                    <div class="ss-mkt ss-mkt--lean">
-                        <div class="ss-mkt-head"><span class="ss-mkt-label">${label}</span><span class="ss-mkt-right"><b class="ss-edge">+${l.edge.toFixed(1)} pts</b></span></div>
-                        <span class="ss-chip ss-chip--lean">Model likes ${ssEsc(l.label)}</span>
-                        ${ssBarRows(rows)}
-                        <span class="ss-say">${say}</span>
-                    </div>` };
+                rows = modelV >= bookV
+                    ? [{ label: 'Book', val: bookV, color: 'var(--ss-gray-bar)', text: bookTxt }, { label: 'Model', val: shorter, gapW: l ? longer - shorter : 0, color: 'var(--ss-navy)', text: modelTxt }]
+                    : [{ label: 'Book', val: shorter, gapW: l ? longer - shorter : 0, color: 'var(--ss-gray-bar)', text: bookTxt }, { label: 'Model', val: modelV, color: 'var(--ss-navy)', text: modelTxt }];
             }
-            return { kind: 'none', html: `<div class="ss-mkt ss-mkt--none"><span class="ss-mkt-label">${label}</span><span class="ss-none">No edge</span></div>` };
+
+            let callout = '', best = false, cls = 'ss-mkt--lean';
+            if (o) {
+                const st = ssStrength(o.edge, o.books);
+                best = st.best;
+                cls = `ss-mkt--lean ss-mkt--hasv${best ? ' ss-mkt--vbest' : ' ss-mkt--vval'}`;
+                callout = `<div class="ss-vcall${best ? ' ss-vcall--best' : ''}"><span class="ss-vcall-tag">${best ? '★ BEST BET' : 'VALUE'}</span><span class="ss-vcall-pick">${ssEsc(ssPickText(g, o))}</span>${ssMeter(st.bars, true)}<b>${ssCents1(o.edge)} off</b></div>`;
+            }
+            const chip = l ? `<span class="ss-chip ss-chip--lean">Model likes ${ssEsc(l.label)}</span>`
+                           : `<span class="ss-chip ss-chip--muted">No lean: model is close to the book</span>`;
+            return { kind: o ? 'value' : 'lean', best, html: `
+                <div class="ss-mkt ${cls}">
+                    <div class="ss-mkt-head"><span class="ss-mkt-label">${label}</span><span class="ss-mkt-right">${l ? `<b class="ss-edge">+${l.edge.toFixed(1)} pts</b>` : ''}</span></div>
+                    ${chip}
+                    ${rows ? ssBarRows(rows) : ''}
+                    ${callout || `<span class="ss-say">${say}</span>`}
+                </div>` };
         }
 
         // Model numbers for both markets, without the lean thresholds
@@ -28182,7 +28197,12 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             const verdict = o.edge >= 0.02 ? `<b class="ss-good">${ssCents1(o.edge)} off</b>`
                 : off ? `<span class="ss-faint" title="Under 2¢ off: too small to count as value">${ssCents1(o.edge)} off</span>`
                 : `<span class="ss-faint">No Discount</span>`;
-            return `<div class="ss-panel ss-box">
+            const isVal = o.edge >= 0.02 && ssCategory(o) === 'value';
+            const isBest = isVal && ssStrength(o.edge, o.books).best;
+            const hl = isBest ? ' ss-box--best' : isVal ? ' ss-box--value' : '';
+            const tag = isBest ? '<span class="ss-vcall-tag ss-tag-on-best">★ BEST BET</span>' : isVal ? '<span class="ss-vcall-tag ss-tag-on-value">VALUE</span>' : '';
+            return `<div class="ss-panel ss-box${hl}">
+                ${tag ? `<div class="ss-box-tagrow">${tag}</div>` : ''}
                 <div class="ss-box-head"><h3 class="ss-box-title">Price Check: ${ssEsc(ssPickText(g, o))}</h3>${verdict}</div>
                 ${ssBarRows(rows)}
             </div>`;
