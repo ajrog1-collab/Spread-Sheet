@@ -10111,7 +10111,7 @@
         .ss-gh { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr) 40px; gap: 10px 14px; align-items: start; padding: 14px 20px; }
         .ss-gh-when { grid-column: 1 / -1; font-size: 12px; font-weight: 800; color: var(--ss-muted); text-transform: uppercase; letter-spacing: 0.04em; }
         .ss-gh-col { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-        .ss-gh-team { display: flex; align-items: center; gap: 10px; min-width: 0; }
+        .ss-gh-team { display: flex; align-items: center; justify-content: center; gap: 10px; min-width: 0; }
         .ss-gh-name { font-size: 18px; font-weight: 800; color: var(--ss-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .ss-gh-name em { font-style: normal; font-size: 12px; font-weight: 700; color: var(--ss-faint); margin-left: 6px; }
         .ss-gh-at { align-self: start; padding-top: 5px; text-align: center; font-size: 14px; font-weight: 700; color: var(--ss-faint); }
@@ -10119,17 +10119,17 @@
         .ss-gh-toggle svg { transition: transform 0.2s; }
         .ss-game--exp .ss-gh-toggle svg { transform: rotate(180deg); }
         .ss-gh-ml { padding: 0 74px 12px 20px; }
-        .ss-tile { display: flex; flex-direction: column; gap: 4px; text-align: left; width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--ss-line); background: var(--ss-surface2); color: var(--ss-ink); font-family: Inter, sans-serif; cursor: pointer; min-width: 0; }
+        .ss-tile { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--ss-line); background: var(--ss-surface2); color: var(--ss-ink); font-family: Inter, sans-serif; cursor: pointer; min-width: 0; }
         .ss-tile:hover { border-color: var(--ss-line2); }
-        .ss-tile-top { display: flex; align-items: center; gap: 8px; }
+        .ss-tile-top { display: flex; align-items: center; justify-content: center; gap: 8px; }
         .ss-tile-type { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ss-muted); }
         .ss-tile-tag { font-size: 10px; font-weight: 800; letter-spacing: 0.05em; padding: 2px 6px; border-radius: 4px; color: #FFFFFF; background: var(--ss-muted); }
-        .ss-tile-bet { font-size: 17px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .ss-tile-foot { display: flex; align-items: center; gap: 8px; min-height: 28px; }
+        .ss-tile-bet { font-size: 20px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+        .ss-tile-foot { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 28px; }
         .ss-tile-score { min-width: 34px; height: 28px; padding: 0 6px; box-sizing: border-box; border-radius: 7px; display: inline-flex; align-items: center; justify-content: center; color: #FFFFFF; font: 800 15px 'JetBrains Mono', monospace; }
         .ss-tile-score.sc-na { background: var(--ss-track); color: var(--ss-muted); }
         .ss-tile-label { font-size: 13px; font-weight: 700; color: var(--ss-ink2); }
-        .ss-tile-note { font-size: 12px; color: var(--ss-muted); margin-left: auto; white-space: nowrap; }
+        .ss-tile-note { font-size: 13px; color: var(--ss-muted); white-space: nowrap; }
         .ss-tile-foot a { font-size: 12px; font-weight: 700; color: var(--ss-navy); margin-left: 8px; }
         .ss-tile-nobet { font-size: 13px; font-weight: 800; color: var(--ss-faint); letter-spacing: 0.02em; }
         .ss-tile--best { background: var(--ss-orange-bg); border-color: var(--ss-orange); } .ss-tile--best .ss-tile-tag { background: var(--ss-orange-dk); }
@@ -10139,6 +10139,35 @@
         .ss-tile--none { background: transparent; border-style: dashed; }
         .ss-tile--none .ss-tile-bet { font-weight: 600; color: var(--ss-ink2); }
         .ss-tile--wide { cursor: default; }
+        /* Bets Ranked */
+        .ss-rk { background: var(--ss-surface); border-radius: 14px; overflow: hidden; box-shadow: 0 1px 3px rgba(20,33,61,0.1); }
+        .ss-rk-item { border-top: 1px solid var(--ss-line); }
+        .ss-rk-item:first-child { border-top: 0; }
+        .ss-rk-item--best { box-shadow: inset 3px 0 0 var(--ss-orange); }
+        .ss-rk-item--value { box-shadow: inset 3px 0 0 var(--ss-green); }
+        .ss-rk-row { width: 100%; display: grid; grid-template-columns: 30px 30px minmax(0, 1fr) auto 150px 18px; gap: 12px; align-items: center; padding: 12px 18px; border: 0; background: transparent; text-align: left; cursor: pointer; color: var(--ss-ink); font-family: Inter, sans-serif; }
+        .ss-rk-row:hover { background: var(--ss-surface2); }
+        .ss-rk-rank { font: 800 15px 'JetBrains Mono', monospace; color: var(--ss-muted); text-align: center; }
+        .ss-rk-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+        .ss-rk-bet { font-size: 17px; font-weight: 800; display: flex; align-items: center; gap: 8px; white-space: nowrap; overflow: hidden; }
+        .ss-rk-bet .ss-tag-best, .ss-rk-bet .ss-vcall-tag { margin: 0; font-size: 10px; }
+        .ss-rk-sub { font-size: 12px; color: var(--ss-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .ss-rk-note { font-size: 13px; color: var(--ss-ink2); white-space: nowrap; }
+        .ss-rk-score { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+        .ss-rk-chev { color: var(--ss-muted); transition: transform 0.2s; }
+        .ss-rk-item.open .ss-rk-chev { transform: rotate(180deg); }
+        .ss-rk-item.open { background: var(--ss-surface2); }
+        .ss-rk-detail { padding: 4px 18px 18px; display: flex; flex-direction: column; gap: 12px; }
+        .ss-rk-card .ss-mkt { height: auto !important; background-color: var(--ss-surface); }
+        .ss-rk-card .ss-chip-row, .ss-rk-card .ss-vcall, .ss-rk-card .ss-score-line, .ss-rk-detail .ss-why .bb-track-btn { display: none !important; }
+        .ss-rk-detail .ss-why { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; padding: 0; border: 0; }
+        .ss-rk-detail .ss-why > * { display: none; }
+        .ss-rk-detail[data-tab="spread"] .ss-why-s1, .ss-rk-detail[data-tab="spread"] .ss-why-s2,
+        .ss-rk-detail[data-tab="total"] .ss-why-t1, .ss-rk-detail[data-tab="total"] .ss-why-t2 { display: flex; grid-column: auto; grid-row: auto; }
+        .ss-rk-detail .ss-why-s2 > .ss-box, .ss-rk-detail .ss-why-t2 > .ss-box { width: 100%; }
+        .ss-rk-actions .ss-btn-outline, .ss-rk-actions .ss-btn-green { flex: 0 1 auto; padding: 0 18px; }
+        .ss-rk-lshead { padding: 12px 18px 6px; border-top: 1px solid var(--ss-line); font: 800 13px Inter, sans-serif; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ss-purple-text); }
+        #vtLsRows .ss-vrow { border-top: 1px solid var(--ss-line); }
         /* Cards under the tiles keep the bars; the bet and score are already in the tiles */
         .ss-cards .ss-chip-row, .ss-cards .ss-score-line, .ss-cards .ss-vcall { display: none !important; }
         .ss-game-body .ss-cards { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr); column-gap: 14px; }
@@ -10159,7 +10188,7 @@
         .ss-sheet-card .ss-bars, .ss-sheet-card .ss-meter { display: grid !important; }
         .ss-sheet-card .ss-meter { display: inline-flex !important; }
         /* Polymarket off */
-        body.ss-nopoly #tabValue, body.ss-nopoly .ss-toolbar--sticky .ss-seg,
+        body.ss-nopoly .ss-toolbar--sticky .ss-seg,
         body.ss-nopoly .ss-vcall, body.ss-nopoly .ss-why-s2, body.ss-nopoly .ss-why-t2, body.ss-nopoly .ss-ml,
         body.ss-nopoly .ss-why-foot .ss-btn-solid, body.ss-nopoly .ss-t10-act, body.ss-nopoly .ss-fp-seg[data-group="sort"] button[data-v="value"],
         body.ss-nopoly #scTop10, body.ss-nopoly #scBest, body.ss-nopoly #scValue, body.ss-nopoly #scLongshots,
@@ -10577,6 +10606,15 @@
             .ss-tile { padding: 9px 10px; gap: 3px; border-radius: 10px; }
             .ss-tile-bet { font-size: 15px; }
             .ss-tile-note, .ss-hide-phone { display: none; }
+            .ss-tile-bet { font-size: 16px; }
+            .ss-gh-team { justify-content: center; text-align: center; }
+            .ss-rk-row { grid-template-columns: 22px minmax(0, 1fr) auto 14px; gap: 10px; padding: 11px 12px; }
+            .ss-rk-row .ss-badge, .ss-rk-note { display: none; }
+            .ss-rk-bet { font-size: 15px; flex-wrap: wrap; white-space: normal; }
+            .ss-rk-score .ss-tile-label { display: none; }
+            .ss-rk-detail { padding: 0 10px 12px; }
+            .ss-rk-detail .ss-why { grid-template-columns: 1fr; }
+            .ss-rk-actions .ss-btn-outline, .ss-rk-actions .ss-btn-green { flex: 1; }
             .ss-tile-top { justify-content: space-between; }
             .ss-tile-label { font-size: 12px; }
             .ss-gh-ml { padding: 0 12px 12px; }
@@ -10735,7 +10773,7 @@
             </a>
             <nav class="ss-nav tabs-container" role="tablist" aria-label="Main navigation">
                 <button class="tab active" onclick="switchTab('today')" id="tabToday" role="tab" aria-selected="true" aria-controls="todayTab"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 10h16M9 3v4M15 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Today</span></button>
-                <button class="tab" onclick="switchTab('value')" id="tabValue" role="tab" aria-selected="false" aria-controls="valueTab"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M16 7.5c0-1.9-1.8-3-4-3s-4 1.1-4 3 1.8 2.6 4 3.2 4 1.3 4 3.3-1.8 3-4 3-4-1.1-4-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Value</span><span class="tab-badge" id="tabValueCount"></span></button>
+                <button class="tab" onclick="switchTab('value')" id="tabValue" role="tab" aria-selected="false" aria-controls="valueTab"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h3M4 12h3M4 18h3M10 6h10M10 12h7M10 18h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><span class="ss-hide-phone">Bets </span>Ranked</span></button>
 
                 <button class="tab" onclick="switchTab('validation')" id="tabValidation" role="tab" aria-selected="false" aria-controls="validationTab"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Scorecard</span></button>
                 <button class="tab" onclick="switchTab('tracked')" id="tabTracked" role="tab" aria-selected="false" aria-controls="trackedTab"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>My Bets</span><span class="tab-badge" id="tabTrackedCount"></span></button>
@@ -11226,15 +11264,15 @@
                 <section class="ss-hero ss-hero--slim">
                     <div class="ss-hero-head">
                         <div style="max-width: 640px">
-                            <h1 class="ss-hero-title">Value Bets</h1>
-                            <div class="ss-hero-sub">Bets that cost less on Polymarket than the sportsbooks say they are worth. A share pays $1 if it wins: if it costs 47¢ but is worth 50¢, you get it <strong>3¢ off</strong>, shown in <span style="color: #F6B48A; font-weight: 700">orange</span>.</div>
+                            <h1 class="ss-hero-title">Bets Ranked</h1>
+                            <div class="ss-hero-sub" id="rkSub">Every spread and total bet today, best score first. Tap a bet for the bars, model math and price check.</div>
                         </div>
                         <div class="ss-hero-stats" id="vtStats"></div>
                     </div>
                 </section>
-                <div class="ss-table" id="vtRows"><div class="ss-empty">Click Refresh Data or wait for the next scheduled update.</div></div>
-<div id="lsRows" hidden></div>
-                <p class="ss-foot">Biggest discount first, longshots last. ★ Best Bet = 4¢+ off with 3+ books agreeing. LONGSHOT = underdog with value and a 15–40% chance, kept off the Top 10 and Best Bets. Score = Bet Score (0–100, 50 = fair price). "Worth" is the sportsbooks' average odds with their fee removed, from books posting the same line. Confirm the price on Polymarket US before trading.</p>
+                <div class="ss-rk" id="vtRows"><div class="ss-empty">Loading…</div></div>
+                <div id="lsRows" hidden></div>
+                <p class="ss-foot">Spreads and totals only, one line per bet. Bets with no lean and no value are left out. Longshots (underdogs with value and a 15–40% chance) are listed at the end. Confirm prices before betting.</p>
                 <div id="valueList" hidden></div><div id="valueSummary" hidden></div><div id="valueLogSummary" hidden></div><div id="valueLogList" hidden></div>
             </div>
         </div>
@@ -28942,33 +28980,35 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             </div>`;
         }
 
-        // One bet tile: what to bet, how good it is. "No Bet" when there is no lean and no value.
-        function ssTile(g, type) {
+        // What to bet on one market, and how good it is (shared by the game tiles and Bets Ranked)
+        function ssBetInfo(g, type) {
             const o = ((ssOppsByGame()[g.id] || []).filter(x => x.type === type).sort((a, b) => b.edge - a.edge))[0] || null;
             const l = ssLean(g, type);
             const favLine = type === 'spread'
                 ? (g.spread == null ? '—' : g.spread <= 0 ? `${ssShortName(g, 'home')} ${ssLineText(g.spread)}` : `${ssShortName(g, 'away')} ${ssLineText(-g.spread)}`)
                 : `O/U ${g.total ?? '—'}`;
-            let kind, tag, bet, note, sc = null;
             if (o) {
                 const st = ssStrength(o.edge, o.books);
-                kind = st.best ? 'best' : 'value'; tag = st.best ? '★ BEST<span class="ss-hide-phone"> BET</span>' : 'VALUE';
-                bet = ssPickText(g, o); note = `${ssCents1(o.edge)} off`;
-                sc = ssPolyOn ? ssBetScore(o, g) : ssModelScore(g, type);
-            } else if (l) {
-                kind = 'lean'; tag = 'LEAN'; bet = l.label; note = `Model +${l.edge.toFixed(1)} pts`;
-                sc = ssPolyOn ? ssSideScore(g, type, l.side) : ssModelScore(g, type);
-            } else {
-                kind = 'none'; tag = ''; bet = favLine; note = '';
+                return { g, type, o, l, kind: st.best ? 'best' : 'value', bet: ssPickText(g, o), note: `${ssCents1(o.edge)} off`,
+                         sc: ssPolyOn ? ssBetScore(o, g) : ssModelScore(g, type), side: o.type === 'total' ? o.side : (o.side === g.homeTeam ? 'home' : 'away') };
             }
-            const scoreHtml = kind === 'none'
-                ? '<span class="ss-tile-nobet">No Bet</span>'
-                : sc ? `<span class="ss-tile-score sc-${sc.cls}">${sc.score}</span><span class="ss-tile-label">${sc.label}</span>`
-                     : '<span class="ss-tile-score sc-na">–</span><span class="ss-tile-label">No price</span>';
-            return `<button type="button" class="ss-tile ss-tile--${kind}" onclick="ssTileClick('${g.id}','${type}')" aria-label="${type === 'spread' ? 'Spread' : 'Total'}: ${ssEsc(bet)}${kind === 'none' ? ', no bet' : ''}. Show details.">
-                <span class="ss-tile-top"><span class="ss-tile-type">${type === 'spread' ? 'Spread' : 'Total'}</span>${tag ? `<span class="ss-tile-tag">${tag}</span>` : ''}</span>
-                <span class="ss-tile-bet">${ssEsc(bet)}</span>
-                <span class="ss-tile-foot">${scoreHtml}${note ? `<span class="ss-tile-note">${note}</span>` : ''}</span>
+            if (l) return { g, type, o: null, l, kind: 'lean', bet: l.label, note: `Model +${l.edge.toFixed(1)} pts`,
+                            sc: ssPolyOn ? ssSideScore(g, type, l.side) : ssModelScore(g, type), side: l.side };
+            return { g, type, o: null, l: null, kind: 'none', bet: favLine, note: '', sc: null, side: null };
+        }
+        function ssScoreBlock(x) {
+            if (x.kind === 'none') return '<span class="ss-tile-nobet">No Bet</span>';
+            return x.sc ? `<span class="ss-tile-score sc-${x.sc.cls}">${x.sc.score}</span><span class="ss-tile-label">${x.sc.label}</span>`
+                        : '<span class="ss-tile-score sc-na">–</span><span class="ss-tile-label">No price</span>';
+        }
+        // One bet tile: centered pick, score underneath. Only Best Bet / Value get a tag.
+        function ssTile(g, type) {
+            const x = ssBetInfo(g, type);
+            const tag = x.kind === 'best' ? '<span class="ss-tile-tag">★ BEST<span class="ss-hide-phone"> BET</span></span>' : x.kind === 'value' ? '<span class="ss-tile-tag">VALUE</span>' : '';
+            return `<button type="button" class="ss-tile ss-tile--${x.kind}" onclick="ssTileClick('${g.id}','${type}')" aria-label="${type === 'spread' ? 'Spread' : 'Total'}: ${ssEsc(x.bet)}${x.kind === 'none' ? ', no bet' : ''}. Show details.">
+                <span class="ss-tile-top"><span class="ss-tile-type">${type === 'spread' ? 'Spread' : 'Total'}</span>${tag}</span>
+                <span class="ss-tile-bet">${ssEsc(x.bet)}</span>
+                <span class="ss-tile-foot">${ssScoreBlock(x)}${x.note ? `<span class="ss-tile-note">· ${x.note}</span>` : ''}</span>
             </button>`;
         }
         function ssTileClick(id, type) {
@@ -29225,39 +29265,66 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 + (noEdge.length ? `<button type="button" class="ss-noedge-btn" onclick="ssShowNoEdge = !ssShowNoEdge; renderToday()">${ssShowNoEdge ? `Hide the ${noEdge.length} game${noEdge.length === 1 ? '' : 's'} with no edge` : `Show ${noEdge.length} game${noEdge.length === 1 ? '' : 's'} with no edge`}</button>` : '');
         }
 
-        // ---- Value tab (new layout); tracked value bets render on My Bets ----
+        // ---- Bets Ranked: every spread and total bet, best score first; tap to expand ----
+        const ssRkOpen = new Set();
+        function ssRkToggle(key) { ssRkOpen.has(key) ? ssRkOpen.delete(key) : ssRkOpen.add(key); renderValueTab(); }
+        function ssRankedList() {
+            const out = [];
+            (state.games || []).forEach(g => ['spread', 'total'].forEach(t => { const x = ssBetInfo(g, t); if (x.kind !== 'none') out.push(x); }));
+            return out.sort((a, b) => (b.sc?.score ?? -1) - (a.sc?.score ?? -1) || a.g.commenceTime - b.g.commenceTime);
+        }
+        function ssRkDetail(x) {
+            const g = x.g;
+            const trade = x.o?.tradeUrl || g.poly?.tradeUrl;
+            const track = x.o && ssPolyOn
+                ? `<button type="button" class="ss-btn-outline" onclick="trackValueBet('${x.o.id}', this); this.textContent='✓ Tracked'">Track ${ssEsc(x.bet)}</button>`
+                : `<button type="button" class="ss-btn-outline bb-track-btn" id="track-${g.id}-${x.type}" onclick="trackPick('${g.id}','${x.type}',this)">Track ${ssEsc(x.bet)}</button>`;
+            return `<div class="ss-rk-detail" data-tab="${x.type}">
+                <div class="ss-rk-card">${ssMarket(g, x.type, ssOppsByGame()[g.id] || []).html}</div>
+                ${ssWhy(g)}
+                <div class="ss-actions ss-rk-actions">${track}${trade && ssPolyOn ? `<a class="ss-btn-green" href="${ssEsc(trade)}" target="_blank" rel="noopener">Open on Polymarket</a>` : ''}</div>
+            </div>`;
+        }
         async function renderValueTab() {
             const rowsEl = document.getElementById('vtRows');
-            const opps = (state.value?.opportunities || []).slice().sort((a, b) => b.edge - a.edge);
+            const list = ssRankedList();
             const badge = document.getElementById('tabValueCount');
-            if (badge) badge.textContent = opps.length || '';
-            const gameById = Object.fromEntries((state.games || []).map(g => [g.id, g]));
-            const tracked = new Set((await getAllValueBets()).map(b => b.id));
+            if (badge) badge.textContent = '';
+            const sub = document.getElementById('rkSub');
+            if (sub) sub.textContent = ssPolyOn
+                ? 'Every spread and total bet today, ranked by Bet Score. Tap a bet for the bars, model math and price check.'
+                : 'Every spread and total lean today, ranked by Model Score (unproven). Tap a bet for the bars and model math.';
             if (rowsEl) {
-                rowsEl.innerHTML = opps.length ? opps.map((o, i) => {
-                    const g = gameById[o.gameId];
-                    const st = ssStrength(o.edge, o.books);
-                    const teamName = o.type === 'total' ? (g ? ssShortName(g, 'home') : o.homeTeam) : (g ? ssShortName(g, o.side === o.homeTeam ? 'home' : 'away') : o.side);
-                    const pick = o.type === 'total' ? o.label : o.label.replace(o.side, teamName);
-                    const typeLabel = o.type === 'total' ? 'Total' : o.type === 'spread' ? 'Spread' : 'Moneyline';
-                    const when = new Date(o.startTime).toLocaleString('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' });
-                    return `<div class="ss-vrow${st.best ? ' ss-vrow--best' : ''}">
-                        <div class="ss-vbet">${ssBadge(teamName, 32)}<div>${st.best ? '<span class="ss-tag-best">★ BEST BET</span>' : ''}<div class="ss-vpick">${ssEsc(pick)}</div><div class="ss-vsub">${typeLabel} · ${o.books} books${g && ssModelAgrees(o, g) ? ' · Model agrees' : ''}</div></div></div>
-                        <div class="ss-vgame"><div>${ssEsc(g ? ssShortName(g, 'away') + ' @ ' + ssShortName(g, 'home') : o.awayTeam + ' @ ' + o.homeTeam)}</div><div class="ss-vsub">${when}</div></div>
-                        ${ssBarRows([{ label: 'Costs', val: o.polyPrice * 100, color: 'var(--ss-gray-bar)', text: ssCents(o.polyPrice) },
-                                     { label: 'Worth', val: o.polyPrice * 100, gapW: o.edge * 100, color: 'var(--ss-green)', text: ssCents1(o.fairProb) }])}
-                        <div class="ss-vval"><span class="ss-pill${st.best ? ' ss-pill--best' : ''}">${ssCents1(o.edge)} off</span>${(() => { const sc = ssBetScore(o, g); return `<span class="ss-vscore sc-${sc.cls}">Score ${sc.score} · ${sc.label}</span>`; })()}</div>
-                        <div class="ss-actions">
-                            <button type="button" class="ss-btn-outline${tracked.has(o.id) ? ' is-on' : ''}" onclick="trackValueBet('${o.id}', this).then(() => renderValueTab())">${tracked.has(o.id) ? '✓ Tracked' : 'Track'}</button>
-                            ${o.tradeUrl ? `<a class="ss-btn-green" href="${ssEsc(o.tradeUrl)}" target="_blank" rel="noopener">Trade</a>` : ''}
-                        </div>
+                const rows = list.map((x, i) => {
+                    const g = x.g, key = `${g.id}|${x.type}`, open = ssRkOpen.has(key);
+                    const team = x.type === 'total' ? ssShortName(g, 'home') : ssShortName(g, x.side);
+                    const when = g.commenceTime.toLocaleString('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' });
+                    const tag = x.kind === 'best' ? '<span class="ss-tag-best">★ BEST BET</span>' : x.kind === 'value' ? '<span class="ss-vcall-tag">VALUE</span>' : '';
+                    return `<div class="ss-rk-item ss-rk-item--${x.kind}${open ? ' open' : ''}">
+                        <button type="button" class="ss-rk-row" onclick="ssRkToggle('${key}')" aria-expanded="${open}">
+                            <span class="ss-rk-rank">${i + 1}</span>
+                            ${ssBadge(team, 30)}
+                            <span class="ss-rk-main">
+                                <span class="ss-rk-bet">${ssEsc(x.bet)} ${tag}</span>
+                                <span class="ss-rk-sub">${x.type === 'spread' ? 'Spread' : 'Total'} · ${ssEsc(ssShortName(g, 'away'))} @ ${ssEsc(ssShortName(g, 'home'))} · ${when}</span>
+                            </span>
+                            <span class="ss-rk-note">${x.note}</span>
+                            <span class="ss-rk-score">${ssScoreBlock(x)}</span>
+                            <svg class="ss-rk-chev" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6 L8 10 L12 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        ${open ? ssRkDetail(x) : ''}
                     </div>`;
-                }).join('') : '<div class="ss-empty">No value bets right now. Polymarket prices currently match the sportsbooks. Check back after the next update.</div>';
-                rowsEl.innerHTML += '<div id="vtLsRows"></div>';
+                }).join('');
+                rowsEl.innerHTML = (rows || '<div class="ss-empty">No bets to rank yet. Data updates around 9 AM and 5 PM ET.</div>')
+                    + (ssPolyOn ? '<div id="vtLsRows"></div>' : '');
+                restoreTrackedButtonStates();
             }
             const statsEl = document.getElementById('vtStats');
-            if (statsEl) ssValueLogSummary().then(s => { statsEl.innerHTML = ssStatTiles(s); }).catch(() => {});
-            renderLongshots();
+            if (statsEl) {
+                if (ssPolyOn) ssValueLogSummary().then(sm => { statsEl.innerHTML = ssStatTiles(sm); }).catch(() => {});
+                else statsEl.innerHTML = '';
+            }
+            if (ssPolyOn) renderLongshots();
             try { await renderValueTabLegacy(); } catch (e) { /* tracked list only */ }
         }
 
@@ -29332,13 +29399,13 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             if (ttl) ttl.textContent = ssPolyOn ? "Today's Top 10" : "Today's Top 10 Leans";
             if (!ssPolyOn && ssFilter !== 'all') { ssFilter = 'all'; document.querySelectorAll('.ss-seg-btn').forEach(b => b.classList.toggle('active', b.dataset.f === 'all')); }
             if (!ssPolyOn && ssSort === 'value') ssSetOpt('sort', 'score');
-            if (!ssPolyOn && document.getElementById('valueTab')?.style.display === 'block') switchTab('today');
         }
         function ssTogglePoly() {
             ssPolyOn = !ssPolyOn;
             localStorage.setItem('ss_poly', ssPolyOn ? 'on' : 'off');
             ssApplyPoly();
             renderToday();
+            renderValueTab();
             try { renderPredictionTracker(); } catch (e) { /* scorecard not open */ }
         }
 
@@ -29455,13 +29522,14 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
 
         async function renderLongshots() {
             const rowsEl = document.getElementById('vtLsRows');
-            const ls = (state.value?.longshots || []).slice().sort((a, b) => b.edge - a.edge);
+            const ls = (ssV()?.longshots || []).slice().sort((a, b) => b.edge - a.edge);
+            if (rowsEl && ls.length) rowsEl.insertAdjacentHTML('beforebegin', '');
             const badge = document.getElementById('tabLongshotsCount');
             if (badge) badge.textContent = ls.length || '';
             if (!rowsEl) return;
             const gameById = Object.fromEntries((state.games || []).map(g => [g.id, g]));
             const tracked = new Set((await getAllValueBets()).map(b => b.id));
-            rowsEl.innerHTML = ls.length ? ls.map(o => {
+            rowsEl.innerHTML = ls.length ? '<div class="ss-rk-lshead">Longshots</div>' + ls.map(o => {
                 const g = gameById[o.gameId];
                 const team = g ? ssShortName(g, o.side === g.homeTeam ? 'home' : 'away') : o.side;
                 const opp = g ? ssShortName(g, o.side === g.homeTeam ? 'away' : 'home') : '';
