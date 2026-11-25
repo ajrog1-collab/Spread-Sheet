@@ -30,6 +30,7 @@ jobs:
       - name: Pull data and update value log
         env:
           PROXY_URL: ${{ vars.PROXY_URL }}
+          ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
           SITE_DIR: ${{ vars.SITE_DIR || '.' }}
         run: python scripts/snapshot.py
 
@@ -41,6 +42,7 @@ jobs:
       - name: Record model picks and grade results
         env:
           PROXY_URL: ${{ vars.PROXY_URL }}
+          ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
           SITE_DIR: ${{ vars.SITE_DIR || '.' }}
         run: python scripts/capture_model.py
 
