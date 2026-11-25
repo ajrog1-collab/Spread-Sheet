@@ -10107,6 +10107,28 @@
         .ss-admin-form .ss-btn-solid { border: 0; cursor: pointer; min-height: 46px; margin-top: 4px; }
         .ss-admin-err { margin: 0; min-height: 18px; font-size: 13px; color: #B42318; }
         .ss-m { display: none; }
+        /* Desktop game row */
+        .ss-gh { display: none !important; }
+        .ss-dh { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr) 40px; gap: 12px 16px; align-items: stretch; padding: 14px 20px; }
+        .ss-dh-match { display: flex; flex-direction: column; justify-content: center; gap: 8px; padding-right: 12px; border-right: 1px solid var(--ss-line); min-width: 0; }
+        .ss-dh-team { display: flex; align-items: center; gap: 10px; min-width: 0; }
+        .ss-dh-name { font-size: 17px; font-weight: 800; color: var(--ss-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .ss-dh-name em { font-style: normal; font-size: 12px; font-weight: 700; color: var(--ss-faint); margin-left: 6px; }
+        .ss-dh-when { font-size: 12px; color: var(--ss-muted); padding-left: 38px; }
+        .ss-dh .ss-tile { justify-content: center; min-height: 104px; }
+        .ss-dh-toggle { align-self: center; }
+        .ss-game--open .ss-dh-toggle { background: var(--ss-navy-dk); color: #FFFFFF; }
+        .ss-dh-ml { grid-column: 2 / 4; }
+        .ss-dh-ml .ss-tile { min-height: 0; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 6px 14px; padding: 8px 12px; }
+        .ss-dh-ml .ss-tile-bet { font-size: 16px; }
+        .ss-gh-ml { display: none; }
+        .ss-game--open { background: var(--ss-surface2); }
+        .ss-game .ss-why { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr) 40px; gap: 16px; padding: 0 20px 20px; border-top: 0; }
+        .ss-why-bars { margin-bottom: 4px; }
+        .ss-game .ss-why .ss-h2h-rows { justify-content: space-evenly; gap: 12px; padding: 8px 0; }
+        .ss-game .ss-why .ss-vs > div { min-width: 0; }
+        .ss-game .ss-why .ss-vs b { font-size: 13px; }
+        .ss-sheet-body .ss-why-bars, .ss-rk-detail .ss-why-bars { display: none; }
         /* Game header: teams side by side, a bet tile under each */
         .ss-gh { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr) 40px; gap: 10px 14px; align-items: start; padding: 14px 20px; }
         .ss-gh-when { grid-column: 1 / -1; font-size: 12px; font-weight: 800; color: var(--ss-muted); text-transform: uppercase; letter-spacing: 0.04em; }
@@ -10596,7 +10618,9 @@
             .ss-group-head { border-radius: 0; }
             .ss-game { border-radius: 0; box-shadow: none; border-top: 1px solid var(--ss-line); }
             .ss-game--best { box-shadow: inset 3px 0 0 var(--ss-orange); }
-            .ss-row, .ss-game-body, .ss-game .ss-why, .ss-gh-toggle, .ss-m { display: none !important; }
+            .ss-row, .ss-game-body, .ss-game .ss-why, .ss-gh-toggle, .ss-m, .ss-dh { display: none !important; }
+            .ss-gh { display: grid !important; }
+            .ss-gh-ml { display: block; }
             .ss-gh { grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1fr); gap: 8px 6px; padding: 12px 12px 12px; }
             .ss-gh-name { font-size: 15px; white-space: normal; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
             .ss-gh-team { gap: 7px; min-height: 38px; align-items: center; }
@@ -28810,6 +28834,20 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             </div>`;
         }
 
+        function ssWhyBars(g, type) {
+            const lm = ssLean(g, type, true);
+            if (!lm) return '';
+            const strong = !!ssLean(g, type);
+            let bookV, modelV, bookTxt, modelTxt;
+            if (type === 'spread') { bookV = (-lm.book + 20) / 40 * 100; modelV = (-lm.model + 20) / 40 * 100; bookTxt = ssLineText(lm.book); modelTxt = ssLineText(+lm.model.toFixed(1)); }
+            else { bookV = (lm.book - 110) / 60 * 100; modelV = (lm.model - 110) / 60 * 100; bookTxt = String(lm.book); modelTxt = lm.model.toFixed(1); }
+            const hi = Math.max(bookV, modelV), lo = Math.min(bookV, modelV);
+            const rows = modelV >= bookV
+                ? [{ label: 'Book', val: bookV, color: 'var(--ss-gray-bar)', text: bookTxt }, { label: 'Model', val: lo, gapW: strong ? hi - lo : 0, color: 'var(--ss-navy)', text: modelTxt }]
+                : [{ label: 'Book', val: lo, gapW: strong ? hi - lo : 0, color: 'var(--ss-gray-bar)', text: bookTxt }, { label: 'Model', val: modelV, color: 'var(--ss-navy)', text: modelTxt }];
+            return `<div class="ss-why-bars">${ssBarRows(rows)}</div>`;
+        }
+
         function ssWhy(g) {
             const a = g.analysis || {};
             const hr = g.homeRating || {}, ar = g.awayRating || {};
@@ -28857,7 +28895,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 const modelMargin = -m.modelHomeSpread;
                 const parts = [['Team strength', strength], ['Home court', hca], ['Rest, travel, form', modelMargin - strength - hca]];
                 const scale = Math.max(...parts.map(p => Math.abs(p[1])), 1);
-                spreadBody = `
+                spreadBody = ssWhyBars(g, 'spread') + `
                     <div class="ss-parts">${parts.map(([lab, v]) => {
                         const look = v >= 0 ? hL : aL;
                         return `<span>${lab}</span><span class="ss-track"><i style="width:${(Math.abs(v) / scale * 100).toFixed(1)}%;background:${look.color}"></i></span><span class="ss-num">${Math.abs(v) < 0.05 ? '0.0' : `${ssEsc(look.abbr)} +${Math.abs(v).toFixed(1)}`}</span>`;
@@ -28875,7 +28913,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 const awayPts = (m.modelTotal + sp) / 2, homePts = (m.modelTotal - sp) / 2;
                 const pace = ((hr.pace || 68) + (ar.pace || 68)) / 2;
                 const max = Math.max(awayPts, homePts, 1);
-                totalBody = `
+                totalBody = ssWhyBars(g, 'total') + `
                     <div class="ss-parts">
                         <span>${ssEsc(aN)}</span><span class="ss-track"><i style="width:${(awayPts / max * 100).toFixed(1)}%;background:${aL.color}"></i></span><span class="ss-num">${awayPts.toFixed(0)} pts</span>
                         <span>${ssEsc(hN)}</span><span class="ss-track"><i style="width:${(homePts / max * 100).toFixed(1)}%;background:${hL.color}"></i></span><span class="ss-num">${homePts.toFixed(0)} pts</span>
@@ -28992,8 +29030,11 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 return { g, type, o, l, kind: st.best ? 'best' : 'value', bet: ssPickText(g, o), note: `${ssCents1(o.edge)} off`,
                          sc: ssPolyOn ? ssBetScore(o, g) : ssModelScore(g, type), side: o.type === 'total' ? o.side : (o.side === g.homeTeam ? 'home' : 'away') };
             }
-            if (l) return { g, type, o: null, l, kind: 'lean', bet: l.label, note: `Model +${l.edge.toFixed(1)} pts`,
-                            sc: ssPolyOn ? ssSideScore(g, type, l.side) : ssModelScore(g, type), side: l.side };
+            if (l) {
+                const sc = ssPolyOn ? ssSideScore(g, type, l.side) : ssModelScore(g, type);
+                if (ssPolyOn && sc && sc.score < 50) return { g, type, o: null, l, kind: 'none', bet: l.label, note: '', sc: null, side: null };
+                return { g, type, o: null, l, kind: 'lean', bet: l.label, note: `Model +${l.edge.toFixed(1)} pts`, sc, side: l.side };
+            }
             return { g, type, o: null, l: null, kind: 'none', bet: favLine, note: '', sc: null, side: null };
         }
         function ssScoreBlock(x) {
@@ -29013,15 +29054,14 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
         }
         function ssTileClick(id, type) {
             if (ssIsPhone()) return ssOpenSheet(id, type);
-            ssCollapsed.delete(id);
-            if (!ssOpen.has(id)) ssOpen.add(id);
+            if (ssOpen.has(id)) ssOpen.delete(id); else ssOpen.add(id);
             renderToday();
             restoreTrackedButtonStates();
             document.getElementById('game-' + id)?.querySelector('.ss-why')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
         function ssRowHtml(r) {
             const { g, spread, total, best, ml, types } = r;
-            const exp = !ssCollapsed.has(g.id), open = ssOpen.has(g.id) && !ssIsPhone();
+            const open = ssOpen.has(g.id) && !ssIsPhone(), exp = open;
             const aN = ssShortName(g, 'away'), hN = ssShortName(g, 'home');
             const rank = rr => rr && rr.rank && rr.rank <= 25 ? `<em>#${rr.rank}</em>` : '';
             const when = ssSort !== 'time' ? `<span class="ss-gh-when">${g.commenceTime.toLocaleString('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' })}</span>` : '';
@@ -29031,7 +29071,19 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 <span class="ss-tile-bet">${ssEsc(ml.pick)}</span>
                 <span class="ss-tile-foot"><span class="ss-tile-note">${ssCents1(ml.o.edge)} off at ${ssCents(ml.o.polyPrice)}${ml.longshot ? ` · wins about 1 in ${(1 / ml.o.fairProb).toFixed(1)}` : ''}</span>${ml.o.tradeUrl ? `<a href="${ssEsc(ml.o.tradeUrl)}" target="_blank" rel="noopener">Trade</a>` : ''}</span>
             </div>` : '';
+            const desk = `<div class="ss-dh">
+                    <div class="ss-dh-match">
+                        <div class="ss-dh-team">${ssBadge(aN, 28)}<span class="ss-dh-name">${ssEsc(aN)}${rank(g.awayRating)}</span></div>
+                        <div class="ss-dh-team">${ssBadge(hN, 28)}<span class="ss-dh-name">${ssEsc(hN)}${rank(g.homeRating)}</span></div>
+                        <span class="ss-dh-when">${g.commenceTime.toLocaleString('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' })}</span>
+                    </div>
+                    ${showS ? ssTile(g, 'spread') : (showT ? ssTile(g, 'total') : '<span></span>')}
+                    ${showS && showT ? ssTile(g, 'total') : '<span></span>'}
+                    <button type="button" class="ss-gh-toggle ss-dh-toggle" onclick="ssToggle('${g.id}')" aria-expanded="${open}" aria-label="${open ? 'Hide' : 'Show'} details for ${ssEsc(aN)} at ${ssEsc(hN)}"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6 L8 10 L12 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    ${mlTile ? `<div class="ss-dh-ml">${mlTile}</div>` : ''}
+                </div>`;
             return `<article id="game-${g.id}" class="ss-game${best ? ' ss-game--best' : ''}${exp ? ' ss-game--exp' : ''}${open ? ' ss-game--open' : ''}">
+                ${desk}
                 <div class="ss-gh">
                     ${when}
                     <div class="ss-gh-col">
@@ -29046,13 +29098,6 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                     <button type="button" class="ss-gh-toggle" onclick="ssToggleRow('${g.id}')" aria-expanded="${exp}" aria-label="${exp ? 'Hide' : 'Show'} the bars for ${ssEsc(aN)} at ${ssEsc(hN)}"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6 L8 10 L12 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                 </div>
                 ${mlTile ? `<div class="ss-gh-ml">${mlTile}</div>` : ''}
-                ${exp ? `<div class="ss-game-body">
-                    <div class="ss-cards${types.length === 1 ? ' ss-cards--single' : ''}">
-                        ${showS ? spread.html : ''}
-                        ${showT ? total.html : ''}
-                    </div>
-                    <button type="button" class="ss-why-open" onclick="ssWhyOpen('${g.id}')" aria-expanded="${open}">${open ? 'Hide details' : 'Why? See the details'}</button>
-                </div>` : ''}
                 ${open ? ssWhy(g) : ''}
             </article>`;
         }
@@ -29123,7 +29168,6 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 const si = document.getElementById('ssSearch'); if (si) si.value = '';
             }
             ssShowNoEdge = true;
-            ssCollapsed.delete(id);
             if (!ssIsPhone()) ssOpen.add(id);
             renderToday();
             restoreTrackedButtonStates();
