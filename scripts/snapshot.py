@@ -24,7 +24,7 @@ from datetime import datetime, timedelta, timezone
 PROXY = os.environ.get("PROXY_URL", "").rstrip("/")
 SITE_DIR = os.environ.get("SITE_DIR", ".")
 DATA_DIR = os.path.join(SITE_DIR, "data")
-MIN_EDGE = float(os.environ.get("MIN_EDGE", "0.03"))
+MIN_EDGE = float(os.environ.get("MIN_EDGE", "0.02"))
 KEEP_BOOKS = ("draftkings", "fanduel", "betmgm", "williamhill_us", "betrivers", "bovada")
 
 
