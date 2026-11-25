@@ -10103,7 +10103,8 @@
         .ss-why { border-top: 1px solid var(--ss-line); padding: 16px 20px 20px; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr) 44px; grid-template-rows: auto auto; gap: 16px; align-items: stretch; }
         .ss-why-h2h { grid-column: 1; grid-row: 1 / span 2; }
         .ss-why-h2h .ss-h2h-names { font-size: 15px; font-weight: 800; }
-        .ss-h2h-rows { flex: 1; display: flex; flex-direction: column; justify-content: space-evenly; gap: 10px; padding: 6px 0; }
+        .ss-h2h-rows { flex: 1; display: flex; flex-direction: column; justify-content: space-around; gap: 12px; padding: 4px 0; border-top: 1px solid var(--ss-line); margin-top: 2px; }
+        .ss-why-h2h .ss-h2h-names em { font-style: normal; font-size: 12px; font-weight: 600; color: var(--ss-faint); }
         .ss-why-h2h .ss-h2h-row { grid-template-columns: 1fr 84px 1fr; }
         .ss-why-h2h .ss-h2h-row > span { font-size: 12px; }
         .ss-why-h2h .ss-h2h-l i, .ss-why-h2h .ss-h2h-r i { height: 16px; border-radius: 8px; }
@@ -26000,11 +26001,15 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
         }
 
         async function fetchValue() {
-            if (SNAPSHOT) return { ...SNAPSHOT.value, all: SNAPSHOT.prices || SNAPSHOT.value?.opportunities || [] };
+            if (SNAPSHOT) {
+                const ok = o => Math.abs(o.edge) <= 0.15;
+                return { ...SNAPSHOT.value, opportunities: (SNAPSHOT.value?.opportunities || []).filter(ok),
+                         all: (SNAPSHOT.prices || SNAPSHOT.value?.opportunities || []).filter(ok) };
+            }
             const proxyUrl = document.getElementById('proxyUrl').value.trim();
             if (!proxyUrl) throw new Error('Enter proxy URL');
             const v = await fetchWithRetry(`${proxyUrl}/api/value?minEdge=-1`, { headers: { 'ngrok-skip-browser-warning': 'true' } }, 1);
-            const all = v.opportunities || [];
+            const all = (v.opportunities || []).filter(o => Math.abs(o.edge) <= 0.15);
             return { ...v, minEdge: 0.03, all, opportunities: all.filter(o => o.edge >= 0.03) };
         }
 
@@ -28095,7 +28100,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
 
         // Price check for one market: the Polymarket side with the best price vs what the books say it is worth
         function ssPriceBest(g, type) {
-            const list = (state.value?.all || state.value?.opportunities || []).filter(o => o.gameId === g.id && o.type === type);
+            const list = (state.value?.all || state.value?.opportunities || []).filter(o => o.gameId === g.id && o.type === type && Math.abs(o.edge) <= 0.15);
             return list.sort((x, y) => y.edge - x.edge)[0] || null;
         }
         function ssPickText(g, o) {
@@ -28103,7 +28108,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
         }
         function ssPriceBox(g, type) {
             const o = ssPriceBest(g, type);
-            if (!o) return `<div class="ss-panel ss-box"><h3 class="ss-box-title">Price check</h3><p class="ss-muted">No Polymarket price at this line.</p></div>`;
+            if (!o) return `<div class="ss-panel ss-box"><h3 class="ss-box-title">Price Check</h3><p class="ss-muted">No Polymarket price at this line.</p></div>`;
             const off = o.edge > 0;
             const rows = off
                 ? [{ label: 'Costs', val: o.polyPrice * 100, color: 'var(--ss-gray-bar)', text: ssCents(o.polyPrice) },
@@ -28112,9 +28117,9 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                    { label: 'Worth', val: o.fairProb * 100, color: 'var(--ss-green)', text: ssCents1(o.fairProb) }];
             const verdict = o.edge >= 0.03 ? `<b class="ss-good">${ssCents1(o.edge)} off</b>`
                 : off ? `<span class="ss-faint" title="Under 3¢ off: too small to count as value">${ssCents1(o.edge)} off</span>`
-                : `<span class="ss-faint">No discount</span>`;
+                : `<span class="ss-faint">No Discount</span>`;
             return `<div class="ss-panel ss-box">
-                <div class="ss-box-head"><h3 class="ss-box-title">Price check: ${ssEsc(ssPickText(g, o))}</h3>${verdict}</div>
+                <div class="ss-box-head"><h3 class="ss-box-title">Price Check: ${ssEsc(ssPickText(g, o))}</h3>${verdict}</div>
                 ${ssBarRows(rows)}
             </div>`;
         }
@@ -28142,7 +28147,18 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             const sl = ssLean(g, 'spread'), tl = ssLean(g, 'total');
             const sv = ssPriceBest(g, 'spread'), tv = ssPriceBest(g, 'total');
             const fav = margin => Math.abs(margin) < 0.05 ? 'Even' : `${margin > 0 ? hL.abbr : aL.abbr} by ${Math.abs(margin).toFixed(1)}`;
-            const trackBtn = (type, l) => l ? `<button type="button" class="ss-btn-outline bb-track-btn" id="track-${g.id}-${type}" onclick="trackPick('${g.id}','${type}',this)">Track lean</button>` : '';
+            const trackBtn = (type, l) => {
+                const v = type === 'spread' ? sv : tv;
+                if (!l && v && v.edge >= 0.03) {
+                    return `<button type="button" class="ss-btn-outline" onclick="trackValueBet('${v.id}', this); this.textContent='✓ Tracked'">Track ${ssEsc(ssPickText(g, v))}</button>`;
+                }
+                let label = l ? l.label : null;
+                if (!label) {
+                    if (type === 'spread' && a.spreadPick) label = `${ssShortName(g, a.spreadPick.side)} ${ssLineText(a.spreadPick.line)}`;
+                    if (type === 'total' && a.totalPick && g.total != null) label = `${a.totalPick.pick === 'OVER' ? 'Over' : 'Under'} ${g.total}`;
+                }
+                return label ? `<button type="button" class="ss-btn-outline bb-track-btn" id="track-${g.id}-${type}" onclick="trackPick('${g.id}','${type}',this)">Track ${ssEsc(label)}</button>` : '';
+            };
 
             // Spread box: title = the lean, else the value bet, else the sportsbook favorite
             const favLine = g.spread == null ? '' : g.spread <= 0 ? `${hN} ${ssLineText(g.spread)}` : `${aN} ${ssLineText(-g.spread)}`;
@@ -28187,9 +28203,8 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 <div class="ss-why">
                     <div class="ss-panel ss-why-h2h">
                         <h3 class="ss-box-title">Head to Head</h3>
-                        <div class="ss-h2h-names"><span>${ssBadge(aN, 28)} ${ssEsc(aN)}</span><span>${ssEsc(hN)} ${ssBadge(hN, 28)}</span></div>
+                        <div class="ss-h2h-names"><span>${ssBadge(aN, 28)} ${ssEsc(aN)}${ar.rank && ar.rank < 400 ? ` <em>#${ar.rank}</em>` : ''}</span><span>${hr.rank && hr.rank < 400 ? `<em>#${hr.rank}</em> ` : ''}${ssEsc(hN)} ${ssBadge(hN, 28)}</span></div>
                         <div class="ss-h2h-rows">
-                            ${(ar.rank && hr.rank && ar.rank < 400 && hr.rank < 400) ? `<div class="ss-h2h-row ss-h2h-rank"><div class="ss-h2h-l"><b class="${ar.rank < hr.rank ? 'better' : ''}">#${ar.rank}</b></div><span>Rank</span><div class="ss-h2h-r"><b class="${hr.rank < ar.rank ? 'better' : ''}">#${hr.rank}</b></div></div>` : ''}
                             ${h2h || '<p class="ss-muted">Ratings not available.</p>'}
                         </div>
                         <p class="ss-muted">Longer bar = better. Bold = the stronger team.</p>
