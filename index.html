@@ -10083,6 +10083,37 @@
         .ss-ml a { font-weight: 700; font-size: 12px; color: var(--ss-navy); }
         .ss-ml { flex-wrap: nowrap; white-space: nowrap; overflow: hidden; }
         .ss-ml-pick { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+        .ss-top10 { background: var(--ss-surface); border-radius: 14px; overflow: hidden; }
+        .ss-t10-row { display: grid; grid-template-columns: 36px minmax(0, 2.4fr) 70px 104px minmax(0, 1.1fr) 92px 84px; gap: 12px; align-items: center; padding: 10px 16px; border-top: 1px solid var(--ss-line); color: var(--ss-ink); }
+        .ss-t10-row:first-child { border-top: 0; }
+        .ss-t10-row--best { background: var(--ss-orange-row); box-shadow: inset 0 0 0 2px var(--ss-orange); }
+        .ss-t10-rank { font: 800 18px 'JetBrains Mono', monospace; color: var(--ss-muted); text-align: center; }
+        .ss-t10-bet { display: flex; align-items: center; gap: 10px; min-width: 0; }
+        .ss-t10-text { min-width: 0; }
+        .ss-t10-pick { font-size: 15px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .ss-t10-pick .ss-tag-best { vertical-align: 1px; margin-right: 4px; }
+        .ss-t10-sub { font-size: 12px; color: var(--ss-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .ss-t10-stat { display: flex; flex-direction: column; gap: 1px; }
+        .ss-t10-stat span { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ss-muted); }
+        .ss-t10-stat b { font: 700 14px 'JetBrains Mono', monospace; }
+        .ss-t10-stat b.ss-good, .ss-t10-stat b.ss-faint { font-size: 12px; }
+        .ss-t10-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+        .ss-t10-tag { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 999px; white-space: nowrap; }
+        .ss-t10-agree { background: var(--ss-lean-bg); color: var(--ss-navy); border: 1px solid var(--ss-lean-line); }
+        .ss-t10-disagree { background: var(--ss-surface2); color: var(--ss-muted); border: 1px dashed var(--ss-line2); }
+        .ss-t10-score { display: flex; flex-direction: column; align-items: center; border-radius: 10px; padding: 4px 6px; color: #FFFFFF; }
+        .ss-t10-score b { font: 800 20px 'JetBrains Mono', monospace; line-height: 1.1; }
+        .ss-t10-score span { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+        .sc-strong { background: #13603A; } .sc-good { background: #1A7F4B; } .sc-thin { background: #8A6D1F; } .sc-none { background: #6B7280; }
+        .ss-t10-act .ss-btn-green { min-height: 40px; width: 100%; }
+        .ss-mob-only { display: none; }
+        .ss-score-key { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: #D6DEEA; }
+        .ss-score-key span { display: flex; align-items: center; gap: 6px; }
+        .ss-score-key i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+        .ss-vscore { font-size: 11px; font-weight: 700; color: #FFFFFF; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+        .ss-ls-head { margin-top: 18px; }
+        .ss-ls-head h2 { margin: 0 0 4px; font: 800 22px Inter, sans-serif; color: var(--ss-purple-text); }
+        .ss-ls-head p { margin: 0 0 8px; font-size: 13px; color: var(--ss-muted); line-height: 1.5; max-width: 760px; }
         .ss-mkt.ss-mkt--vval { background: var(--ss-green-bg); border-color: var(--ss-green-line); }
         .ss-mkt.ss-mkt--vbest { background: var(--ss-orange-bg); border-color: var(--ss-orange); }
         .ss-chip.ss-chip--muted { background: var(--ss-surface); color: var(--ss-ink2); font-weight: 600; border: 1px solid var(--ss-line2); }
@@ -10227,7 +10258,7 @@
             .ss-top-inner { padding: 0 14px; gap: 12px; justify-content: space-between; }
             .ss-brand { font-size: 18px; }
             .ss-top-right .header-status { font-size: 11px; }
-            .ss-nav { position: fixed !important; top: auto !important; left: 0; right: 0; bottom: 0; height: auto !important; z-index: 950; background: #14213D !important; display: grid !important; grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 6px 2px calc(10px + env(safe-area-inset-bottom)) !important; gap: 0; }
+            .ss-nav { position: fixed !important; top: auto !important; left: 0; right: 0; bottom: 0; height: auto !important; z-index: 950; background: #14213D !important; display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 6px 4px calc(10px + env(safe-area-inset-bottom)) !important; gap: 0; }
             .ss-nav .tab { flex-direction: column; gap: 3px; font-size: 11px; padding: 6px 2px; min-height: 54px; border-radius: 0; position: relative; }
             .ss-nav .tab svg { display: block; }
             .ss-nav .tab.active { background: transparent; color: #FFFFFF; }
@@ -10255,6 +10286,16 @@
             .ss-team > b { font-size: 15px; }
             .ss-mkt { height: 108px; padding: 10px 12px; gap: 6px; }
             .ss-mkt .ss-chip { font-size: 12px; padding: 3px 8px; }
+            .ss-t10-row { grid-template-columns: 26px minmax(0, 1fr) 62px; grid-template-areas: "rank bet score" "rank tags act"; gap: 6px 10px; padding: 10px 12px; }
+            .ss-t10-rank { grid-area: rank; align-self: start; font-size: 15px; }
+            .ss-t10-bet { grid-area: bet; } .ss-t10-score { grid-area: score; }
+            .ss-t10-stat { display: none; }
+            .ss-t10-tags { grid-area: tags; } .ss-t10-act { grid-area: act; }
+            .ss-t10-row .ss-t10-sub { white-space: normal; }
+            .ss-score-key { font-size: 11px; gap: 8px; }
+            .ss-mob-only { display: inline; }
+            .ss-t10-pick { white-space: normal; }
+            .ss-t10-pick .ss-tag-best { display: block; width: fit-content; margin-bottom: 3px; }
             .ss-mkt--hasv { height: 136px; }
             .ss-mkt .ss-say { display: none; }
             .ss-mkt--none { height: 36px; flex-direction: row; align-items: center; padding: 0 12px; }
@@ -10349,7 +10390,7 @@
             <nav class="ss-nav tabs-container" role="tablist" aria-label="Main navigation">
                 <button class="tab active" onclick="switchTab('today')" id="tabToday" role="tab" aria-selected="true" aria-controls="todayTab"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 10h16M9 3v4M15 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Today</span></button>
                 <button class="tab" onclick="switchTab('value')" id="tabValue" role="tab" aria-selected="false" aria-controls="valueTab"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M16 7.5c0-1.9-1.8-3-4-3s-4 1.1-4 3 1.8 2.6 4 3.2 4 1.3 4 3.3-1.8 3-4 3-4-1.1-4-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Value</span><span class="tab-badge" id="tabValueCount"></span></button>
-                <button class="tab" onclick="switchTab('longshots')" id="tabLongshots" role="tab" aria-selected="false" aria-controls="longshotsTab"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Longshots</span><span class="tab-badge ss-badge-ls" id="tabLongshotsCount"></span></button>
+
                 <button class="tab" onclick="switchTab('validation')" id="tabValidation" role="tab" aria-selected="false" aria-controls="validationTab"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Scorecard</span></button>
                 <button class="tab" onclick="switchTab('tracked')" id="tabTracked" role="tab" aria-selected="false" aria-controls="trackedTab"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>My Bets</span><span class="tab-badge" id="tabTrackedCount"></span></button>
             </nav>
@@ -10510,12 +10551,13 @@
                     <div class="ss-hero-head">
                         <div>
                             <div class="ss-kicker" id="ssDate"></div>
-                            <h1 class="ss-hero-title">Best Bets Today</h1>
+                            <h1 class="ss-hero-title">Today's Top 10</h1>
                             <div class="ss-hero-sub" id="ssHeroSub">Loading today's prices…</div>
                         </div>
                         <div class="ss-hero-stats" id="ssHeroStats"></div>
                     </div>
-                    <div class="ss-hero-cards" id="ssHeroCards"></div>
+                    <div class="ss-top10" id="ssHeroCards"></div>
+                    <div class="ss-score-key"><span>Bet Score:</span><span><i class="sc-strong"></i>80+ Strong</span><span><i class="sc-good"></i>60–79 Good</span><span><i class="sc-thin"></i>50–59 Thin</span><span><i class="sc-none"></i>Under 50 No value (costs more than it's worth)</span><span>★ Best Bet = 4¢+ off, 3+ books</span></div>
                 </section>
 
                 <div class="ss-toolbar">
@@ -10780,24 +10822,13 @@
                     </div>
                 </section>
                 <div class="ss-table" id="vtRows"><div class="ss-empty">Click Refresh Data or wait for the next scheduled update.</div></div>
-                <p class="ss-foot">Biggest discount first. ★ Best Bet = 4¢+ off with 3+ books agreeing. Bars show strength: 1 bar 2–4¢ off, 2 bars 4–6¢, 3 bars 6¢+. "Worth" is the sportsbooks' average odds with their fee removed, from books posting the same line. Confirm the price on Polymarket US before trading.</p>
-                <div id="valueList" hidden></div><div id="valueSummary" hidden></div><div id="valueLogSummary" hidden></div><div id="valueLogList" hidden></div>
-            </div>
-        </div>
-
-        <div id="longshotsTab" class="tab-content" style="display:none;">
-            <div class="ss-wrap">
-                <section class="ss-hero ss-hero--slim ss-hero--ls">
-                    <div class="ss-hero-head">
-                        <div style="max-width: 660px">
-                            <h1 class="ss-hero-title">Longshots</h1>
-                            <div class="ss-hero-sub">Underdogs to win outright that cost less on Polymarket than they are worth, and still win often enough to matter: the books give them a <strong>15–40% chance</strong>. They lose more often than they win, so they are kept apart from Value Bets and Best Bets, with their own record.</div>
-                        </div>
-                        <div class="ss-hero-stats" id="lsStats"></div>
-                    </div>
-                </section>
+                <div class="ss-ls-head">
+                    <h2>Longshots</h2>
+                    <p>Underdogs to win that cost less than they are worth and still have a real chance (15–40%). They lose more often than they win, so they are kept off the Top 10 and Best Bets and graded separately on the Scorecard.</p>
+                </div>
                 <div class="ss-table" id="lsRows"><div class="ss-empty">Loading…</div></div>
-                <p class="ss-foot">A Longshot needs: moneyline, worth between 15¢ and 40¢ (a 15–40% chance), at least 2¢ off, and 3+ books agreeing. Underdogs under 15% are left out: sportsbook odds on big longshots are too imprecise to trust. "Pays" is what $1 returns if it wins.</p>
+                <p class="ss-foot">Biggest discount first. ★ Best Bet = 4¢+ off with 3+ books agreeing. Score = Bet Score (0–100, 50 = fair price). "Worth" is the sportsbooks' average odds with their fee removed, from books posting the same line. Confirm the price on Polymarket US before trading.</p>
+                <div id="valueList" hidden></div><div id="valueSummary" hidden></div><div id="valueLogSummary" hidden></div><div id="valueLogList" hidden></div>
             </div>
         </div>
 
@@ -10851,6 +10882,7 @@
                     <div class="sc-sub">Is it working? Every bet below was logged before the game and graded automatically from the final score.
                         Nothing is hand-picked, so this is the honest test.</div>
                 </div>
+                <section class="sc-section" id="scTop10"><div class="sc-loading">Loading…</div></section>
                 <section class="sc-section" id="scBest"><div class="sc-loading">Loading…</div></section>
                 <section class="sc-section" id="scValue"><div class="sc-loading">Loading…</div></section>
                 <section class="sc-section" id="scLongshots"><div class="sc-loading">Loading…</div></section>
@@ -25639,7 +25671,6 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             if (tab === 'tracked') { renderTrackedBetsTab(); renderValueTab(); }
             if (tab === 'value') renderValueTab();
             if (tab === 'today') renderToday();
-            if (tab === 'longshots') renderLongshots();
         }
 
         // [RECOVERED] navigateToGameAnalysis
@@ -26128,7 +26159,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                     if (existing.status === 'pending') await deleteValueBet(id);
                     return renderValueTab();
                 }
-                const o = [...(state.value?.opportunities || []), ...(state.value?.longshots || [])].find(x => x.id === id);
+                const o = [...(state.value?.opportunities || []), ...(state.value?.longshots || []), ...(state.value?.all || [])].find(x => x.id === id);
                 if (!o) return;
                 await saveValueBet({
                     ...o, entryPrice: o.polyPrice, entryFair: o.fairProb, entryEdge: o.edge,
@@ -27846,6 +27877,24 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             // ---- Value bets ----
             const log = await loadValueLog();
             const allLogged = (log?.bets || []).map(b => ({ ...b, date: b.startTime }));
+            // Top 10 log: every bet that made the daily Top 10, with its Bet Score
+            try {
+                const tr = await fetch('data/top10_log.json', { cache: 'no-store' });
+                const t10 = tr.ok ? ((await tr.json()).bets || []).map(b => ({ ...b, date: b.startTime })) : [];
+                const tProfit = b => b.result === 'win' ? (1 / b.entryPrice - 1) : -1;
+                const tst = scSummarize(t10, tProfit, () => null);
+                stats.top10 = tst;
+                const tEl = document.getElementById('scTop10');
+                if (tEl) tEl.innerHTML = scSection({
+                    title: '🔟 Top 10',
+                    subtitle: 'Every bet that made Today\'s Top 10, at the price shown then. If the Bet Score means anything, higher scores should win more often and return more.',
+                    st: tst,
+                    buckets: tst.n ? scBuckets(t10, b => b.score, [0, 50, 60, 70, 80], (lo, hi) => hi ? (lo === 0 ? 'Under 50' : `${lo}–${hi - 1}`) : `${lo}+`, tProfit) : '',
+                    recent: t10.filter(b => b.result).sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 10)
+                              .map(b => scRecentRow(b.date, b.label, `Score ${b.score}`, b.result)),
+                    empty: 'No Top 10 bets logged yet. The scheduled refresh records them twice a day.'
+                });
+            } catch (e) { /* no log yet */ }
             const vb = allLogged.filter(b => ssCategory(b) === 'value');
             const lsb = allLogged.filter(b => ssCategory(b) === 'longshot');
             const vProfit = b => b.result === 'win' ? (1 / b.entryPrice - 1) : -1;
@@ -27934,6 +27983,8 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
         }
 
         const GLOSSARY_TERMS = [
+            ['Bet Score', 'A 0–100 rating for every bet with a Polymarket price. 50 = costs exactly what it is worth. Higher = bigger expected return (¢ off ÷ price), counted more when more books agree; +5 if the model agrees, −5 if it disagrees. 80+ Strong, 60–79 Good, 50–59 Thin, under 50 No value.'],
+            ['Top 10', 'The ten highest Bet Scores today, one side per bet, longshots excluded. On slow days the bottom of the list can be under 50.'],
             ['Best Bet', 'A value bet that is at least 4¢ off with 3 or more sportsbooks agreeing on what it is worth. Shown with ★ and an orange outline.'],
             ['Value bet', 'A bet that costs less on Polymarket than the sportsbooks say it is worth, for the same line.'],
             ['Costs', 'The Polymarket price for one share. A share pays $1 if it wins, so 47¢ means you risk 47¢ to win 53¢.'],
@@ -27970,6 +28021,10 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 <p class="how-p">For each bet, the site works out what it is <strong>worth</strong> from the sportsbooks' odds (their fee removed, same line only) and compares it to what it
                 <strong>costs</strong> on Polymarket. If it costs at least 2¢ less than it is worth, it is a <strong>value bet</strong>; 4¢+ off with 3+ books agreeing makes it a
                 <strong>★ Best Bet</strong>. This does not predict games; it finds prices that look cheap compared with the betting market.</p></div>
+                <div class="glossary-section"><h3>Bet Score and Top 10</h3>
+                <p class="how-p">Every bet with a Polymarket price gets a <strong>Bet Score</strong> from 0 to 100. 50 means it costs exactly what it is worth.
+                The score rises with the expected return (¢ off ÷ price), counts for more when more sportsbooks agree, and moves 5 points if the model agrees or disagrees.
+                <strong>Today's Top 10</strong> lists the ten highest scores; ★ marks Best Bets.</p></div>
                 <div class="glossary-section"><h3>3. Model leans</h3>
                 <p class="how-p">The model rates teams from efficiency data and projects each spread and total. Where its number differs from the line, that side is a
                 <strong>lean</strong>, and the difference is the <strong>edge (pts)</strong>. Tested on all of last season, leans won 50.3% against closing spreads and
@@ -27987,6 +28042,11 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             const vals = (state.value?.opportunities || []).filter(o => new Date(o.startTime).toDateString() === today).sort((a, b) => b.edge - a.edge);
             const bestV = vals.filter(o => ssStrength(o.edge, o.books).best), restV = vals.filter(o => !ssStrength(o.edge, o.books).best);
             const vLine = o => `  ${o.label} — costs ${Math.round(o.polyPrice * 100)}¢, worth ${(o.fairProb * 100).toFixed(1)}¢ (${(o.edge * 100).toFixed(1)}¢ off) [${fmtCardTime(new Date(o.startTime))}]`;
+            const t10 = ssTop10();
+            L.push("🔟 TODAY'S TOP 10 (Bet Score 0–100, 50 = fair price)");
+            if (t10.length) t10.forEach(t => L.push(`  ${t.rank}. ${t.best ? '★ ' : ''}${t.o.label} — score ${t.score} (${t.label}), ${Math.round(t.o.fairProb * 100)}% chance, ${t.o.edge >= 0 ? (t.o.edge * 100).toFixed(1) + '¢ off' : (-t.o.edge * 100).toFixed(1) + '¢ over'} [${fmtCardTime(new Date(t.o.startTime))}]`));
+            else L.push('  Nothing to rank yet');
+            L.push('');
             L.push('★ BEST BETS (4¢+ off, 3+ books agree)');
             if (bestV.length) bestV.slice(0, 5).forEach(o => L.push(vLine(o))); else L.push('  None today');
             L.push('');
@@ -28344,36 +28404,35 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             const dateEl = document.getElementById('ssDate');
             if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
 
-            // Hero
+            // Hero: Today's Top 10 by Bet Score
+            const top = ssTop10();
             const sub = document.getElementById('ssHeroSub');
-            if (sub) sub.textContent = opps.length
-                ? `${bests.length} of ${opps.length} value bet${opps.length === 1 ? '' : 's'} clear the bar: 4¢+ off and 3+ books agree`
-                : 'No value bets right now. Prices update around 9 AM and 5 PM ET.';
+            if (sub) sub.textContent = top.length
+                ? `Every bet with a Polymarket price, ranked by Bet Score (0–100). 50 = fair price. ${bests.length} Best Bet${bests.length === 1 ? '' : 's'} today.`
+                : 'No Polymarket prices to rank yet. Prices update around 9 AM and 5 PM ET.';
             const cards = document.getElementById('ssHeroCards');
             if (cards) {
                 const gameById = Object.fromEntries(games.map(g => [g.id, g]));
-                const heroCards = bests.slice(0, 3).map(o => {
-                    const g = gameById[o.gameId];
-                    const st = ssStrength(o.edge, o.books);
+                cards.innerHTML = top.length ? top.map(t => {
+                    const o = t.o, g = gameById[o.gameId];
                     const teamName = o.type === 'total' ? (g ? ssShortName(g, 'home') : o.homeTeam) : (g ? ssShortName(g, o.side === o.homeTeam ? 'home' : 'away') : o.side);
-                    const pick = o.type === 'total' ? o.label : o.label.replace(o.side, teamName);
                     const when = new Date(o.startTime).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
                     const typeLabel = o.type === 'total' ? 'Total' : o.type === 'spread' ? 'Spread' : 'Moneyline';
-                    return `<article class="ss-hero-card">
-                        <div class="ss-hc-top"><span class="ss-hc-tags"><span class="ss-tag-best">★ BEST BET</span><span class="ss-hc-type">${typeLabel} · ${when}</span></span><span class="ss-mkt-right">${ssMeter(st.bars)}<b class="ss-good ss-big">${ssCents1(o.edge)} off</b></span></div>
-                        <div class="ss-hc-bet">${ssBadge(teamName, 34)}<div><div class="ss-hc-pick">${ssEsc(pick)}</div><div class="ss-hc-game">${ssEsc(g ? ssShortName(g, 'away') + ' @ ' + ssShortName(g, 'home') : o.awayTeam + ' @ ' + o.homeTeam)}</div></div></div>
-                        ${ssBarRows([{ label: 'Costs', val: o.polyPrice * 100, color: 'var(--ss-gray-bar)', text: ssCents(o.polyPrice) },
-                                     { label: 'Worth', val: o.polyPrice * 100, gapW: o.edge * 100, color: 'var(--ss-green)', text: ssCents1(o.fairProb) }])}
-                        <div class="ss-hc-why">${ssCents1(o.edge)} off · ${o.books} books agree${g && ssModelAgrees(o, g) ? ' · Model agrees' : ''}</div>
-                        <div class="ss-actions"><button type="button" class="ss-btn-outline" onclick="trackValueBet('${o.id}', this); this.textContent='✓ Tracked'">Track</button>${o.tradeUrl ? `<a class="ss-btn-green" href="${ssEsc(o.tradeUrl)}" target="_blank" rel="noopener">Trade on Polymarket</a>` : ''}</div>
-                    </article>`;
-                });
-                const otherCard = `<a class="ss-hero-other" href="#" onclick="switchTab('value'); return false;">
-                    <span class="ss-kicker">${bests.length ? 'Other value today' : 'No Best Bets right now'}</span>
-                    <b>${others} ${bests.length ? 'smaller ' : ''}value bet${others === 1 ? '' : 's'}</b>
-                    <span>${bests.length ? 'Under 4¢ off, or fewer books agree. Still cheaper than they should be, just not by as much.' : 'Nothing clears the Best Bet bar yet. Smaller discounts are on the Value page.'}</span>
-                    <strong>See all value bets →</strong></a>`;
-                cards.innerHTML = heroCards.join('') + otherCard;
+                    const disc = o.edge >= 0 ? `<b class="ss-good">${ssCents1(o.edge)} off</b>` : `<b class="ss-faint">${ssCents1(-o.edge)} over</b>`;
+                    const model = t.model === 'agrees' ? '<span class="ss-t10-tag ss-t10-agree">Model agrees</span>' : t.model === 'disagrees' ? '<span class="ss-t10-tag ss-t10-disagree">Model disagrees</span>' : '';
+                    return `<div class="ss-t10-row${t.best ? ' ss-t10-row--best' : ''}">
+                        <span class="ss-t10-rank">${t.rank}</span>
+                        <div class="ss-t10-bet">${ssBadge(teamName, 30)}<div class="ss-t10-text">
+                            <div class="ss-t10-pick">${t.best ? '<span class="ss-tag-best">★ BEST BET</span> ' : ''}${ssEsc(ssPickText(g || { homeTeam: o.homeTeam, homeRating: null, awayRating: null }, o))}</div>
+                            <div class="ss-t10-sub">${typeLabel} · ${ssEsc(g ? ssShortName(g, 'away') + ' @ ' + ssShortName(g, 'home') : o.awayTeam + ' @ ' + o.homeTeam)} · ${when}<span class="ss-mob-only"> · ${Math.round(o.fairProb * 100)}% chance · ${ssCents(o.polyPrice)}, ${o.edge >= 0 ? ssCents1(o.edge) + ' off' : ssCents1(-o.edge) + ' over'}</span></div>
+                        </div></div>
+                        <div class="ss-t10-stat"><span>Chance</span><b>${Math.round(o.fairProb * 100)}%</b></div>
+                        <div class="ss-t10-stat"><span>Price</span><b>${ssCents(o.polyPrice)}</b>${disc}</div>
+                        <div class="ss-t10-tags">${model}</div>
+                        <div class="ss-t10-score sc-${t.cls}"><b>${t.score}</b><span>${t.label}</span></div>
+                        <div class="ss-t10-act">${o.tradeUrl ? `<a class="ss-btn-green" href="${ssEsc(o.tradeUrl)}" target="_blank" rel="noopener">Trade</a>` : ''}</div>
+                    </div>`;
+                }).join('') : '<div class="ss-empty" style="color:#D6DEEA">Nothing to rank yet.</div>';
             }
             const stats = document.getElementById('ssHeroStats');
             if (stats) ssValueLogSummary().then(s => { stats.innerHTML = ssStatTiles(s); }).catch(() => {});
@@ -28461,7 +28520,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                         <div class="ss-vgame"><div>${ssEsc(g ? ssShortName(g, 'away') + ' @ ' + ssShortName(g, 'home') : o.awayTeam + ' @ ' + o.homeTeam)}</div><div class="ss-vsub">${when}</div></div>
                         ${ssBarRows([{ label: 'Costs', val: o.polyPrice * 100, color: 'var(--ss-gray-bar)', text: ssCents(o.polyPrice) },
                                      { label: 'Worth', val: o.polyPrice * 100, gapW: o.edge * 100, color: 'var(--ss-green)', text: ssCents1(o.fairProb) }])}
-                        <div class="ss-vval"><span class="ss-pill${st.best ? ' ss-pill--best' : ''}">${ssCents1(o.edge)} off</span>${ssMeter(st.bars)}</div>
+                        <div class="ss-vval"><span class="ss-pill${st.best ? ' ss-pill--best' : ''}">${ssCents1(o.edge)} off</span>${(() => { const sc = ssBetScore(o, g); return `<span class="ss-vscore sc-${sc.cls}">Score ${sc.score} · ${sc.label}</span>`; })()}</div>
                         <div class="ss-actions">
                             <button type="button" class="ss-btn-outline${tracked.has(o.id) ? ' is-on' : ''}" onclick="trackValueBet('${o.id}', this).then(() => renderValueTab())">${tracked.has(o.id) ? '✓ Tracked' : 'Track'}</button>
                             ${o.tradeUrl ? `<a class="ss-btn-green" href="${ssEsc(o.tradeUrl)}" target="_blank" rel="noopener">Trade</a>` : ''}
@@ -28471,6 +28530,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             }
             const statsEl = document.getElementById('vtStats');
             if (statsEl) ssValueLogSummary().then(s => { statsEl.innerHTML = ssStatTiles(s); }).catch(() => {});
+            renderLongshots();
             try { await renderValueTabLegacy(); } catch (e) { /* tracked list only */ }
         }
 
@@ -28483,6 +28543,41 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             if (right && menu) right.appendChild(menu);
             const legacy = document.getElementById('legacyHeader');
             if (legacy) legacy.style.display = 'none';
+        }
+
+        // ===== Bet Score (0–100) and Today's Top 10 =====
+        // 50 = fair price. Each 1% of expected return (¢ off ÷ price) adds ~3 points, scaled by how many
+        // books agree (2 books 0.7, 3 books 0.85, 4+ full). Model agrees +5, disagrees −5. Clamped 0–100.
+        function ssModelView(o, g) {
+            if (!g) return 'none';
+            const type = o.type === 'total' ? 'total' : 'spread';
+            const l = ssLean(g, type);
+            if (!l) return 'none';
+            return ssModelAgrees(o, g) ? 'agrees' : 'disagrees';
+        }
+        function ssBetScore(o, g) {
+            const roi = o.polyPrice > 0 ? (o.edge / o.polyPrice) * 100 : 0;
+            const rel = o.books >= 4 ? 1 : o.books === 3 ? 0.85 : 0.7;
+            const model = ssModelView(o, g);
+            let score = 50 + roi * 3 * rel + (model === 'agrees' ? 5 : model === 'disagrees' ? -5 : 0);
+            score = Math.max(0, Math.min(100, Math.round(score)));
+            const label = score >= 80 ? 'Strong' : score >= 60 ? 'Good' : score >= 50 ? 'Thin' : 'No value';
+            const cls = score >= 80 ? 'strong' : score >= 60 ? 'good' : score >= 50 ? 'thin' : 'none';
+            return { score, label, cls, model };
+        }
+        function ssTop10() {
+            const gameById = Object.fromEntries((state.games || []).map(g => [g.id, g]));
+            const pool = (state.value?.all || state.value?.opportunities || [])
+                .filter(o => gameById[o.gameId] && ssCategory(o) === 'value');
+            const bestPer = {};
+            pool.forEach(o => {
+                const sc = ssBetScore(o, gameById[o.gameId]);
+                const key = o.gameId + '|' + o.type;
+                if (!bestPer[key] || sc.score > bestPer[key].score || (sc.score === bestPer[key].score && o.edge > bestPer[key].o.edge)) {
+                    bestPer[key] = { o, ...sc, best: o.edge >= 0.02 && ssStrength(o.edge, o.books).best };
+                }
+            });
+            return Object.values(bestPer).sort((a, b) => b.score - a.score || b.o.edge - a.o.edge).slice(0, 10).map((t, i) => ({ ...t, rank: i + 1 }));
         }
 
         // ===== Longshots: moneyline underdogs with value and a real chance (15–40%) =====
@@ -28524,7 +28619,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                         ${o.tradeUrl ? `<a class="ss-btn-green ss-btn-purple" href="${ssEsc(o.tradeUrl)}" target="_blank" rel="noopener">Trade</a>` : ''}
                     </div>
                 </div>`;
-            }).join('') : '<div class="ss-empty">No longshots right now. Underdogs with a 15–40% chance are priced in line with the sportsbooks.</div>';
+            }).join('') : '<div class="ss-empty">No longshots right now.</div>';
             const statsEl = document.getElementById('lsStats');
             if (statsEl) ssValueLogSummary().then(sm => {
                 const l = sm.longshot;
