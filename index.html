@@ -10102,6 +10102,14 @@
 
         .ss-why { border-top: 1px solid var(--ss-line); padding: 16px 20px 20px; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr) 44px; grid-template-rows: auto auto; gap: 16px; align-items: stretch; }
         .ss-why-h2h { grid-column: 1; grid-row: 1 / span 2; }
+        .ss-why-h2h .ss-h2h-names { font-size: 15px; font-weight: 800; }
+        .ss-h2h-rows { flex: 1; display: flex; flex-direction: column; justify-content: space-evenly; gap: 10px; padding: 6px 0; }
+        .ss-why-h2h .ss-h2h-row { grid-template-columns: 1fr 84px 1fr; }
+        .ss-why-h2h .ss-h2h-row > span { font-size: 12px; }
+        .ss-why-h2h .ss-h2h-l i, .ss-why-h2h .ss-h2h-r i { height: 16px; border-radius: 8px; }
+        .ss-why-h2h .ss-h2h-l b, .ss-why-h2h .ss-h2h-r b { font-size: 16px; font-weight: 500; color: var(--ss-muted); }
+        .ss-why-h2h .ss-h2h-l b.better, .ss-why-h2h .ss-h2h-r b.better { font-weight: 800; color: var(--ss-ink); }
+        .ss-h2h-rank .ss-h2h-l, .ss-h2h-rank .ss-h2h-r { min-height: 16px; }
         .ss-why-s1 { grid-column: 2; grid-row: 1; } .ss-why-t1 { grid-column: 3; grid-row: 1; }
         .ss-why-s2 { grid-column: 2; grid-row: 2; display: flex; } .ss-why-t2 { grid-column: 3; grid-row: 2; display: flex; }
         .ss-why-s2 > .ss-box, .ss-why-t2 > .ss-box { flex: 1; }
@@ -28125,9 +28133,9 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             ].filter(r => r[1] != null && r[2] != null && !isNaN(r[1]) && !isNaN(r[2]));
             const h2h = rows.map(([lab, av, hv, lo, hi, f]) => `
                 <div class="ss-h2h-row">
-                    <div class="ss-h2h-l"><b>${f(av)}</b><i style="width:${bar(av, lo, hi)}%;background:${aL.color}"></i></div>
+                    <div class="ss-h2h-l"><b class="${lab !== 'Pace' && av > hv ? 'better' : ''}">${f(av)}</b><i style="width:${bar(av, lo, hi)}%;background:${aL.color}"></i></div>
                     <span>${lab}</span>
-                    <div class="ss-h2h-r"><i style="width:${bar(hv, lo, hi)}%;background:${hL.color}"></i><b>${f(hv)}</b></div>
+                    <div class="ss-h2h-r"><i style="width:${bar(hv, lo, hi)}%;background:${hL.color}"></i><b class="${lab !== 'Pace' && hv > av ? 'better' : ''}">${f(hv)}</b></div>
                 </div>`).join('');
 
             const m = ssModelNums(g);
@@ -28178,10 +28186,13 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             return `
                 <div class="ss-why">
                     <div class="ss-panel ss-why-h2h">
-                        <h3 class="ss-box-title">Head to head</h3>
-                        <div class="ss-h2h-names"><span>${ssBadge(aN, 20)} ${ssEsc(aN)}</span><span>${ssEsc(hN)} ${ssBadge(hN, 20)}</span></div>
-                        ${h2h || '<p class="ss-muted">Ratings not available.</p>'}
-                        <p class="ss-muted">Longer bar = better.</p>
+                        <h3 class="ss-box-title">Head to Head</h3>
+                        <div class="ss-h2h-names"><span>${ssBadge(aN, 28)} ${ssEsc(aN)}</span><span>${ssEsc(hN)} ${ssBadge(hN, 28)}</span></div>
+                        <div class="ss-h2h-rows">
+                            ${(ar.rank && hr.rank && ar.rank < 400 && hr.rank < 400) ? `<div class="ss-h2h-row ss-h2h-rank"><div class="ss-h2h-l"><b class="${ar.rank < hr.rank ? 'better' : ''}">#${ar.rank}</b></div><span>Rank</span><div class="ss-h2h-r"><b class="${hr.rank < ar.rank ? 'better' : ''}">#${hr.rank}</b></div></div>` : ''}
+                            ${h2h || '<p class="ss-muted">Ratings not available.</p>'}
+                        </div>
+                        <p class="ss-muted">Longer bar = better. Bold = the stronger team.</p>
                     </div>
                     <div class="ss-panel ss-box ss-why-s1"><h3 class="ss-box-title">Spread: ${ssEsc(spreadTitle)}</h3>${spreadBody}</div>
                     <div class="ss-panel ss-box ss-why-t1"><h3 class="ss-box-title">Total: ${ssEsc(totalTitle)}</h3>${totalBody}</div>
