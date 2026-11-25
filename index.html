@@ -9974,6 +9974,229 @@
             background: var(--orange-hover);
         }
 
+
+        /* ================= NEW UI (v7) ================= */
+        :root, [data-theme="light"] {
+            --ss-page: #E6EBF2; --ss-surface: #FFFFFF; --ss-surface2: #F2F5F9; --ss-row-alt: #F7F9FC;
+            --ss-ink: #14213D; --ss-ink2: #374151; --ss-muted: #4B5563; --ss-faint: #5F6672;
+            --ss-line: #E3E8EF; --ss-line2: #D3DBE6; --ss-track: #DDE3EB;
+            --ss-navy: #1E3A5F; --ss-navy-dk: #14213D; --ss-gray-bar: #8A97A8;
+            --ss-green: #1A7F4B; --ss-good-text: #13603A; --ss-green-bg: #EAF6EF; --ss-green-line: #A7D7B9;
+            --ss-lean-bg: #EEF2F8; --ss-lean-line: #C9D5E6;
+            --ss-orange: #E8742C; --ss-orange-dk: #C2531A; --ss-orange-bg: #FFF4EC; --ss-orange-row: #FFFAF6; --ss-orange-text: #B4511A;
+        }
+        [data-theme="dark"] {
+            --ss-page: #0E1524; --ss-surface: #172133; --ss-surface2: #1D2A40; --ss-row-alt: #1A2538;
+            --ss-ink: #E8EDF5; --ss-ink2: #CBD5E3; --ss-muted: #AAB7C9; --ss-faint: #95A3B7;
+            --ss-line: #2A3850; --ss-line2: #33445F; --ss-track: #2C3A52;
+            --ss-navy: #4F7DB8; --ss-navy-dk: #0B1220; --ss-gray-bar: #7D8BA0;
+            --ss-green: #2FA36A; --ss-good-text: #7FE0A8; --ss-green-bg: #13301F; --ss-green-line: #2F6B4A;
+            --ss-lean-bg: #1B2A44; --ss-lean-line: #34496E;
+            --ss-orange-bg: #3A2416; --ss-orange-row: #2A1E17; --ss-orange-text: #F6A56F;
+        }
+        body { background: var(--ss-page) !important; color: var(--ss-ink); }
+        #legacyHeader, #globalConfidenceLegend, .metrics-bar-wrapper, .tab-legend-toggle { display: none !important; }
+        .ss-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+        .ss-top { background: #14213D; color: #FFFFFF; position: sticky; top: 0; z-index: 900; padding-top: env(safe-area-inset-top); }
+        .ss-top-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; min-height: 60px; display: flex; align-items: center; gap: 28px; }
+        .ss-brand { display: flex; align-items: center; gap: 10px; color: #FFFFFF !important; text-decoration: none; font-family: 'Playfair Display', Georgia, serif; font-size: 20px; font-weight: 700; white-space: nowrap; }
+        .ss-nav { display: flex; gap: 4px; flex: 1 1 auto; background: none !important; border: 0 !important; padding: 0 !important; margin: 0 !important; box-shadow: none !important; position: static !important; }
+        .ss-nav .tab { display: inline-flex; align-items: center; gap: 6px; background: transparent; color: #D6DEEA; border: 0; border-radius: 8px; padding: 9px 14px; font: 500 14px Inter, system-ui, sans-serif; cursor: pointer; min-height: 40px; }
+        .ss-nav .tab svg { display: none; }
+        .ss-nav .tab:hover { color: #FFFFFF; background: rgba(255,255,255,0.08); }
+        .ss-nav .tab.active { background: #FFFFFF; color: #14213D; font-weight: 700; }
+        .ss-nav .tab::after { display: none !important; }
+        .ss-nav .tab-badge { background: #E8742C; color: #FFFFFF; border-radius: 999px; font-size: 11px; font-weight: 700; padding: 1px 7px; }
+        .ss-nav .tab-badge:empty { display: none; }
+        .ss-top-right { display: flex; align-items: center; gap: 14px; color: #D6DEEA; font-size: 13px; }
+        .ss-top-right .header-status { color: #D6DEEA; background: transparent; border: 0; padding: 0; }
+        .ss-top-right .hamburger-btn .bar { background: #FFFFFF; }
+
+        .ss-wrap { max-width: 1200px; margin: 0 auto; padding: 20px 16px 56px; display: flex; flex-direction: column; gap: 16px; }
+        .ss-kicker { font-size: 12px; font-weight: 700; color: #B9C7DA; text-transform: uppercase; letter-spacing: 0.06em; }
+        .ss-hero { background: #1E3A5F; color: #FFFFFF; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 18px; }
+        .ss-hero-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+        .ss-hero-title { margin: 2px 0 4px; font: 800 28px Inter, system-ui, sans-serif; letter-spacing: -0.01em; color: #FFFFFF; }
+        .ss-hero-sub { font-size: 14px; line-height: 1.5; color: #D6DEEA; }
+        .ss-hero-stats { display: flex; gap: 10px; flex-wrap: wrap; }
+        .ss-stat { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); border-radius: 10px; padding: 9px 13px; display: flex; flex-direction: column; gap: 2px; }
+        .ss-stat span { font-size: 11px; font-weight: 700; color: #B9C7DA; text-transform: uppercase; letter-spacing: 0.05em; }
+        .ss-stat b { font: 700 17px 'JetBrains Mono', monospace; color: #FFFFFF; }
+        .ss-stat b.ss-stat-small { font: 700 14px Inter, sans-serif; }
+        .ss-stat em { font-style: normal; } .ss-stat em.up { color: #7FE0A8; } .ss-stat em.down { color: #FFB4A8; }
+        .ss-hero-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+        .ss-hero-card { background: var(--ss-surface); color: var(--ss-ink); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 0 0 3px var(--ss-orange), 0 6px 18px rgba(8,18,38,0.25); }
+        .ss-hc-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+        .ss-hc-tags { display: flex; align-items: center; gap: 8px; }
+        .ss-hc-type { font-size: 12px; font-weight: 700; color: var(--ss-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .ss-tag-best { display: inline-block; background: var(--ss-orange-dk); color: #FFFFFF; font-size: 11px; font-weight: 800; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 5px; }
+        .ss-hc-bet { display: flex; align-items: center; gap: 10px; min-width: 0; }
+        .ss-hc-pick { font-size: 19px; font-weight: 800; }
+        .ss-hc-game { font-size: 13px; color: var(--ss-muted); }
+        .ss-hc-why { font-size: 13px; font-weight: 600; }
+        .ss-hero-other { border: 2px dashed rgba(255,255,255,0.3); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; justify-content: center; gap: 8px; color: #FFFFFF !important; text-decoration: none; }
+        .ss-hero-other b { font-size: 20px; } .ss-hero-other span:not(.ss-kicker) { font-size: 14px; line-height: 1.5; color: #D6DEEA; }
+        .ss-hero--slim { padding: 22px 24px; }
+
+        .ss-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+        .ss-toolbar-title { display: flex; align-items: baseline; gap: 12px; }
+        .ss-toolbar-title h2 { margin: 0; font: 800 22px Inter, sans-serif; color: var(--ss-ink); }
+        .ss-toolbar-title span { font-size: 14px; color: var(--ss-muted); }
+        .ss-toolbar-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .ss-seg { display: flex; background: var(--ss-line2); border-radius: 10px; padding: 4px; gap: 4px; }
+        .ss-seg-btn { border: 0; background: transparent; color: var(--ss-ink); font: 600 13px Inter, sans-serif; padding: 0 14px; border-radius: 8px; min-height: 40px; cursor: pointer; }
+        .ss-seg-btn.ss-seg-best { color: var(--ss-orange-text); font-weight: 700; }
+        .ss-seg-btn.active { background: var(--ss-navy-dk); color: #FFFFFF; }
+        .ss-select, .ss-input { font: 500 13px Inter, sans-serif; color: var(--ss-ink); background: var(--ss-surface); border: 1px solid var(--ss-line2); border-radius: 10px; padding: 0 12px; height: 44px; }
+        .ss-input { width: 170px; }
+        .ss-btn-ghost { background: transparent; border: 1px solid var(--ss-line2); color: var(--ss-ink); border-radius: 10px; height: 44px; padding: 0 14px; font: 600 13px Inter, sans-serif; cursor: pointer; }
+        .ss-legend { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; font-size: 12px; font-weight: 600; color: var(--ss-ink2); background: var(--ss-surface); border-radius: 10px; padding: 10px 14px; }
+        .ss-legend strong { color: var(--ss-ink); }
+        .ss-legend span { display: flex; align-items: center; gap: 6px; }
+        .ss-legend i { width: 14px; height: 8px; border-radius: 4px; display: inline-block; }
+
+        .ss-games { background: var(--ss-surface); border-radius: 14px; overflow: hidden; box-shadow: 0 1px 3px rgba(20,33,61,0.1); }
+        .ss-group-head { background: var(--ss-navy-dk); color: #FFFFFF; padding: 8px 20px; font-size: 13px; font-weight: 800; letter-spacing: 0.03em; display: flex; justify-content: space-between; }
+        .ss-group-head span:last-child { font-weight: 600; color: #B9C7DA; }
+        .ss-game { border-top: 1px solid var(--ss-line); background: var(--ss-surface); }
+        .ss-game--best { background: var(--ss-orange-row); box-shadow: inset 0 0 0 2px var(--ss-orange); }
+        .ss-game--open { background: var(--ss-surface2); }
+        .ss-game-main { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr) 44px; gap: 16px; align-items: center; padding: 16px 20px; }
+        .ss-matchup { display: flex; flex-direction: column; gap: 10px; min-width: 0; padding-right: 8px; }
+        .ss-team { display: grid; grid-template-columns: 30px minmax(0, 1fr) 64px; align-items: center; gap: 10px; }
+        .ss-name { display: flex; align-items: baseline; gap: 6px; min-width: 0; font-size: 18px; font-weight: 700; color: var(--ss-ink); }
+        .ss-name > span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+        .ss-name em { font-style: normal; font-size: 12px; color: var(--ss-faint); font-weight: 600; flex: none; }
+        .ss-team > b { font: 700 16px 'JetBrains Mono', monospace; text-align: right; color: var(--ss-muted); }
+        .ss-team > b.fav { color: var(--ss-ink); }
+        .ss-badge { position: relative; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-family: Inter, sans-serif; font-weight: 800; flex: none; overflow: hidden; letter-spacing: -0.02em; }
+        .ss-badge img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #FFFFFF; padding: 2px; box-sizing: border-box; }
+
+        .ss-mkt { height: 156px; box-sizing: border-box; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; min-width: 0; overflow: hidden; border: 1px solid var(--ss-line); background: var(--ss-row-alt); }
+        .ss-mkt > * { flex: none; }
+        .ss-mkt--lean { background: var(--ss-lean-bg); border-color: var(--ss-lean-line); }
+        .ss-mkt--value { background: var(--ss-green-bg); border-color: var(--ss-green-line); }
+        .ss-mkt--best { background: var(--ss-orange-bg); border-color: var(--ss-orange); }
+        .ss-mkt--none { background: transparent; border-color: var(--ss-line); }
+        .ss-mkt-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 16px; }
+        .ss-mkt-label { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; color: var(--ss-muted); }
+        .ss-mkt-right { display: flex; align-items: center; gap: 8px; }
+        .ss-good { font: 700 13px 'JetBrains Mono', monospace; color: var(--ss-good-text); }
+        .ss-good.ss-big { font-size: 15px; font-weight: 800; }
+        .ss-edge { font: 700 13px 'JetBrains Mono', monospace; color: var(--ss-orange-text); }
+        .ss-none { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--ss-faint); }
+        .ss-chip { align-self: flex-start; color: #FFFFFF; font-size: 13px; line-height: 1.35; font-weight: 700; padding: 4px 10px; border-radius: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; box-sizing: border-box; }
+        .ss-chip--lean { background: var(--ss-navy); } .ss-chip--value { background: var(--ss-green); } .ss-chip--best { background: var(--ss-orange-dk); }
+        .ss-say { font-size: 12px; color: var(--ss-ink2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .ss-meter { display: inline-flex; align-items: flex-end; gap: 3px; }
+        .ss-meter i { display: block; border-radius: 2px; }
+        .ss-bars { display: grid; grid-template-columns: 50px 1fr 52px; gap: 6px; align-items: center; font-size: 12px; font-weight: 600; color: var(--ss-muted); }
+        .ss-track { height: 8px; background: var(--ss-track); border-radius: 4px; overflow: hidden; display: flex; }
+        .ss-track i { display: block; height: 100%; }
+        .ss-num { font-family: 'JetBrains Mono', monospace; text-align: right; color: var(--ss-ink); font-weight: 700; }
+        .ss-why-btn { width: 44px; height: 44px; border-radius: 10px; border: 0; background: var(--ss-line); color: var(--ss-ink); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .ss-why-btn .ss-why-text { display: none; }
+        .ss-game--open .ss-why-btn { background: var(--ss-navy-dk); color: #FFFFFF; }
+        .ss-game--open .ss-why-btn svg { transform: rotate(180deg); }
+
+        .ss-why { border-top: 1px solid var(--ss-line); padding: 20px; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr); gap: 18px; }
+        .ss-panel { background: var(--ss-surface); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+        .ss-panel h3 { margin: 0; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ss-muted); }
+        .ss-h2h-names { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: var(--ss-ink); }
+        .ss-h2h-names span { display: flex; align-items: center; gap: 6px; }
+        .ss-h2h-row { display: grid; grid-template-columns: 1fr 72px 1fr; align-items: center; gap: 8px; }
+        .ss-h2h-row > span { text-align: center; font-size: 11px; font-weight: 700; color: var(--ss-muted); text-transform: uppercase; }
+        .ss-h2h-l, .ss-h2h-r { display: flex; align-items: center; gap: 6px; }
+        .ss-h2h-l { justify-content: flex-end; }
+        .ss-h2h-l i, .ss-h2h-r i { display: block; height: 10px; border-radius: 5px; }
+        .ss-h2h-l b, .ss-h2h-r b { font: 700 12px 'JetBrains Mono', monospace; color: var(--ss-ink); }
+        .ss-kv { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; color: var(--ss-ink2); }
+        .ss-kv b { font-family: 'JetBrains Mono', monospace; color: var(--ss-ink); text-align: right; }
+        .ss-kv--total { border-top: 1px solid var(--ss-line); padding-top: 8px; font-weight: 800; }
+        .ss-kv--edge, .ss-kv--edge b { color: var(--ss-orange-text); font-weight: 800; }
+        .ss-muted { margin: 0; font-size: 12px; line-height: 1.5; color: var(--ss-muted); }
+        .ss-muted b { color: var(--ss-muted); }
+        .ss-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+        .ss-btn-outline, .ss-actions .bb-track-btn { flex: 1; min-height: 44px; padding: 0 14px; border-radius: 10px; border: 2px solid var(--ss-navy); background: var(--ss-surface); color: var(--ss-navy); font: 700 14px Inter, sans-serif; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+        .ss-btn-outline.is-on, .ss-actions .bb-track-btn.tracked { background: var(--ss-navy); color: #FFFFFF; }
+        .ss-btn-solid, .ss-btn-green { flex: 1; min-height: 44px; padding: 0 16px; border-radius: 10px; color: #FFFFFF !important; font: 700 14px Inter, sans-serif; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+        .ss-btn-solid { background: var(--ss-navy); } .ss-btn-green { background: var(--ss-green); }
+        .ss-empty { padding: 28px 20px; color: var(--ss-muted); font-size: 14px; text-align: center; }
+        .ss-foot { margin: 4px 0 0; font-size: 12px; color: var(--ss-muted); text-align: center; line-height: 1.5; }
+
+        .ss-table { background: var(--ss-surface); border-radius: 14px; overflow: hidden; box-shadow: 0 1px 3px rgba(20,33,61,0.1); }
+        .ss-vrow { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr) minmax(0, 2fr) 104px 190px; gap: 18px; align-items: center; padding: 18px 20px; border-top: 1px solid var(--ss-line); }
+        .ss-vrow:first-child { border-top: 0; }
+        .ss-vrow:nth-child(even) { background: var(--ss-row-alt); }
+        .ss-vrow--best, .ss-vrow--best:nth-child(even) { background: var(--ss-orange-row); box-shadow: inset 0 0 0 2px var(--ss-orange); }
+        .ss-vbet { display: flex; align-items: center; gap: 10px; min-width: 0; }
+        .ss-vbet .ss-tag-best { margin-bottom: 4px; }
+        .ss-vpick { font-size: 16px; font-weight: 800; color: var(--ss-ink); }
+        .ss-vsub { font-size: 12px; font-weight: 600; color: var(--ss-muted); }
+        .ss-vgame { font-size: 14px; font-weight: 600; color: var(--ss-ink); min-width: 0; }
+        .ss-vval { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+        .ss-pill { background: var(--ss-green); color: #FFFFFF; font: 700 15px 'JetBrains Mono', monospace; padding: 6px 12px; border-radius: 999px; white-space: nowrap; }
+        .ss-pill--best { background: var(--ss-orange-dk); }
+
+        /* Scorecard + My Bets in the new style */
+        .sc-header h2, .tracked-title-section h2 { font-family: Inter, sans-serif !important; font-weight: 800 !important; color: var(--ss-ink) !important; }
+        .sc-section { background: var(--ss-surface) !important; border: 0 !important; box-shadow: 0 1px 3px rgba(20,33,61,0.1); }
+        .sc-stat { background: var(--ss-surface2) !important; }
+        .sc-table th { background: var(--ss-navy-dk); color: #FFFFFF !important; }
+        .sc-table th:first-child { color: #FFFFFF !important; }
+        .tracked-bets-page, .sc-page { padding: 20px 16px 56px; }
+
+        @media (max-width: 960px) {
+            .ss-game-main { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+            .ss-matchup { grid-column: 1 / -1; }
+            .ss-why-btn { grid-column: 1 / -1; width: 100%; }
+            .ss-why-btn .ss-why-text { display: inline; margin-right: 8px; font: 700 14px Inter, sans-serif; }
+            .ss-why { grid-template-columns: 1fr; }
+            .ss-vrow { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+        }
+        @media (max-width: 640px) {
+            .ss-top-inner { padding: 0 14px; gap: 12px; justify-content: space-between; }
+            .ss-brand { font-size: 18px; }
+            .ss-top-right .header-status { font-size: 11px; }
+            .ss-nav { position: fixed !important; top: auto !important; left: 0; right: 0; bottom: 0; height: auto !important; z-index: 950; background: #14213D !important; display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 6px 4px calc(10px + env(safe-area-inset-bottom)) !important; gap: 0; }
+            .ss-nav .tab { flex-direction: column; gap: 3px; font-size: 12px; padding: 6px 2px; min-height: 54px; border-radius: 0; position: relative; }
+            .ss-nav .tab svg { display: block; }
+            .ss-nav .tab.active { background: transparent; color: #FFFFFF; }
+            .ss-nav .tab.active::before { content: ''; position: absolute; bottom: 2px; width: 20px; height: 3px; border-radius: 2px; background: #E8742C; }
+            .ss-nav .tab-badge { position: absolute; top: 2px; right: 22%; font-size: 10px; padding: 0 5px; }
+            .ss-wrap, .tracked-bets-page, .sc-page { padding: 14px 10px 110px; }
+            .ss-hero { padding: 18px 14px; border-radius: 14px; }
+            .ss-hero-title { font-size: 24px; }
+            .ss-hero-cards { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding: 4px 2px 8px; margin: 0 -14px; padding-left: 14px; padding-right: 14px; }
+            .ss-hero-card { flex: 0 0 290px; scroll-snap-align: start; }
+            .ss-hero-other { flex: 0 0 220px; scroll-snap-align: start; }
+            .ss-stat { flex: 1; min-width: 120px; }
+            .ss-hero-stats .ss-stat:nth-child(n+3) { display: none; }
+            .ss-toolbar-controls { width: 100%; }
+            .ss-seg { width: 100%; } .ss-seg-btn { flex: 1; }
+            .ss-select, .ss-input { flex: 1; min-width: 0; width: auto; }
+            .ss-legend { gap: 10px; font-size: 11px; }
+            .ss-games { background: transparent; box-shadow: none; display: flex; flex-direction: column; gap: 10px; overflow: visible; }
+            .ss-group-head { border-radius: 8px; padding: 7px 14px; }
+            .ss-game { border: 0; border-radius: 14px; box-shadow: 0 1px 3px rgba(20,33,61,0.1); }
+            .ss-game--best { box-shadow: inset 0 0 0 2px var(--ss-orange); }
+            .ss-game-main { grid-template-columns: 1fr; gap: 10px; padding: 14px; }
+            .ss-team { grid-template-columns: 28px minmax(0, 1fr) 56px; }
+            .ss-name { font-size: 17px; }
+            .ss-team > b { font-size: 15px; }
+            .ss-mkt { height: 108px; padding: 10px 12px; gap: 6px; }
+            .ss-mkt .ss-chip { font-size: 12px; padding: 3px 8px; }
+            .ss-mkt .ss-say { display: none; }
+            .ss-mkt--none { height: 36px; flex-direction: row; align-items: center; padding: 0 12px; }
+            .ss-mkt--none .ss-none { justify-content: flex-start; font-size: 12px; }
+            .ss-bars { grid-template-columns: 44px 1fr 42px; font-size: 11px; }
+            .ss-track { height: 6px; }
+            .ss-why { padding: 0 14px 14px; border-top: 0; gap: 12px; }
+            .ss-panel { background: var(--ss-surface2); }
+            .ss-vrow { grid-template-columns: 1fr; gap: 10px; padding: 14px; }
+            .ss-vval { flex-direction: row; align-items: center; justify-content: flex-start; }
+        }
         /* Scorecard */
         #metricsBarWrapper { display: none !important; }
         .sc-page { max-width: 920px; margin: 0 auto; }
@@ -10047,9 +10270,24 @@
     <!-- Skip to main content link for keyboard users -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
+    <header class="ss-top">
+        <div class="ss-top-inner">
+            <a href="#" class="ss-brand" onclick="switchTab('today'); return false;">
+                <svg width="30" height="30" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="13" fill="#E8742C"></circle><path d="M6 18 L11 12 L15 15 L22 8" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span>The Spread Sheet</span>
+            </a>
+            <nav class="ss-nav tabs-container" role="tablist" aria-label="Main navigation">
+                <button class="tab active" onclick="switchTab('today')" id="tabToday" role="tab" aria-selected="true" aria-controls="todayTab"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 10h16M9 3v4M15 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Today</span></button>
+                <button class="tab" onclick="switchTab('value')" id="tabValue" role="tab" aria-selected="false" aria-controls="valueTab"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M16 7.5c0-1.9-1.8-3-4-3s-4 1.1-4 3 1.8 2.6 4 3.2 4 1.3 4 3.3-1.8 3-4 3-4-1.1-4-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Value</span><span class="tab-badge" id="tabValueCount"></span></button>
+                <button class="tab" onclick="switchTab('validation')" id="tabValidation" role="tab" aria-selected="false" aria-controls="validationTab"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Scorecard</span></button>
+                <button class="tab" onclick="switchTab('tracked')" id="tabTracked" role="tab" aria-selected="false" aria-controls="trackedTab"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>My Bets</span><span class="tab-badge" id="tabTrackedCount"></span></button>
+            </nav>
+            <div class="ss-top-right" id="ssTopRight"></div>
+        </div>
+    </header>
     <div class="container" role="main" id="main-content">
         <div class="sticky-nav-wrapper">
-        <header class="header">
+        <header class="header" id="legacyHeader">
             <div class="header-left">
                 <a href="#main-content" class="brand-logo" aria-label="The Spread Sheet - Home">
                     <img src="assets/brand/logo-icon.png"
@@ -10187,15 +10425,6 @@
             </div>
         </div>
 
-        <div class="tabs-container" role="tablist" aria-label="Main navigation">
-            <button class="tab active" onclick="switchTab('games')" id="tabGames" role="tab" aria-selected="true" aria-controls="gamesTab">Games <span class="tab-badge" id="tabGamesCount"></span></button>
-            <button class="tab" onclick="switchTab('bestbets')" id="tabBestbets" role="tab" aria-selected="false" aria-controls="bestbetsTab">Leans <span class="tab-badge" id="tabBetsCount"></span></button>
-            <button class="tab" onclick="switchTab('value')" id="tabValue" role="tab" aria-selected="false" aria-controls="valueTab">Value <span class="tab-badge" id="tabValueCount"></span></button>
-            <button class="tab" onclick="switchTab('tracked')" id="tabTracked" role="tab" aria-selected="false" aria-controls="trackedTab">Tracked <span class="tab-badge" id="tabTrackedCount"></span></button>
-            <span class="tab-divider"></span>
-            <button class="tab" onclick="switchTab('validation')" id="tabValidation" role="tab" aria-selected="false" aria-controls="validationTab">Scorecard</button>
-            <button class="tab-legend-toggle" onclick="document.getElementById('globalConfidenceLegend').classList.toggle('visible')" title="Toggle win probability legend" aria-label="Toggle legend">?</button>
-        </div>
         </div>
 
         <!-- Unified Win% Legend - Shared across Games and Best Bets tabs -->
@@ -10204,7 +10433,55 @@
             <div class="confidence-legend-items"><span class="confidence-legend-label"><strong>Lean</strong>: the side the model prefers. <strong>Edge (pts)</strong>: how far the model's number is from the line. Bigger edge means bigger disagreement, not a higher chance. <strong>Value</strong> bets are on the Value tab. Full definitions: menu → Glossary.</span></div>
         </div>
 
-        <div id="gamesTab" class="tab-content">
+        <div id="todayTab" class="tab-content">
+            <div class="ss-wrap">
+                <section class="ss-hero" id="ssHero">
+                    <div class="ss-hero-head">
+                        <div>
+                            <div class="ss-kicker" id="ssDate"></div>
+                            <h1 class="ss-hero-title">Best Bets Today</h1>
+                            <div class="ss-hero-sub" id="ssHeroSub">Loading today's prices…</div>
+                        </div>
+                        <div class="ss-hero-stats" id="ssHeroStats"></div>
+                    </div>
+                    <div class="ss-hero-cards" id="ssHeroCards"></div>
+                </section>
+
+                <div class="ss-toolbar">
+                    <div class="ss-toolbar-title">
+                        <h2>All games</h2>
+                        <span id="ssCounts"></span>
+                    </div>
+                    <div class="ss-toolbar-controls">
+                        <div class="ss-seg" role="group" aria-label="Show">
+                            <button type="button" class="ss-seg-btn active" data-f="all" onclick="ssSetFilter('all')">All</button>
+                            <button type="button" class="ss-seg-btn" data-f="value" onclick="ssSetFilter('value')">Value</button>
+                            <button type="button" class="ss-seg-btn ss-seg-best" data-f="best" onclick="ssSetFilter('best')">★ Best Bets</button>
+                        </div>
+                        <label class="ss-sr" for="ssConf">Conference</label>
+                        <select id="ssConf" class="ss-select" onchange="ssConf = this.value; renderToday()"><option value="all">All conferences</option></select>
+                        <label class="ss-sr" for="ssSearch">Search teams</label>
+                        <input id="ssSearch" class="ss-input" type="search" placeholder="Search teams" oninput="ssSearch = this.value.toLowerCase(); renderToday()">
+                        <button type="button" class="ss-btn-ghost" onclick="showTodaysCard()">Share card</button>
+                    </div>
+                </div>
+
+                <div class="ss-legend">
+                    <strong>Reading the bars:</strong>
+                    <span><i style="background: var(--ss-gray-bar)"></i>Sportsbook line / what it costs</span>
+                    <span><i style="background: var(--ss-navy)"></i>Our model</span>
+                    <span><i style="background: var(--ss-green)"></i>What it's worth</span>
+                    <span><i style="background: var(--ss-orange)"></i>Your edge</span>
+                </div>
+
+                <div class="ss-games" id="ssGames">
+                    <div class="ss-empty">Loading games…</div>
+                </div>
+                <p class="ss-foot">Information only, not betting advice. Model leans are unproven: 50.3% against closing spreads in last season's test. <a href="#" onclick="showHowItWorksModal(); return false;">How it works</a></p>
+            </div>
+        </div>
+
+        <div id="gamesTab" class="tab-content" style="display:none;">
             <div class="games-page-container">
                 <!-- Sidebar Filters -->
                 <div class="games-sidebar">
@@ -10420,23 +10697,19 @@
 
         <!-- ====== VALUE TAB ====== -->
         <div id="valueTab" class="tab-content" style="display:none;">
-            <div class="value-page">
-                <div class="value-header">
-                    <h2>Value Finder</h2>
-                    <div class="value-subtitle">Bets where Polymarket's price is cheaper than what the sportsbooks' consensus says the bet is worth.
-                        Only compared when books post the exact same line. Prices come from Polymarket's public data, so <strong>confirm the price on Polymarket US before trading</strong>.</div>
-                </div>
-                <div class="value-summary" id="valueSummary"></div>
-                <div id="valueList"><div class="bb-empty-state"><div class="bb-empty-icon">💲</div><div class="bb-empty-title">Click Refresh Data to load prices</div></div></div>
-                <h3 class="value-section-title">Automatic Log (every flagged bet)</h3>
-                <div class="value-subtitle">Recorded twice a day by the scheduled refresh, whether or not anyone tracked it, so this is the unbiased test of the value finder.
-                    Entry = first price seen; close = last price seen before tip-off.</div>
-                <div class="value-summary" id="valueLogSummary"></div>
-                <div id="valueLogList"></div>
-                <h3 class="value-section-title">My Value Bets</h3>
-                <div class="value-subtitle">Track a bet to record its price. Results grade automatically. "Close" is the books' fair value at the last refresh before tip-off: beating it consistently is the best early sign of a real edge.</div>
-                <div class="value-summary" id="valueTrackedSummary"></div>
-                <div id="valueTrackedList"></div>
+            <div class="ss-wrap">
+                <section class="ss-hero ss-hero--slim">
+                    <div class="ss-hero-head">
+                        <div style="max-width: 640px">
+                            <h1 class="ss-hero-title">Value Bets</h1>
+                            <div class="ss-hero-sub">Bets that cost less on Polymarket than the sportsbooks say they are worth. A share pays $1 if it wins: if it costs 47¢ but is worth 50¢, you get it <strong>3¢ off</strong>, shown in <span style="color: #F6B48A; font-weight: 700">orange</span>.</div>
+                        </div>
+                        <div class="ss-hero-stats" id="vtStats"></div>
+                    </div>
+                </section>
+                <div class="ss-table" id="vtRows"><div class="ss-empty">Click Refresh Data or wait for the next scheduled update.</div></div>
+                <p class="ss-foot">Biggest discount first. ★ Best Bet = 4¢+ off with 3+ books agreeing. Bars show strength: 1 bar 3–4¢ off, 2 bars 4–6¢, 3 bars 6¢+. "Worth" is the sportsbooks' average odds with their fee removed, from books posting the same line. Confirm the price on Polymarket US before trading.</p>
+                <div id="valueList" hidden></div><div id="valueSummary" hidden></div><div id="valueLogSummary" hidden></div><div id="valueLogList" hidden></div>
             </div>
         </div>
 
@@ -10446,8 +10719,8 @@
                 <!-- Header -->
                 <div class="tracked-header">
                     <div class="tracked-title-section">
-                        <h2>My Tracked Picks</h2>
-                        <div class="tracked-subtitle">Your personally selected bets — screenshot & share</div>
+                        <h2>My Bets</h2>
+                        <div class="tracked-subtitle">Bets you saved with Track. Stored in this browser only.</div>
                     </div>
                     <div class="tracked-header-actions">
                         <button class="bb-track-btn" onclick="clearTrackedBetsForDay()" style="color:var(--accent-red);border-color:var(--accent-red);" id="trackedClearDayBtn">🗑 Clear Day</button>
@@ -10469,9 +10742,14 @@
                     <div class="bb-empty-state" style="grid-column:1/-1;">
                         <div class="bb-empty-icon">📌</div>
                         <div class="bb-empty-title">No tracked picks yet</div>
-                        <div class="bb-empty-text">Use the 🔒 Track button on any pick in the Games or Best Bets tab to add it here.</div>
+                        <div class="bb-empty-text">Use the Track button on any lean (Today tab, open "Why") to add it here.</div>
                     </div>
                 </div>
+
+                <h3 class="value-section-title">My Value Bets</h3>
+                <div class="value-subtitle">Value bets you tracked from the Value tab, graded automatically at the price you saw. "vs close" shows whether the price moved your way before tip-off.</div>
+                <div class="value-summary" id="valueTrackedSummary"></div>
+                <div id="valueTrackedList"></div>
             </div>
         </div>
 
@@ -10485,6 +10763,7 @@
                     <div class="sc-sub">Is it working? Every bet below was logged before the game and graded automatically from the final score.
                         Nothing is hand-picked, so this is the honest test.</div>
                 </div>
+                <section class="sc-section" id="scBest"><div class="sc-loading">Loading…</div></section>
                 <section class="sc-section" id="scValue"><div class="sc-loading">Loading…</div></section>
                 <section class="sc-section" id="scLeans"><div class="sc-loading">Loading…</div></section>
                 <details class="sc-help">
@@ -25268,8 +25547,9 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             if (tab === 'analytics') renderAnalytics();
             if (tab === 'validation') renderPredictionTracker();
             if (tab === 'diagnostics') renderDiagnosticsTab();
-            if (tab === 'tracked') renderTrackedBetsTab();
+            if (tab === 'tracked') { renderTrackedBetsTab(); renderValueTab(); }
             if (tab === 'value') renderValueTab();
+            if (tab === 'today') renderToday();
         }
 
         // [RECOVERED] navigateToGameAnalysis
@@ -25813,7 +26093,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             }).join('');
         }
 
-        async function renderValueTab() {
+        async function renderValueTabLegacy() {
             const list = document.getElementById('valueList');
             if (!list) return;
             renderValueLog();
@@ -26399,6 +26679,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             const finalBestBets = document.querySelectorAll('#bestBetsList .best-bets-grid-row, #bestBetsList .bb-pick-card').length;
 
             renderValueTab();
+            renderToday();
             setStepDone('render', 'complete');
 
             document.getElementById('lastUpdate').textContent = SNAPSHOT
@@ -27471,14 +27752,27 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             const vClv = b => b.closeFair != null ? b.closeFair - b.entryPrice : null;
             const vst = scSummarize(vb, vProfit, vClv);
             stats.value = vst;
+            const bb = vb.filter(b => ssStrength(b.entryEdge, b.books || 0).best);
+            const bst = scSummarize(bb, vProfit, vClv);
+            stats.best = bst;
+            const bestEl = document.getElementById('scBest');
+            if (bestEl) bestEl.innerHTML = scSection({
+                title: '★ Best Bets',
+                subtitle: 'Value bets that cleared the Best Bet bar: 4¢+ off with 3+ books agreeing. If these do not beat regular value bets over time, the label should go.',
+                st: bst,
+                statsExtra: `<div class="sc-stat"><span class="sc-num">${bst.clvAvg != null ? (bst.clvAvg >= 0 ? '+' : '') + (bst.clvAvg * 100).toFixed(1) + '¢' : '--'}</span><span class="sc-lbl">Avg vs close</span><span class="sc-sm">value gained after bet</span></div>`,
+                recent: bb.filter(b => b.result).sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 10)
+                          .map(b => scRecentRow(b.date, b.label, `${(b.entryEdge * 100).toFixed(1)}¢ off`, b.result)),
+                empty: 'No Best Bets logged yet. The scheduled refresh adds them twice a day.'
+            });
             if (valueEl) valueEl.innerHTML = scSection({
                 title: '💲 Value Bets',
-                subtitle: 'Every bet the Value finder flagged: Polymarket price below the books\' fair chance. Profit uses the actual Polymarket price.',
+                subtitle: 'Every value bet flagged: it cost less on Polymarket than the sportsbooks said it was worth. Profit uses the actual Polymarket price.',
                 st: vst,
-                statsExtra: `<div class="sc-stat"><span class="sc-num">${vst.clvAvg != null ? scSigned(vst.clvAvg) : '--'}</span><span class="sc-lbl">Avg vs close</span><span class="sc-sm">value gained after bet</span></div>`,
-                buckets: vst.n ? scBuckets(vb, b => b.entryEdge, [0.03, 0.05, 0.08], (lo, hi) => hi ? `${lo * 100}–${hi * 100}% value` : `${lo * 100}%+ value`, vProfit) : '',
+                statsExtra: `<div class="sc-stat"><span class="sc-num">${vst.clvAvg != null ? (vst.clvAvg >= 0 ? '+' : '') + (vst.clvAvg * 100).toFixed(1) + '¢' : '--'}</span><span class="sc-lbl">Avg vs close</span><span class="sc-sm">value gained after bet</span></div>`,
+                buckets: vst.n ? scBuckets(vb, b => b.entryEdge, [0.03, 0.04, 0.06], (lo, hi) => hi ? `${lo * 100}–${hi * 100}¢ off` : `${lo * 100}¢+ off`, vProfit) : '',
                 recent: vb.filter(b => b.result).sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 10)
-                          .map(b => scRecentRow(b.date, b.label, `+${(b.entryEdge * 100).toFixed(1)}% value`, b.result)),
+                          .map(b => scRecentRow(b.date, b.label, `${(b.entryEdge * 100).toFixed(1)}¢ off`, b.result)),
                 empty: 'No value bets logged yet. The scheduled refresh adds them twice a day.'
             });
 
@@ -27529,22 +27823,24 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
         }
 
         const GLOSSARY_TERMS = [
-            ['Lean', 'The side the model prefers in a game, because its projected spread or total differs from the sportsbook line. Leans are tracked on the Scorecard; so far they have not beaten the market.'],
+            ['Best Bet', 'A value bet that is at least 4¢ off with 3 or more sportsbooks agreeing on what it is worth. Shown with ★ and an orange outline.'],
+            ['Value bet', 'A bet that costs less on Polymarket than the sportsbooks say it is worth, for the same line.'],
+            ['Costs', 'The Polymarket price for one share. A share pays $1 if it wins, so 47¢ means you risk 47¢ to win 53¢.'],
+            ['Worth', 'What the sportsbooks say the bet should cost: their average odds with their built-in fee (vig) removed, using only books that post the exact same line.'],
+            ['¢ off', 'Worth minus cost. Worth 50¢, costs 47¢ → 3¢ off. This is your edge on a value bet.'],
+            ['Strength', 'The 3-bar meter on value bets. 1 bar: 3–4¢ off. 2 bars: 4–6¢ off with 3+ books. 3 bars: 6¢+ off with 3+ books.'],
+            ['Lean', 'The side the model prefers because its number differs from the sportsbook line. Leans have not beaten the market in testing, so they are shown for information only.'],
             ['Edge (pts)', 'How many points the model\'s number differs from the line. Bigger means bigger disagreement, not a higher chance of winning.'],
-            ['Value bet', 'A bet where the Polymarket price is lower than the sportsbooks\' fair chance for the same bet at the same line.'],
-            ['Value (%)', 'Books\' fair chance minus the Polymarket price. Example: fair chance 51%, price 47¢ → +4% value.'],
-            ['Fair chance', 'The sportsbooks\' average probability with their built-in margin (vig) removed. Only books posting the exact same line are used, and at least 2 are required.'],
-            ['Price (¢)', 'What one Polymarket share costs. A share pays $1 if it wins, so the price is also the win rate needed to break even.'],
+            ['Model agrees', 'The model\'s lean points the same way as a value bet. Shown as extra information; it does not make a bet a Best Bet.'],
             ['Close', 'The last line or price seen before tip-off.'],
-            ['Beat the close', 'The line or price moved your way after the bet. Doing this more than half the time is the earliest reliable sign of real skill.'],
+            ['Beat the close', 'The line or price moved your way after the bet. Doing this more than half the time is the earliest reliable sign of a real edge.'],
             ['Win rate', 'Wins ÷ (wins + losses). Pushes are ignored.'],
             ['Breakeven (52.4%)', 'The win rate needed to profit at standard −110 sportsbook odds.'],
             ['Units (u)', 'Profit counted at 1 unit risked per bet.'],
             ['ROI', 'Profit ÷ amount risked.'],
             ['95% range', 'Where the true result likely sits given the sample size. If the whole range is above zero, the edge is real; small samples have wide ranges.'],
-            ['Graded', 'A bet whose game is final and has been scored automatically.'],
-            ['Pending', 'A bet whose game has not finished or been scored yet.'],
-            ['Tracked', 'Bets you personally saved with the 🔒 Track button. Saved in your browser only.'],
+            ['Graded / Pending', 'Graded: the game is final and the bet has been scored automatically. Pending: not finished or not scored yet.'],
+            ['My Bets', 'Bets you saved with Track. Stored in your browser only.'],
         ];
 
         function showGlossaryModal() {
@@ -27556,11 +27852,11 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             showInfoModal('howModal', '📐 How It Works', `
                 <div class="glossary-section"><h3>1. Data</h3>
                 <p class="how-p">Twice a day (about 9am and 5pm ET, plus 11:30am on weekends) the site saves fresh team ratings, sportsbook lines,
-                Polymarket prices and final scores. Visitors see that saved data; <em>Refresh Data</em> pulls live data instead.</p></div>
+                Polymarket prices and final scores. Visitors see that saved data; <em>Refresh Data</em> in the menu pulls live data instead.</p></div>
                 <div class="glossary-section"><h3>2. Value bets (the main tool)</h3>
-                <p class="how-p">For each bet, the site averages the sportsbooks' <strong>fair chance</strong> (vig removed, same line only) and compares it to the
-                Polymarket <strong>price</strong>. When the price is at least 3% below the fair chance, it is a <strong>value bet</strong>.
-                This does not predict games; it finds prices that look cheap compared with the betting market.</p></div>
+                <p class="how-p">For each bet, the site works out what it is <strong>worth</strong> from the sportsbooks' odds (their fee removed, same line only) and compares it to what it
+                <strong>costs</strong> on Polymarket. If it costs at least 3¢ less than it is worth, it is a <strong>value bet</strong>; 4¢+ off with 3+ books agreeing makes it a
+                <strong>★ Best Bet</strong>. This does not predict games; it finds prices that look cheap compared with the betting market.</p></div>
                 <div class="glossary-section"><h3>3. Model leans</h3>
                 <p class="how-p">The model rates teams from efficiency data and projects each spread and total. Where its number differs from the line, that side is a
                 <strong>lean</strong>, and the difference is the <strong>edge (pts)</strong>. Tested on all of last season, leans won 50.3% against closing spreads and
@@ -27575,11 +27871,14 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             const dateStr = new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
             const today = new Date().toDateString();
             const L = [`🏀 THE SPREAD SHEET — ${dateStr}`, '━━━━━━━━━━━━━━━━━━━━━━━'];
-            const vals = (state.value?.opportunities || []).filter(o => new Date(o.startTime).toDateString() === today);
-            L.push('💲 VALUE BETS (Polymarket price below books\' fair chance)');
-            if (vals.length) {
-                vals.slice(0, 8).forEach(o => L.push(`  ${o.label} — ${Math.round(o.polyPrice * 100)}¢ vs ${Math.round(o.fairProb * 100)}% fair (+${(o.edge * 100).toFixed(1)}% value) [${fmtCardTime(new Date(o.startTime))}]`));
-            } else L.push('  None today');
+            const vals = (state.value?.opportunities || []).filter(o => new Date(o.startTime).toDateString() === today).sort((a, b) => b.edge - a.edge);
+            const bestV = vals.filter(o => ssStrength(o.edge, o.books).best), restV = vals.filter(o => !ssStrength(o.edge, o.books).best);
+            const vLine = o => `  ${o.label} — costs ${Math.round(o.polyPrice * 100)}¢, worth ${(o.fairProb * 100).toFixed(1)}¢ (${(o.edge * 100).toFixed(1)}¢ off) [${fmtCardTime(new Date(o.startTime))}]`;
+            L.push('★ BEST BETS (4¢+ off, 3+ books agree)');
+            if (bestV.length) bestV.slice(0, 5).forEach(o => L.push(vLine(o))); else L.push('  None today');
+            L.push('');
+            L.push('💲 OTHER VALUE BETS');
+            if (restV.length) restV.slice(0, 6).forEach(o => L.push(vLine(o))); else L.push('  None today');
             L.push('');
             const leans = [...picks].sort((a, b) => b.edge - a.edge).slice(0, 8);
             L.push('📐 BIGGEST MODEL LEANS (unproven)');
@@ -27589,11 +27888,400 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             const sc = window.__scorecardStats;
             if (sc) {
                 L.push('━━━━━━━━━━━━━━━━━━━━━━━', '📊 SCORECARD');
+                if (sc.best) L.push(`  Best Bets: ${sc.best.w}-${sc.best.l}`);
                 if (sc.value) L.push(`  Value bets: ${sc.value.w}-${sc.value.l}, ROI ${scSigned(sc.value.roi)}`);
                 if (sc.leans) L.push(`  Model leans (${sc.leansScope}): ${sc.leans.w}-${sc.leans.l} (${scPct(sc.leans.winRate)}; 52.4% breaks even)`);
             }
             L.push('━━━━━━━━━━━━━━━━━━━━━━━', 'Info only, not betting advice.');
             return L.join('\n');
+        }
+
+        // =====================================================================
+        // NEW UI (v7): Today, Value, Best Bets, team badges
+        // One set of terms: Lean, Edge (pts), Value bet, Worth, ¢ off, Best Bet, Strength
+        // =====================================================================
+        let ssFilter = 'all', ssConf = 'all', ssSearch = '';
+        const ssOpen = new Set();
+        let TEAM_META = {};
+        try { TEAM_META = JSON.parse(localStorage.getItem('ss_team_meta') || '{}'); } catch (e) { TEAM_META = {}; }
+
+        function loadTeamMeta(list) {
+            if (!Array.isArray(list) || !list.length) return;
+            const out = {};
+            const hex = c => { if (!c) return null; c = String(c).trim(); if (!c.startsWith('#')) c = '#' + c; return /^#[0-9a-f]{6}$/i.test(c) ? c : null; };
+            list.forEach(t => {
+                const name = t.school || t.team || t.displayName || t.name;
+                if (!name) return;
+                const logo = Array.isArray(t.logos) ? t.logos[0] : (t.logo || null);
+                out[String(name).toLowerCase()] = {
+                    abbr: t.abbreviation || t.abbr || null,
+                    color: hex(t.primaryColor || t.color),
+                    logo: logo && /^https:\/\//.test(logo) ? logo : null
+                };
+            });
+            TEAM_META = out;
+            try { localStorage.setItem('ss_team_meta', JSON.stringify(out)); } catch (e) { /* full */ }
+        }
+
+        function ssEsc(x) { return String(x ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+        function ssShortName(g, side) { const r = side === 'home' ? g.homeRating : g.awayRating; return r?.name || (side === 'home' ? g.homeTeam : g.awayTeam); }
+        function ssDeriveAbbr(name) {
+            const words = String(name || '').replace(/[^A-Za-z ]/g, ' ').split(/\s+/).filter(w => w && !/^(of|the|at|and)$/i.test(w));
+            if (words.length >= 2) return words.map(w => w[0]).join('').slice(0, 4).toUpperCase();
+            return (words[0] || '?').slice(0, 4).toUpperCase();
+        }
+        function ssHashColor(name) {
+            const palette = ['#1E3A5F', '#7A1F2B', '#1F5C3A', '#4B2E83', '#8C3B12', '#0B4F6C', '#5B3A1E', '#2F4858'];
+            let h = 0; for (const ch of String(name)) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+            return palette[h % palette.length];
+        }
+        function ssTeamLook(name) {
+            const m = TEAM_META[String(name || '').toLowerCase()] || {};
+            const color = m.color || ssHashColor(name);
+            const r = parseInt(color.slice(1, 3), 16), g = parseInt(color.slice(3, 5), 16), b = parseInt(color.slice(5, 7), 16);
+            const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+            return { color, fg: lum > 0.6 ? '#14213D' : '#FFFFFF', abbr: (m.abbr || ssDeriveAbbr(name)).slice(0, 5).toUpperCase(), logo: m.logo };
+        }
+        function ssBadge(name, size = 28) {
+            const t = ssTeamLook(name);
+            const fs = Math.max(8, Math.round(size / 3.3));
+            return `<span class="ss-badge" style="width:${size}px;height:${size}px;background:${t.color};color:${t.fg};font-size:${fs}px" aria-hidden="true">${ssEsc(t.abbr)}${t.logo ? `<img src="${ssEsc(t.logo)}" alt="" loading="lazy" onerror="this.remove()">` : ''}</span>`;
+        }
+
+        // Strength: 1 bar = 3–4¢ off; 2 bars = 4–6¢ with 3+ books; 3 bars = 6¢+ with 3+ books. Best Bet = 2+ bars.
+        function ssStrength(edge, books) {
+            const c = edge * 100;
+            const bars = c >= 6 && books >= 3 ? 3 : c >= 4 && books >= 3 ? 2 : c >= 3 ? 1 : 0;
+            return { bars, best: bars >= 2 };
+        }
+        function ssMeter(bars, small) {
+            const h = small ? [7, 10, 14] : [8, 12, 16], w = small ? 5 : 6;
+            return `<span class="ss-meter" role="img" aria-label="Strength ${bars} of 3">${h.map((hh, i) => `<i style="width:${w}px;height:${hh}px;background:${bars > i ? 'var(--ss-orange)' : 'var(--ss-track)'}"></i>`).join('')}</span>`;
+        }
+        function ssBarRows(rows) {
+            // rows: [{label, val(0-100), color, text, gapW?}] ; gapW = orange extension (0-100)
+            return `<div class="ss-bars">${rows.map(r => `<span>${r.label}</span><span class="ss-track"><i style="width:${Math.max(0, Math.min(100, r.val)).toFixed(1)}%;background:${r.color}"></i>${r.gapW ? `<i style="width:${Math.max(0, Math.min(100, r.gapW)).toFixed(1)}%;background:var(--ss-orange)"></i>` : ''}</span><span class="ss-num">${r.text}</span>`).join('')}</div>`;
+        }
+        function ssCents(p) { return Math.round(p * 100) + '¢'; }
+        function ssCents1(p) { return (p * 100).toFixed(1) + '¢'; }
+        function ssSigned(x) { return (x > 0 ? '+' : x < 0 ? '−' : '') + Math.abs(x).toFixed(1); }
+        function ssLineText(x) { return x === 0 ? 'PK' : (x > 0 ? '+' : '−') + Math.abs(x).toFixed(1).replace(/\.0$/, ''); }
+
+        function ssOppsByGame() {
+            const by = {};
+            (state.value?.opportunities || []).forEach(o => { (by[o.gameId] = by[o.gameId] || []).push(o); });
+            return by;
+        }
+
+        // Model lean for one market (null when the model is close to the line)
+        function ssLean(g, type) {
+            const a = g.analysis;
+            if (!a || !a.hasData) return null;
+            if (type === 'spread') {
+                if (!a.spreadPick || !(a.spreadEdge >= 2) || g.spread == null) return null;
+                const side = a.spreadPick.side, book = a.spreadPick.line, edge = a.spreadEdge;
+                const model = book - edge;                    // pick team's model line
+                const name = ssShortName(g, side);
+                return { side, name, book, model, edge, label: `${name} ${ssLineText(book)}` };
+            }
+            if (!a.totalPick || !(a.totalEdge >= 3) || g.total == null) return null;
+            const over = a.totalPick.pick === 'OVER', book = g.total, edge = a.totalEdge;
+            return { side: over ? 'over' : 'under', name: over ? 'Over' : 'Under', book, model: over ? book + edge : book - edge, edge, label: `${over ? 'Over' : 'Under'} ${book}` };
+        }
+
+        function ssModelAgrees(o, g) {
+            const l = ssLean(g, o.type === 'total' ? 'total' : 'spread');
+            if (!l) return false;
+            if (o.type === 'total') return l.side === o.side;
+            const sideIsHome = o.side === g.homeTeam;
+            return (l.side === 'home') === sideIsHome;
+        }
+
+        function ssMarket(g, type, opps) {
+            const label = type === 'spread' ? 'SPREAD' : 'TOTAL (O/U)';
+            const o = opps.filter(x => x.type === type).sort((x, y) => y.edge - x.edge)[0];
+            if (o) {
+                const st = ssStrength(o.edge, o.books);
+                const agrees = ssModelAgrees(o, g);
+                const pick = o.type === 'total' ? o.label : o.label.replace(o.side, ssShortName(g, o.side === g.homeTeam ? 'home' : 'away'));
+                return { kind: 'value', best: st.best, html: `
+                    <div class="ss-mkt ss-mkt--value${st.best ? ' ss-mkt--best' : ''}">
+                        <div class="ss-mkt-head"><span class="ss-mkt-label">${label}</span><span class="ss-mkt-right">${ssMeter(st.bars, true)}<b class="ss-good">${ssCents1(o.edge)} off</b></span></div>
+                        <span class="ss-chip ${st.best ? 'ss-chip--best' : 'ss-chip--value'}">${st.best ? '★ Best Bet: ' : 'Value: '}${ssEsc(pick)}</span>
+                        ${ssBarRows([{ label: 'Costs', val: o.polyPrice * 100, color: 'var(--ss-gray-bar)', text: ssCents(o.polyPrice) },
+                                     { label: 'Worth', val: o.polyPrice * 100, gapW: o.edge * 100, color: 'var(--ss-green)', text: ssCents1(o.fairProb) }])}
+                        <span class="ss-say">${st.best ? `${ssCents1(o.edge)} off · ${o.books} books agree${agrees ? ' · Model agrees' : ''}` : `You pay ${ssCents(o.polyPrice)} for a bet worth ${ssCents1(o.fairProb)}.`}</span>
+                    </div>` };
+            }
+            const l = ssLean(g, type);
+            if (l) {
+                let bookV, modelV, bookTxt, modelTxt, say;
+                if (type === 'spread') {
+                    bookV = (-l.book + 20) / 40 * 100; modelV = (-l.model + 20) / 40 * 100;
+                    bookTxt = ssLineText(l.book); modelTxt = ssLineText(+l.model.toFixed(1));
+                    say = `Model has ${l.name} ${l.edge.toFixed(1)} pts better than the book.`;
+                } else {
+                    bookV = (l.book - 110) / 60 * 100; modelV = (l.model - 110) / 60 * 100;
+                    bookTxt = String(l.book); modelTxt = l.model.toFixed(1);
+                    say = `Model expects ${l.edge.toFixed(1)} ${l.side === 'over' ? 'more' : 'fewer'} points.`;
+                }
+                const longer = Math.max(bookV, modelV), shorter = Math.min(bookV, modelV);
+                const rows = modelV >= bookV
+                    ? [{ label: 'Book', val: bookV, color: 'var(--ss-gray-bar)', text: bookTxt }, { label: 'Model', val: shorter, gapW: longer - shorter, color: 'var(--ss-navy)', text: modelTxt }]
+                    : [{ label: 'Book', val: shorter, gapW: longer - shorter, color: 'var(--ss-gray-bar)', text: bookTxt }, { label: 'Model', val: modelV, color: 'var(--ss-navy)', text: modelTxt }];
+                return { kind: 'lean', html: `
+                    <div class="ss-mkt ss-mkt--lean">
+                        <div class="ss-mkt-head"><span class="ss-mkt-label">${label}</span><span class="ss-mkt-right"><b class="ss-edge">+${l.edge.toFixed(1)} pts</b></span></div>
+                        <span class="ss-chip ss-chip--lean">Model likes ${ssEsc(l.label)}</span>
+                        ${ssBarRows(rows)}
+                        <span class="ss-say">${say}</span>
+                    </div>` };
+            }
+            return { kind: 'none', html: `<div class="ss-mkt ss-mkt--none"><span class="ss-mkt-label">${label}</span><span class="ss-none">No edge</span></div>` };
+        }
+
+        function ssWhy(g) {
+            const a = g.analysis || {};
+            const hr = g.homeRating || {}, ar = g.awayRating || {};
+            const hN = ssShortName(g, 'home'), aN = ssShortName(g, 'away');
+            const hL = ssTeamLook(hN), aL = ssTeamLook(aN);
+            const bar = (v, lo, hi) => Math.max(4, Math.min(100, (v - lo) / (hi - lo) * 100));
+            const rows = [
+                ['Net', ar.netRating, hr.netRating, -30, 35, x => ssSigned(x)],
+                ['Offense', ar.offRating, hr.offRating, 90, 130, x => x.toFixed(1)],
+                ['Defense', ar.defRating != null ? 205 - ar.defRating : null, hr.defRating != null ? 205 - hr.defRating : null, 75, 115, x => (205 - x).toFixed(1)],
+                ['Pace', ar.pace, hr.pace, 60, 76, x => x.toFixed(1)]
+            ].filter(r => r[1] != null && r[2] != null && !isNaN(r[1]) && !isNaN(r[2]));
+            const h2h = rows.map(([lab, av, hv, lo, hi, f]) => `
+                <div class="ss-h2h-row">
+                    <div class="ss-h2h-l"><b>${f(av)}</b><i style="width:${bar(av, lo, hi)}%;background:${aL.color}"></i></div>
+                    <span>${lab}</span>
+                    <div class="ss-h2h-r"><i style="width:${bar(hv, lo, hi)}%;background:${hL.color}"></i><b>${f(hv)}</b></div>
+                </div>`).join('');
+
+            // How the model gets its spread (home perspective, positive = home wins by)
+            let mathHtml = '<p class="ss-muted">No model projection for this game.</p>';
+            const sl = ssLean(g, 'spread');
+            if (a.hasData && g.spread != null) {
+                const pace = ((hr.pace || 68) + (ar.pace || 68)) / 2;
+                const strength = ((hr.netRating || 0) - (ar.netRating || 0)) * pace / 100;
+                const hca = a.dynamicHCA ?? 3.2;
+                const modelHomeSpread = sl ? (sl.side === 'home' ? sl.model : -sl.model) : -(a.projectedMargin ?? 0);
+                const modelMargin = -modelHomeSpread;
+                const other = modelMargin - strength - hca;
+                const fav = m => m >= 0 ? `${hN} by ${Math.abs(m).toFixed(1)}` : `${aN} by ${Math.abs(m).toFixed(1)}`;
+                mathHtml = `
+                    <div class="ss-kv"><span>Team strength gap</span><b>${fav(strength)}</b></div>
+                    <div class="ss-kv"><span>Home court (${ssEsc(hN)})</span><b>${ssSigned(hca)}</b></div>
+                    <div class="ss-kv"><span>Rest, travel, recent form</span><b>${ssSigned(other)}</b></div>
+                    <div class="ss-kv ss-kv--total"><span>Model</span><b>${fav(modelMargin)}</b></div>
+                    <div class="ss-kv ss-muted"><span>Sportsbook</span><b>${fav(-g.spread)}</b></div>
+                    ${sl ? `<div class="ss-kv ss-kv--edge"><span>Edge</span><b>${sl.edge.toFixed(1)} pts on ${ssEsc(sl.name)}</b></div>` : ''}
+                    ${g.total != null && a.projectedTotal != null ? `<div class="ss-kv ss-muted"><span>Total: model vs book</span><b>${(ssLean(g, 'total')?.model ?? a.projectedTotal).toFixed(1)} vs ${g.total}</b></div>` : ''}`;
+            }
+
+            // Price check + actions for leans
+            const tl = ssLean(g, 'total');
+            const priceRows = [];
+            [['spread', sl], ['total', tl]].forEach(([type, l]) => {
+                if (!l || typeof findPolyPrice !== 'function') return;
+                const q = findPolyPrice(g, type);
+                if (q && q.diff === 0) priceRows.push(`<div class="ss-kv"><span>Polymarket · ${ssEsc(l.label)}</span><b>${ssCents(q.price)}</b></div>`);
+            });
+            const trade = g.poly?.tradeUrl;
+            const trackBtns = [['spread', sl], ['total', tl]].filter(x => x[1])
+                .map(([type, l]) => `<button type="button" class="ss-btn-outline bb-track-btn" id="track-${g.id}-${type}" onclick="trackPick('${g.id}','${type}',this)">Track ${ssEsc(l.label)}</button>`).join('');
+            return `
+                <div class="ss-why">
+                    <div class="ss-panel">
+                        <h3>Head to head</h3>
+                        <div class="ss-h2h-names"><span>${ssBadge(aN, 20)} ${ssEsc(aN)}</span><span>${ssEsc(hN)} ${ssBadge(hN, 20)}</span></div>
+                        ${h2h || '<p class="ss-muted">Ratings not available.</p>'}
+                        <p class="ss-muted">Longer bar = better. Defense: fewer points allowed per 100 possessions.</p>
+                    </div>
+                    <div class="ss-panel">
+                        <h3>How the model gets its number</h3>
+                        ${mathHtml}
+                    </div>
+                    <div class="ss-panel">
+                        <h3>Price check</h3>
+                        ${priceRows.join('') || '<p class="ss-muted">No matching Polymarket price for these leans.</p>'}
+                        <div class="ss-actions">${trackBtns}${trade ? `<a class="ss-btn-solid" href="${ssEsc(trade)}" target="_blank" rel="noopener">Open on Polymarket</a>` : ''}</div>
+                        <p class="ss-muted">Leans are unproven: 50.3% vs closing spreads in last season's test.</p>
+                    </div>
+                </div>`;
+        }
+
+        function ssSetFilter(f) {
+            ssFilter = f;
+            document.querySelectorAll('.ss-seg-btn').forEach(b => b.classList.toggle('active', b.dataset.f === f));
+            renderToday();
+        }
+        function ssToggle(id) { ssOpen.has(id) ? ssOpen.delete(id) : ssOpen.add(id); renderToday(); restoreTrackedButtonStates(); }
+
+        async function ssValueLogSummary() {
+            const log = await loadValueLog();
+            const bets = log?.bets || [];
+            const sumOf = list => {
+                const g = list.filter(b => b.result === 'win' || b.result === 'loss');
+                const w = g.filter(b => b.result === 'win').length;
+                const units = g.reduce((acc, b) => acc + (b.result === 'win' ? (1 / b.entryPrice - 1) : -1), 0);
+                const clv = list.filter(b => b.closeFair != null).map(b => b.closeFair - b.entryPrice).filter(x => x !== 0);
+                return { n: g.length, w, l: g.length - w, units, beat: clv.length ? clv.filter(x => x > 0).length / clv.length : null };
+            };
+            return { all: sumOf(bets), best: sumOf(bets.filter(b => ssStrength(b.entryEdge, b.books || 0).best)) };
+        }
+        function ssStatTiles(s) {
+            const verdict = s.all.n < 100 ? `Too early · ${s.all.n}/100` : 'See Scorecard';
+            return `
+                <div class="ss-stat"><span>Value record</span><b>${s.all.w}–${s.all.l} <em class="${s.all.units >= 0 ? 'up' : 'down'}">${s.all.units >= 0 ? '+' : ''}${s.all.units.toFixed(1)}u</em></b></div>
+                <div class="ss-stat"><span>Best Bets</span><b>${s.best.w}–${s.best.l}</b></div>
+                <div class="ss-stat"><span>Beat the close</span><b>${s.all.beat != null ? Math.round(s.all.beat * 100) + '%' : '--'}</b></div>
+                <div class="ss-stat"><span>Verdict</span><b class="ss-stat-small">${verdict}</b></div>`;
+        }
+
+        async function renderToday() {
+            const wrap = document.getElementById('ssGames');
+            if (!wrap) return;
+            const games = (state.games || []).slice().sort((a, b) => a.commenceTime - b.commenceTime);
+            const by = ssOppsByGame();
+            const opps = (state.value?.opportunities || []).slice().sort((a, b) => b.edge - a.edge);
+            const bests = opps.filter(o => ssStrength(o.edge, o.books).best);
+            const others = opps.length - bests.length;
+            const dateEl = document.getElementById('ssDate');
+            if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+
+            // Hero
+            const sub = document.getElementById('ssHeroSub');
+            if (sub) sub.textContent = opps.length
+                ? `${bests.length} of ${opps.length} value bet${opps.length === 1 ? '' : 's'} clear the bar: 4¢+ off and 3+ books agree`
+                : 'No value bets right now. Prices update around 9 AM and 5 PM ET.';
+            const cards = document.getElementById('ssHeroCards');
+            if (cards) {
+                const gameById = Object.fromEntries(games.map(g => [g.id, g]));
+                const heroCards = bests.slice(0, 3).map(o => {
+                    const g = gameById[o.gameId];
+                    const st = ssStrength(o.edge, o.books);
+                    const teamName = o.type === 'total' ? (g ? ssShortName(g, 'home') : o.homeTeam) : (g ? ssShortName(g, o.side === o.homeTeam ? 'home' : 'away') : o.side);
+                    const pick = o.type === 'total' ? o.label : o.label.replace(o.side, teamName);
+                    const when = new Date(o.startTime).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+                    const typeLabel = o.type === 'total' ? 'Total' : o.type === 'spread' ? 'Spread' : 'Moneyline';
+                    return `<article class="ss-hero-card">
+                        <div class="ss-hc-top"><span class="ss-hc-tags"><span class="ss-tag-best">★ BEST BET</span><span class="ss-hc-type">${typeLabel} · ${when}</span></span><span class="ss-mkt-right">${ssMeter(st.bars)}<b class="ss-good ss-big">${ssCents1(o.edge)} off</b></span></div>
+                        <div class="ss-hc-bet">${ssBadge(teamName, 34)}<div><div class="ss-hc-pick">${ssEsc(pick)}</div><div class="ss-hc-game">${ssEsc(g ? ssShortName(g, 'away') + ' @ ' + ssShortName(g, 'home') : o.awayTeam + ' @ ' + o.homeTeam)}</div></div></div>
+                        ${ssBarRows([{ label: 'Costs', val: o.polyPrice * 100, color: 'var(--ss-gray-bar)', text: ssCents(o.polyPrice) },
+                                     { label: 'Worth', val: o.polyPrice * 100, gapW: o.edge * 100, color: 'var(--ss-green)', text: ssCents1(o.fairProb) }])}
+                        <div class="ss-hc-why">${ssCents1(o.edge)} off · ${o.books} books agree${g && ssModelAgrees(o, g) ? ' · Model agrees' : ''}</div>
+                        <div class="ss-actions"><button type="button" class="ss-btn-outline" onclick="trackValueBet('${o.id}', this); this.textContent='✓ Tracked'">Track</button>${o.tradeUrl ? `<a class="ss-btn-green" href="${ssEsc(o.tradeUrl)}" target="_blank" rel="noopener">Trade on Polymarket</a>` : ''}</div>
+                    </article>`;
+                });
+                const otherCard = `<a class="ss-hero-other" href="#" onclick="switchTab('value'); return false;">
+                    <span class="ss-kicker">${bests.length ? 'Other value today' : 'No Best Bets right now'}</span>
+                    <b>${others} ${bests.length ? 'smaller ' : ''}value bet${others === 1 ? '' : 's'}</b>
+                    <span>${bests.length ? 'Under 4¢ off, or fewer books agree. Still cheaper than they should be, just not by as much.' : 'Nothing clears the Best Bet bar yet. Smaller discounts are on the Value page.'}</span>
+                    <strong>See all value bets →</strong></a>`;
+                cards.innerHTML = heroCards.join('') + otherCard;
+            }
+            const stats = document.getElementById('ssHeroStats');
+            if (stats) ssValueLogSummary().then(s => { stats.innerHTML = ssStatTiles(s); }).catch(() => {});
+
+            // Conference options
+            const confSel = document.getElementById('ssConf');
+            if (confSel) {
+                const confs = [...new Set(games.flatMap(g => [g.homeRating?.conference, g.awayRating?.conference]).filter(c => c && c !== 'Unknown'))].sort();
+                const cur = ssConf;
+                confSel.innerHTML = '<option value="all">All conferences</option>' + confs.map(c => `<option${c === cur ? ' selected' : ''}>${ssEsc(c)}</option>`).join('');
+            }
+
+            // Rows
+            const built = games.map(g => {
+                const o = by[g.id] || [];
+                const spread = ssMarket(g, 'spread', o), total = ssMarket(g, 'total', o);
+                return { g, spread, total, hasValue: o.length > 0, best: spread.best || total.best, hasLean: spread.kind === 'lean' || total.kind === 'lean' };
+            }).filter(r => {
+                if (ssFilter === 'value' && !r.hasValue) return false;
+                if (ssFilter === 'best' && !r.best) return false;
+                if (ssConf !== 'all' && r.g.homeRating?.conference !== ssConf && r.g.awayRating?.conference !== ssConf) return false;
+                if (ssSearch && !`${r.g.homeTeam} ${r.g.awayTeam}`.toLowerCase().includes(ssSearch)) return false;
+                return true;
+            });
+            const counts = document.getElementById('ssCounts');
+            if (counts) counts.textContent = `${games.length} games · ${built.filter(r => r.hasLean).length} with leans · ${opps.length} value`;
+            if (!games.length) { wrap.innerHTML = '<div class="ss-empty">No games loaded yet. Data updates around 9 AM and 5 PM ET, or use Refresh Data in the menu.</div>'; return; }
+            if (!built.length) { wrap.innerHTML = '<div class="ss-empty">No games match these filters.</div>'; return; }
+
+            const groups = [];
+            built.forEach(r => {
+                const label = r.g.commenceTime.toLocaleString('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' });
+                const last = groups[groups.length - 1];
+                if (last && last.label === label) last.rows.push(r); else groups.push({ label, rows: [r] });
+            });
+            wrap.innerHTML = groups.map(gr => `
+                <div class="ss-group-head"><span>${gr.label}</span><span>${gr.rows.length} game${gr.rows.length === 1 ? '' : 's'}</span></div>
+                ${gr.rows.map(({ g, spread, total, best }) => {
+                    const open = ssOpen.has(g.id);
+                    const aN = ssShortName(g, 'away'), hN = ssShortName(g, 'home');
+                    const aSp = g.spread != null ? ssLineText(-g.spread) : '—', hSp = g.spread != null ? ssLineText(g.spread) : '—';
+                    const rank = r => r && r.rank && r.rank < 400 ? `<em>#${r.rank}</em>` : '';
+                    return `<article class="ss-game${best ? ' ss-game--best' : ''}${open ? ' ss-game--open' : ''}">
+                        <div class="ss-game-main">
+                            <div class="ss-matchup">
+                                <div class="ss-team">${ssBadge(aN, 30)}<span class="ss-name"><span title="${ssEsc(aN)}">${ssEsc(aN)}</span>${rank(g.awayRating)}</span><b class="${g.spread > 0 ? 'fav' : ''}">${aSp}</b></div>
+                                <div class="ss-team">${ssBadge(hN, 30)}<span class="ss-name"><span title="${ssEsc(hN)}">${ssEsc(hN)}</span>${rank(g.homeRating)}</span><b class="${g.spread < 0 ? 'fav' : ''}">${hSp}</b></div>
+                                <div class="ss-team ss-team--total"><span></span><span class="ss-name"><span>Total (O/U)</span></span><b class="fav">${g.total ?? '—'}</b></div>
+                            </div>
+                            ${spread.html}
+                            ${total.html}
+                            <button type="button" class="ss-why-btn" onclick="ssToggle('${g.id}')" aria-expanded="${open}" aria-label="${open ? 'Hide' : 'Show'} why for ${ssEsc(aN)} at ${ssEsc(hN)}"><span class="ss-why-text">${open ? 'Hide why' : 'Why'}</span><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6 L8 10 L12 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                        </div>
+                        ${open ? ssWhy(g) : ''}
+                    </article>`;
+                }).join('')}`).join('');
+        }
+
+        // ---- Value tab (new layout); tracked value bets render on My Bets ----
+        async function renderValueTab() {
+            const rowsEl = document.getElementById('vtRows');
+            const opps = (state.value?.opportunities || []).slice().sort((a, b) => b.edge - a.edge);
+            const badge = document.getElementById('tabValueCount');
+            if (badge) badge.textContent = opps.length || '';
+            const gameById = Object.fromEntries((state.games || []).map(g => [g.id, g]));
+            const tracked = new Set((await getAllValueBets()).map(b => b.id));
+            if (rowsEl) {
+                rowsEl.innerHTML = opps.length ? opps.map((o, i) => {
+                    const g = gameById[o.gameId];
+                    const st = ssStrength(o.edge, o.books);
+                    const teamName = o.type === 'total' ? (g ? ssShortName(g, 'home') : o.homeTeam) : (g ? ssShortName(g, o.side === o.homeTeam ? 'home' : 'away') : o.side);
+                    const pick = o.type === 'total' ? o.label : o.label.replace(o.side, teamName);
+                    const typeLabel = o.type === 'total' ? 'Total' : o.type === 'spread' ? 'Spread' : 'Moneyline';
+                    const when = new Date(o.startTime).toLocaleString('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' });
+                    return `<div class="ss-vrow${st.best ? ' ss-vrow--best' : ''}">
+                        <div class="ss-vbet">${ssBadge(teamName, 32)}<div>${st.best ? '<span class="ss-tag-best">★ BEST BET</span>' : ''}<div class="ss-vpick">${ssEsc(pick)}</div><div class="ss-vsub">${typeLabel} · ${o.books} books${g && ssModelAgrees(o, g) ? ' · Model agrees' : ''}</div></div></div>
+                        <div class="ss-vgame"><div>${ssEsc(g ? ssShortName(g, 'away') + ' @ ' + ssShortName(g, 'home') : o.awayTeam + ' @ ' + o.homeTeam)}</div><div class="ss-vsub">${when}</div></div>
+                        ${ssBarRows([{ label: 'Costs', val: o.polyPrice * 100, color: 'var(--ss-gray-bar)', text: ssCents(o.polyPrice) },
+                                     { label: 'Worth', val: o.polyPrice * 100, gapW: o.edge * 100, color: 'var(--ss-green)', text: ssCents1(o.fairProb) }])}
+                        <div class="ss-vval"><span class="ss-pill${st.best ? ' ss-pill--best' : ''}">${ssCents1(o.edge)} off</span>${ssMeter(st.bars)}</div>
+                        <div class="ss-actions">
+                            <button type="button" class="ss-btn-outline${tracked.has(o.id) ? ' is-on' : ''}" onclick="trackValueBet('${o.id}', this).then(() => renderValueTab())">${tracked.has(o.id) ? '✓ Tracked' : 'Track'}</button>
+                            ${o.tradeUrl ? `<a class="ss-btn-green" href="${ssEsc(o.tradeUrl)}" target="_blank" rel="noopener">Trade</a>` : ''}
+                        </div>
+                    </div>`;
+                }).join('') : '<div class="ss-empty">No value bets right now. Polymarket prices currently match the sportsbooks. Check back after the next update.</div>';
+            }
+            const statsEl = document.getElementById('vtStats');
+            if (statsEl) ssValueLogSummary().then(s => { statsEl.innerHTML = ssStatTiles(s); }).catch(() => {});
+            try { await renderValueTabLegacy(); } catch (e) { /* tracked list only */ }
+        }
+
+        // Move the status text and menu into the new top bar, and open on Today
+        function ssMountChrome() {
+            const right = document.getElementById('ssTopRight');
+            const status = document.querySelector('#legacyHeader .header-status');
+            const menu = document.querySelector('#legacyHeader .hamburger-menu-container');
+            if (right && status) right.appendChild(status);
+            if (right && menu) right.appendChild(menu);
+            const legacy = document.getElementById('legacyHeader');
+            if (legacy) legacy.style.display = 'none';
         }
 
         // ===== Shared model record =====
@@ -27623,6 +28311,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 const r = await fetch('data/snapshot.json', { cache: 'no-store' });
                 if (!r.ok) return false;
                 SNAPSHOT = await r.json();
+                if (SNAPSHOT.teams) loadTeamMeta(SNAPSHOT.teams);
                 await refreshAllData();
                 return true;
             } catch (e) {
@@ -27637,6 +28326,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', async function() {
+            ssMountChrome();
             loadConfig();
 
             // Initialize prediction tracker
