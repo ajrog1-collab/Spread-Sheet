@@ -10017,7 +10017,7 @@
 
         .ss-wrap { max-width: 1200px; margin: 0 auto; padding: 20px 16px 56px; display: flex; flex-direction: column; gap: 16px; }
         .ss-kicker { font-size: 12px; font-weight: 700; color: #B9C7DA; text-transform: uppercase; letter-spacing: 0.06em; }
-        .ss-hero { background: #1E3A5F; color: #FFFFFF; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 18px; }
+        .ss-hero { background: #1E3A5F; color: #FFFFFF; border-radius: 16px; padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; }
         .ss-hero-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
         .ss-hero-title { margin: 2px 0 4px; font: 800 28px Inter, system-ui, sans-serif; letter-spacing: -0.01em; color: #FFFFFF; }
         .ss-hero-sub { font-size: 14px; line-height: 1.5; color: #D6DEEA; }
@@ -10083,8 +10083,30 @@
         .ss-ml a { font-weight: 700; font-size: 12px; color: var(--ss-navy); }
         .ss-ml { flex-wrap: nowrap; white-space: nowrap; overflow: hidden; }
         .ss-ml-pick { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+        .ss-t10-cards { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 6px; padding: 6px 6px 12px; margin: 0 -6px; }
+        .ss-t10-card { flex: 0 0 262px; scroll-snap-align: start; background: var(--ss-surface); color: var(--ss-ink); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 14px rgba(8,18,38,0.22); }
+        .ss-t10-card--best { box-shadow: 0 0 0 3px var(--ss-orange), 0 4px 14px rgba(8,18,38,0.22); }
+        .ss-t10c-top { display: flex; align-items: center; gap: 8px; }
+        .ss-t10c-top .ss-t10-score { margin-left: auto; padding: 3px 8px; }
+        .ss-t10c-top .ss-t10-score b { font-size: 17px; }
+        .ss-t10c-rank { font: 800 15px 'JetBrains Mono', monospace; color: var(--ss-muted); }
+        .ss-t10c-type { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ss-muted); }
+        .ss-t10c-bet { display: flex; align-items: center; gap: 10px; min-width: 0; }
+        .ss-t10c-pick { font-size: 17px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .ss-t10c-meta { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: var(--ss-ink2); }
+        .ss-t10c-meta b { font-size: 12px; }
+        .ss-t10c-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; }
+        .ss-t10c-foot .ss-btn-green { flex: none; min-height: 40px; padding: 0 18px; }
+        .ss-t10-toggle { display: flex; align-items: center; gap: 14px; }
+        .ss-t10-toggle button { background: rgba(255,255,255,0.12); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.28); border-radius: 10px; min-height: 40px; padding: 0 16px; font: 700 13px Inter, sans-serif; cursor: pointer; }
+        .ss-t10-toggle span { font-size: 12px; color: #B9C7DA; }
+        .ss-chip-row { display: flex; align-items: center; gap: 8px; min-width: 0; }
+        .ss-chip-row .ss-chip { min-width: 0; }
+        .ss-score-mini { flex: none; display: inline-flex; align-items: center; justify-content: center; min-width: 26px; height: 22px; padding: 0 6px; border-radius: 6px; color: #FFFFFF; font: 800 12px 'JetBrains Mono', monospace; }
+        .ss-score-mini.sc-na { background: var(--ss-track); color: var(--ss-muted); }
+        .ss-mkt--none .ss-mkt-head { width: 100%; }
         .ss-top10 { background: var(--ss-surface); border-radius: 14px; overflow: hidden; }
-        .ss-t10-row { display: grid; grid-template-columns: 36px minmax(0, 2.4fr) 70px 104px minmax(0, 1.1fr) 92px 84px; gap: 12px; align-items: center; padding: 10px 16px; border-top: 1px solid var(--ss-line); color: var(--ss-ink); }
+        .ss-t10-row { display: grid; grid-template-columns: 30px minmax(0, 2.4fr) 64px 96px minmax(0, 1.1fr) 80px 76px; gap: 12px; align-items: center; padding: 7px 14px; border-top: 1px solid var(--ss-line); color: var(--ss-ink); }
         .ss-t10-row:first-child { border-top: 0; }
         .ss-t10-row--best { background: var(--ss-orange-row); box-shadow: inset 0 0 0 2px var(--ss-orange); }
         .ss-t10-rank { font: 800 18px 'JetBrains Mono', monospace; color: var(--ss-muted); text-align: center; }
@@ -10102,7 +10124,7 @@
         .ss-t10-agree { background: var(--ss-lean-bg); color: var(--ss-navy); border: 1px solid var(--ss-lean-line); }
         .ss-t10-disagree { background: var(--ss-surface2); color: var(--ss-muted); border: 1px dashed var(--ss-line2); }
         .ss-t10-score { display: flex; flex-direction: column; align-items: center; border-radius: 10px; padding: 4px 6px; color: #FFFFFF; }
-        .ss-t10-score b { font: 800 20px 'JetBrains Mono', monospace; line-height: 1.1; }
+        .ss-t10-score b { font: 800 18px 'JetBrains Mono', monospace; line-height: 1.1; }
         .ss-t10-score span { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
         .sc-strong { background: #13603A; } .sc-good { background: #1A7F4B; } .sc-thin { background: #8A6D1F; } .sc-none { background: #6B7280; }
         .ss-t10-act .ss-btn-green { min-height: 40px; width: 100%; }
@@ -10294,6 +10316,10 @@
             .ss-t10-row .ss-t10-sub { white-space: normal; }
             .ss-score-key { font-size: 11px; gap: 8px; }
             .ss-mob-only { display: inline; }
+            .ss-t10-card { flex-basis: 268px; }
+            .ss-t10-cards { margin: 0 -14px; padding: 6px 16px 12px; scroll-padding-left: 16px; }
+            .ss-score-key { display: none; }
+            .ss-mkt--none .ss-mkt-head { width: auto; gap: 8px; }
             .ss-t10-pick { white-space: normal; }
             .ss-t10-pick .ss-tag-best { display: block; width: fit-content; margin-bottom: 3px; }
             .ss-mkt--hasv { height: 136px; }
@@ -10556,7 +10582,7 @@
                         </div>
                         <div class="ss-hero-stats" id="ssHeroStats"></div>
                     </div>
-                    <div class="ss-top10" id="ssHeroCards"></div>
+                    <div id="ssHeroCards"></div>
                     <div class="ss-score-key"><span>Bet Score:</span><span><i class="sc-strong"></i>80+ Strong</span><span><i class="sc-good"></i>60–79 Good</span><span><i class="sc-thin"></i>50–59 Thin</span><span><i class="sc-none"></i>Under 50 No value (costs more than it's worth)</span><span>★ Best Bet = 4¢+ off, 3+ books</span></div>
                 </section>
 
@@ -28079,7 +28105,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
         // NEW UI (v7): Today, Value, Best Bets, team badges
         // One set of terms: Lean, Edge (pts), Value bet, Worth, ¢ off, Best Bet, Strength
         // =====================================================================
-        let ssFilter = 'all', ssConf = 'all', ssSearch = '';
+        let ssFilter = 'all', ssConf = 'all', ssSearch = '', ssTopExpanded = false;
         const ssOpen = new Set();
         let TEAM_META = {};
         try { TEAM_META = JSON.parse(localStorage.getItem('ss_team_meta') || '{}'); } catch (e) { TEAM_META = {}; }
@@ -28181,7 +28207,10 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             const o = opps.filter(x => x.type === type).sort((x, y) => y.edge - x.edge)[0];
             const l = ssLean(g, type);
             const lm = l || ssLean(g, type, true);        // model numbers even without a lean
-            if (!o && !l) return { kind: 'none', html: `<div class="ss-mkt ss-mkt--none"><span class="ss-mkt-label">${label}</span><span class="ss-none">No edge</span></div>` };
+            if (!o && !l) {
+                const scN = ssSideScore(g, type, null);
+                return { kind: 'none', html: `<div class="ss-mkt ss-mkt--none"><div class="ss-mkt-head"><span class="ss-mkt-label">${label}</span>${scN ? ssScoreMini(scN, g) : ''}</div><span class="ss-none">No edge</span></div>` };
+            }
 
             let rows = null, say = '';
             if (lm) {
@@ -28208,8 +28237,9 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 cls = `ss-mkt--lean ss-mkt--hasv${best ? ' ss-mkt--vbest' : ' ss-mkt--vval'}`;
                 callout = `<div class="ss-vcall${best ? ' ss-vcall--best' : ''}"><span class="ss-vcall-tag">${best ? '★ BEST BET' : 'VALUE'}</span><span class="ss-vcall-pick">${ssEsc(ssPickText(g, o))}</span>${ssMeter(st.bars, true)}<b>${ssCents1(o.edge)} off</b></div>`;
             }
-            const chip = l ? `<span class="ss-chip ss-chip--lean">Model likes ${ssEsc(l.label)}</span>`
-                           : `<span class="ss-chip ss-chip--muted">No lean: model is close to the book</span>`;
+            const chipScore = l ? ssSideScore(g, type, l.side) : (o ? ssSideScore(g, type, type === 'total' ? o.side : (o.side === g.homeTeam ? 'home' : 'away')) : null);
+            const chip = `<div class="ss-chip-row">${l ? `<span class="ss-chip ss-chip--lean">Model likes ${ssEsc(l.label)}</span>`
+                           : `<span class="ss-chip ss-chip--muted">No lean: model is close to the book</span>`}${ssScoreMini(chipScore, g)}</div>`;
             return { kind: o ? 'value' : 'lean', best, html: `
                 <div class="ss-mkt ${cls}">
                     <div class="ss-mkt-head"><span class="ss-mkt-label">${label}</span><span class="ss-mkt-right">${l ? `<b class="ss-edge">+${l.edge.toFixed(1)} pts</b>` : ''}</span></div>
@@ -28217,6 +28247,19 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                     ${rows ? ssBarRows(rows) : ''}
                     ${callout || `<span class="ss-say">${say}</span>`}
                 </div>` };
+        }
+
+        // Bet Score for one side of a market (the side the chip names), from Polymarket vs the books
+        function ssSideScore(g, type, side) {
+            const list = (state.value?.all || state.value?.opportunities || []).filter(o => o.gameId === g.id && o.type === type && ssCategory(o) === 'value');
+            const pick = side == null ? list : list.filter(o => type === 'total' ? o.side === side : (o.side === (side === 'home' ? g.homeTeam : g.awayTeam)));
+            let best = null;
+            pick.forEach(o => { const sc = ssBetScore(o, g); if (!best || sc.score > best.score) best = { ...sc, o }; });
+            return best;
+        }
+        function ssScoreMini(sc, g) {
+            if (!sc) return '<span class="ss-score-mini sc-na" title="No Polymarket price for this side">–</span>';
+            return `<span class="ss-score-mini sc-${sc.cls}" title="Bet Score ${sc.score} (${sc.label}) for ${ssEsc(ssPickText(g, sc.o))} at ${ssCents(sc.o.polyPrice)}">${sc.score}</span>`;
         }
 
         // Model numbers for both markets, without the lean thresholds
@@ -28413,26 +28456,50 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             const cards = document.getElementById('ssHeroCards');
             if (cards) {
                 const gameById = Object.fromEntries(games.map(g => [g.id, g]));
-                cards.innerHTML = top.length ? top.map(t => {
+                const info = t => {
                     const o = t.o, g = gameById[o.gameId];
                     const teamName = o.type === 'total' ? (g ? ssShortName(g, 'home') : o.homeTeam) : (g ? ssShortName(g, o.side === o.homeTeam ? 'home' : 'away') : o.side);
-                    const when = new Date(o.startTime).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-                    const typeLabel = o.type === 'total' ? 'Total' : o.type === 'spread' ? 'Spread' : 'Moneyline';
-                    const disc = o.edge >= 0 ? `<b class="ss-good">${ssCents1(o.edge)} off</b>` : `<b class="ss-faint">${ssCents1(-o.edge)} over</b>`;
-                    const model = t.model === 'agrees' ? '<span class="ss-t10-tag ss-t10-agree">Model agrees</span>' : t.model === 'disagrees' ? '<span class="ss-t10-tag ss-t10-disagree">Model disagrees</span>' : '';
-                    return `<div class="ss-t10-row${t.best ? ' ss-t10-row--best' : ''}">
-                        <span class="ss-t10-rank">${t.rank}</span>
-                        <div class="ss-t10-bet">${ssBadge(teamName, 30)}<div class="ss-t10-text">
-                            <div class="ss-t10-pick">${t.best ? '<span class="ss-tag-best">★ BEST BET</span> ' : ''}${ssEsc(ssPickText(g || { homeTeam: o.homeTeam, homeRating: null, awayRating: null }, o))}</div>
-                            <div class="ss-t10-sub">${typeLabel} · ${ssEsc(g ? ssShortName(g, 'away') + ' @ ' + ssShortName(g, 'home') : o.awayTeam + ' @ ' + o.homeTeam)} · ${when}<span class="ss-mob-only"> · ${Math.round(o.fairProb * 100)}% chance · ${ssCents(o.polyPrice)}, ${o.edge >= 0 ? ssCents1(o.edge) + ' off' : ssCents1(-o.edge) + ' over'}</span></div>
-                        </div></div>
-                        <div class="ss-t10-stat"><span>Chance</span><b>${Math.round(o.fairProb * 100)}%</b></div>
-                        <div class="ss-t10-stat"><span>Price</span><b>${ssCents(o.polyPrice)}</b>${disc}</div>
-                        <div class="ss-t10-tags">${model}</div>
-                        <div class="ss-t10-score sc-${t.cls}"><b>${t.score}</b><span>${t.label}</span></div>
-                        <div class="ss-t10-act">${o.tradeUrl ? `<a class="ss-btn-green" href="${ssEsc(o.tradeUrl)}" target="_blank" rel="noopener">Trade</a>` : ''}</div>
-                    </div>`;
-                }).join('') : '<div class="ss-empty" style="color:#D6DEEA">Nothing to rank yet.</div>';
+                    return { o, g, teamName,
+                        pick: ssPickText(g || { homeTeam: o.homeTeam, homeRating: null, awayRating: null }, o),
+                        when: new Date(o.startTime).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }),
+                        typeLabel: o.type === 'total' ? 'Total' : o.type === 'spread' ? 'Spread' : 'Moneyline',
+                        game: g ? ssShortName(g, 'away') + ' @ ' + ssShortName(g, 'home') : o.awayTeam + ' @ ' + o.homeTeam,
+                        disc: o.edge >= 0 ? `<b class="ss-good">${ssCents1(o.edge)} off</b>` : `<b class="ss-faint">${ssCents1(-o.edge)} over</b>`,
+                        model: t.model === 'agrees' ? '<span class="ss-t10-tag ss-t10-agree">Model agrees</span>' : t.model === 'disagrees' ? '<span class="ss-t10-tag ss-t10-disagree">Model disagrees</span>' : '' };
+                };
+                if (!top.length) {
+                    cards.innerHTML = '<div class="ss-empty" style="color:#D6DEEA">Nothing to rank yet.</div>';
+                } else if (!ssTopExpanded) {
+                    cards.innerHTML = `<div class="ss-t10-cards">${top.slice(0, 5).map(t => {
+                        const x = info(t), o = x.o;
+                        return `<article class="ss-t10-card${t.best ? ' ss-t10-card--best' : ''}">
+                            <div class="ss-t10c-top"><span class="ss-t10c-rank">#${t.rank}</span>${t.best ? '<span class="ss-tag-best">★ BEST BET</span>' : `<span class="ss-t10c-type">${x.typeLabel}</span>`}<span class="ss-t10-score sc-${t.cls}"><b>${t.score}</b><span>${t.label}</span></span></div>
+                            <div class="ss-t10c-bet">${ssBadge(x.teamName, 32)}<div style="min-width:0"><div class="ss-t10c-pick">${ssEsc(x.pick)}</div><div class="ss-t10-sub">${ssEsc(x.game)} · ${x.when}</div></div></div>
+                            ${ssBarRows([{ label: 'Costs', val: o.polyPrice * 100, color: 'var(--ss-gray-bar)', text: ssCents(o.polyPrice) },
+                                         o.edge > 0 ? { label: 'Worth', val: o.polyPrice * 100, gapW: o.edge * 100, color: 'var(--ss-green)', text: ssCents1(o.fairProb) }
+                                                    : { label: 'Worth', val: o.fairProb * 100, color: 'var(--ss-green)', text: ssCents1(o.fairProb) }])}
+                            <div class="ss-t10c-meta"><span>${Math.round(o.fairProb * 100)}% chance</span>${x.disc}</div>
+                            <div class="ss-t10c-foot">${x.model || '<span></span>'}${o.tradeUrl ? `<a class="ss-btn-green" href="${ssEsc(o.tradeUrl)}" target="_blank" rel="noopener">Trade</a>` : ''}</div>
+                        </article>`;
+                    }).join('')}</div>`;
+                } else {
+                    cards.innerHTML = `<div class="ss-top10">${top.map(t => {
+                        const x = info(t), o = x.o;
+                        return `<div class="ss-t10-row${t.best ? ' ss-t10-row--best' : ''}">
+                            <span class="ss-t10-rank">${t.rank}</span>
+                            <div class="ss-t10-bet">${ssBadge(x.teamName, 28)}<div class="ss-t10-text">
+                                <div class="ss-t10-pick">${t.best ? '<span class="ss-tag-best">★ BEST BET</span> ' : ''}${ssEsc(x.pick)}</div>
+                                <div class="ss-t10-sub">${x.typeLabel} · ${ssEsc(x.game)} · ${x.when}<span class="ss-mob-only"> · ${Math.round(o.fairProb * 100)}% chance · ${ssCents(o.polyPrice)}</span></div>
+                            </div></div>
+                            <div class="ss-t10-stat"><span>Chance</span><b>${Math.round(o.fairProb * 100)}%</b></div>
+                            <div class="ss-t10-stat"><span>Price</span><b>${ssCents(o.polyPrice)}</b>${x.disc}</div>
+                            <div class="ss-t10-tags">${x.model}</div>
+                            <div class="ss-t10-score sc-${t.cls}"><b>${t.score}</b><span>${t.label}</span></div>
+                            <div class="ss-t10-act">${o.tradeUrl ? `<a class="ss-btn-green" href="${ssEsc(o.tradeUrl)}" target="_blank" rel="noopener">Trade</a>` : ''}</div>
+                        </div>`;
+                    }).join('')}</div>`;
+                }
+                if (top.length) cards.innerHTML += `<div class="ss-t10-toggle"><button type="button" onclick="ssTopExpanded = !ssTopExpanded; renderToday()">${ssTopExpanded ? 'Show as cards' : `Show all ${top.length} as a list`}</button>${!ssTopExpanded && top.length > 1 ? '<span>Scroll for more →</span>' : ''}</div>`;
             }
             const stats = document.getElementById('ssHeroStats');
             if (stats) ssValueLogSummary().then(s => { stats.innerHTML = ssStatTiles(s); }).catch(() => {});
