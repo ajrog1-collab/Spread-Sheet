@@ -10107,6 +10107,48 @@
         .ss-admin-form .ss-btn-solid { border: 0; cursor: pointer; min-height: 46px; margin-top: 4px; }
         .ss-admin-err { margin: 0; min-height: 18px; font-size: 13px; color: #B42318; }
         .ss-m { display: none; }
+        /* Game header: teams side by side, a bet tile under each */
+        .ss-gh { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr) 40px; gap: 10px 14px; align-items: start; padding: 14px 20px; }
+        .ss-gh-when { grid-column: 1 / -1; font-size: 12px; font-weight: 800; color: var(--ss-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+        .ss-gh-col { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+        .ss-gh-team { display: flex; align-items: center; gap: 10px; min-width: 0; }
+        .ss-gh-name { font-size: 18px; font-weight: 800; color: var(--ss-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .ss-gh-name em { font-style: normal; font-size: 12px; font-weight: 700; color: var(--ss-faint); margin-left: 6px; }
+        .ss-gh-at { align-self: start; padding-top: 5px; text-align: center; font-size: 14px; font-weight: 700; color: var(--ss-faint); }
+        .ss-gh-toggle { width: 40px; height: 40px; border-radius: 10px; border: 0; background: var(--ss-line); color: var(--ss-ink); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .ss-gh-toggle svg { transition: transform 0.2s; }
+        .ss-game--exp .ss-gh-toggle svg { transform: rotate(180deg); }
+        .ss-gh-ml { padding: 0 74px 12px 20px; }
+        .ss-tile { display: flex; flex-direction: column; gap: 4px; text-align: left; width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--ss-line); background: var(--ss-surface2); color: var(--ss-ink); font-family: Inter, sans-serif; cursor: pointer; min-width: 0; }
+        .ss-tile:hover { border-color: var(--ss-line2); }
+        .ss-tile-top { display: flex; align-items: center; gap: 8px; }
+        .ss-tile-type { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ss-muted); }
+        .ss-tile-tag { font-size: 10px; font-weight: 800; letter-spacing: 0.05em; padding: 2px 6px; border-radius: 4px; color: #FFFFFF; background: var(--ss-muted); }
+        .ss-tile-bet { font-size: 17px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .ss-tile-foot { display: flex; align-items: center; gap: 8px; min-height: 28px; }
+        .ss-tile-score { min-width: 34px; height: 28px; padding: 0 6px; box-sizing: border-box; border-radius: 7px; display: inline-flex; align-items: center; justify-content: center; color: #FFFFFF; font: 800 15px 'JetBrains Mono', monospace; }
+        .ss-tile-score.sc-na { background: var(--ss-track); color: var(--ss-muted); }
+        .ss-tile-label { font-size: 13px; font-weight: 700; color: var(--ss-ink2); }
+        .ss-tile-note { font-size: 12px; color: var(--ss-muted); margin-left: auto; white-space: nowrap; }
+        .ss-tile-foot a { font-size: 12px; font-weight: 700; color: var(--ss-navy); margin-left: 8px; }
+        .ss-tile-nobet { font-size: 13px; font-weight: 800; color: var(--ss-faint); letter-spacing: 0.02em; }
+        .ss-tile--best { background: var(--ss-orange-bg); border-color: var(--ss-orange); } .ss-tile--best .ss-tile-tag { background: var(--ss-orange-dk); }
+        .ss-tile--value { background: var(--ss-green-bg); border-color: var(--ss-green-line); } .ss-tile--value .ss-tile-tag { background: var(--ss-green); }
+        .ss-tile--lean { background: var(--ss-lean-bg); border-color: var(--ss-lean-line); } .ss-tile--lean .ss-tile-tag { background: var(--ss-navy); }
+        .ss-tile--ls { background: var(--ss-purple-bg); border-color: var(--ss-purple-line); } .ss-tile--ls .ss-tile-tag { background: var(--ss-purple); }
+        .ss-tile--none { background: transparent; border-style: dashed; }
+        .ss-tile--none .ss-tile-bet { font-weight: 600; color: var(--ss-ink2); }
+        .ss-tile--wide { cursor: default; }
+        /* Cards under the tiles keep the bars; the bet and score are already in the tiles */
+        .ss-cards .ss-chip-row, .ss-cards .ss-score-line, .ss-cards .ss-vcall { display: none !important; }
+        .ss-game-body .ss-cards { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr); column-gap: 14px; }
+        .ss-game-body .ss-cards > :nth-child(1) { grid-column: 1; }
+        .ss-game-body .ss-cards > :nth-child(2) { grid-column: 3; }
+        .ss-game-body .ss-cards--single { grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr); max-width: none; }
+        .ss-cards .ss-mkt { height: auto !important; }
+        .ss-cards .ss-mkt--none { visibility: hidden; }
+        .ss-cards .ss-mkt-label { font-size: 10px; }
+        .ss-game-body { padding: 0 74px 16px 20px !important; }
         .ss-t10-cards { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.35) transparent; }
         .ss-t10-cards::-webkit-scrollbar { height: 6px; }
         .ss-t10-cards::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.35); border-radius: 3px; }
@@ -10525,8 +10567,21 @@
             .ss-group-head { border-radius: 0; }
             .ss-game { border-radius: 0; box-shadow: none; border-top: 1px solid var(--ss-line); }
             .ss-game--best { box-shadow: inset 3px 0 0 var(--ss-orange); }
-            .ss-row, .ss-game-body, .ss-game .ss-why { display: none !important; }
-            .ss-m { display: flex; flex-direction: column; gap: 10px; padding: 14px 14px 12px; }
+            .ss-row, .ss-game-body, .ss-game .ss-why, .ss-gh-toggle, .ss-m { display: none !important; }
+            .ss-gh { grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1fr); gap: 8px 6px; padding: 12px 12px 12px; }
+            .ss-gh-name { font-size: 15px; white-space: normal; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+            .ss-gh-team { gap: 7px; min-height: 38px; align-items: center; }
+            .ss-gh-team .ss-badge { width: 24px !important; height: 24px !important; font-size: 8px !important; }
+            .ss-gh-at { padding-top: 10px; font-size: 12px; }
+            .ss-gh-col { gap: 8px; }
+            .ss-tile { padding: 9px 10px; gap: 3px; border-radius: 10px; }
+            .ss-tile-bet { font-size: 15px; }
+            .ss-tile-note, .ss-hide-phone { display: none; }
+            .ss-tile-top { justify-content: space-between; }
+            .ss-tile-label { font-size: 12px; }
+            .ss-gh-ml { padding: 0 12px 12px; }
+            .ss-gh-ml .ss-tile-note { display: inline; }
+            .ss-m-old { display: flex; flex-direction: column; gap: 10px; padding: 14px 14px 12px; }
             .ss-m-when { font-size: 12px; font-weight: 700; color: var(--ss-muted); text-transform: uppercase; letter-spacing: 0.04em; }
             .ss-m-teams { display: flex; flex-direction: column; gap: 6px; }
             .ss-m-team { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; align-items: center; gap: 10px; }
@@ -28887,31 +28942,74 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             </div>`;
         }
 
+        // One bet tile: what to bet, how good it is. "No Bet" when there is no lean and no value.
+        function ssTile(g, type) {
+            const o = ((ssOppsByGame()[g.id] || []).filter(x => x.type === type).sort((a, b) => b.edge - a.edge))[0] || null;
+            const l = ssLean(g, type);
+            const favLine = type === 'spread'
+                ? (g.spread == null ? '—' : g.spread <= 0 ? `${ssShortName(g, 'home')} ${ssLineText(g.spread)}` : `${ssShortName(g, 'away')} ${ssLineText(-g.spread)}`)
+                : `O/U ${g.total ?? '—'}`;
+            let kind, tag, bet, note, sc = null;
+            if (o) {
+                const st = ssStrength(o.edge, o.books);
+                kind = st.best ? 'best' : 'value'; tag = st.best ? '★ BEST<span class="ss-hide-phone"> BET</span>' : 'VALUE';
+                bet = ssPickText(g, o); note = `${ssCents1(o.edge)} off`;
+                sc = ssPolyOn ? ssBetScore(o, g) : ssModelScore(g, type);
+            } else if (l) {
+                kind = 'lean'; tag = 'LEAN'; bet = l.label; note = `Model +${l.edge.toFixed(1)} pts`;
+                sc = ssPolyOn ? ssSideScore(g, type, l.side) : ssModelScore(g, type);
+            } else {
+                kind = 'none'; tag = ''; bet = favLine; note = '';
+            }
+            const scoreHtml = kind === 'none'
+                ? '<span class="ss-tile-nobet">No Bet</span>'
+                : sc ? `<span class="ss-tile-score sc-${sc.cls}">${sc.score}</span><span class="ss-tile-label">${sc.label}</span>`
+                     : '<span class="ss-tile-score sc-na">–</span><span class="ss-tile-label">No price</span>';
+            return `<button type="button" class="ss-tile ss-tile--${kind}" onclick="ssTileClick('${g.id}','${type}')" aria-label="${type === 'spread' ? 'Spread' : 'Total'}: ${ssEsc(bet)}${kind === 'none' ? ', no bet' : ''}. Show details.">
+                <span class="ss-tile-top"><span class="ss-tile-type">${type === 'spread' ? 'Spread' : 'Total'}</span>${tag ? `<span class="ss-tile-tag">${tag}</span>` : ''}</span>
+                <span class="ss-tile-bet">${ssEsc(bet)}</span>
+                <span class="ss-tile-foot">${scoreHtml}${note ? `<span class="ss-tile-note">${note}</span>` : ''}</span>
+            </button>`;
+        }
+        function ssTileClick(id, type) {
+            if (ssIsPhone()) return ssOpenSheet(id, type);
+            ssCollapsed.delete(id);
+            if (!ssOpen.has(id)) ssOpen.add(id);
+            renderToday();
+            restoreTrackedButtonStates();
+            document.getElementById('game-' + id)?.querySelector('.ss-why')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
         function ssRowHtml(r) {
             const { g, spread, total, best, ml, types } = r;
             const exp = !ssCollapsed.has(g.id), open = ssOpen.has(g.id) && !ssIsPhone();
             const aN = ssShortName(g, 'away'), hN = ssShortName(g, 'home');
-            const aSp = g.spread != null ? ssLineText(-g.spread) : '—', hSp = g.spread != null ? ssLineText(g.spread) : '—';
             const rank = rr => rr && rr.rank && rr.rank <= 25 ? `<em>#${rr.rank}</em>` : '';
-            const when = g.commenceTime.toLocaleString('en-US', ssSort === 'time' ? { hour: 'numeric', minute: '2-digit' } : { weekday: 'short', hour: 'numeric', minute: '2-digit' });
-            const mlStrip = ml ? `<div class="ss-ml${ml.best ? ' ss-ml--best' : ''}${ml.longshot ? ' ss-ml--ls' : ''}"><span class="ss-ml-label">${ml.longshot ? 'LONGSHOT' : 'MONEYLINE'}</span><span class="ss-ml-pick">${ml.best ? '★ ' : ''}${ssEsc(ml.pick)}${ml.longshot ? ` · ${ssCents(ml.o.polyPrice)}` : ''}</span><b title="Costs ${ssCents(ml.o.polyPrice)}, worth ${ssCents1(ml.o.fairProb)}, ${ml.o.books} books">${ssCents1(ml.o.edge)} off</b>${ml.o.tradeUrl ? `<a href="${ssEsc(ml.o.tradeUrl)}" target="_blank" rel="noopener">Trade</a>` : ''}</div>` : '';
+            const when = ssSort !== 'time' ? `<span class="ss-gh-when">${g.commenceTime.toLocaleString('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' })}</span>` : '';
+            const showS = types.includes('spread'), showT = types.includes('total');
+            const mlTile = ml && ssPolyOn ? `<div class="ss-tile ss-tile--wide ss-tile--${ml.longshot ? 'ls' : ml.best ? 'best' : 'value'}">
+                <span class="ss-tile-top"><span class="ss-tile-type">To win</span><span class="ss-tile-tag">${ml.longshot ? 'LONGSHOT' : ml.best ? '★ BEST BET' : 'VALUE'}</span></span>
+                <span class="ss-tile-bet">${ssEsc(ml.pick)}</span>
+                <span class="ss-tile-foot"><span class="ss-tile-note">${ssCents1(ml.o.edge)} off at ${ssCents(ml.o.polyPrice)}${ml.longshot ? ` · wins about 1 in ${(1 / ml.o.fairProb).toFixed(1)}` : ''}</span>${ml.o.tradeUrl ? `<a href="${ssEsc(ml.o.tradeUrl)}" target="_blank" rel="noopener">Trade</a>` : ''}</span>
+            </div>` : '';
             return `<article id="game-${g.id}" class="ss-game${best ? ' ss-game--best' : ''}${exp ? ' ss-game--exp' : ''}${open ? ' ss-game--open' : ''}">
-                ${ssPhoneCard(r)}
-                <button type="button" class="ss-row" onclick="ssToggleRow('${g.id}')" aria-expanded="${exp}">
-                    <span class="ss-row-time">${when}</span>
-                    <span class="ss-row-teams">
-                        <span class="ss-row-team">${ssBadge(aN, 24)}<span class="ss-row-name">${ssEsc(aN)}${rank(g.awayRating)}</span><b class="${g.spread > 0 ? 'fav' : ''}">${aSp}</b></span>
-                        <span class="ss-row-team">${ssBadge(hN, 24)}<span class="ss-row-name">${ssEsc(hN)}${rank(g.homeRating)}</span><b class="${g.spread < 0 ? 'fav' : ''}">${hSp}</b></span>
-                    </span>
-                    <span class="ss-row-total"><small>O/U</small><b>${g.total ?? '—'}</b></span>
-                    ${ssSignal(r)}
-                    <svg class="ss-row-chev" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6 L8 10 L12 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </button>
+                <div class="ss-gh">
+                    ${when}
+                    <div class="ss-gh-col">
+                        <div class="ss-gh-team">${ssBadge(aN, 28)}<span class="ss-gh-name">${ssEsc(aN)}${rank(g.awayRating)}</span></div>
+                        ${showS ? ssTile(g, 'spread') : (showT ? ssTile(g, 'total') : '')}
+                    </div>
+                    <div class="ss-gh-at">@</div>
+                    <div class="ss-gh-col">
+                        <div class="ss-gh-team">${ssBadge(hN, 28)}<span class="ss-gh-name">${ssEsc(hN)}${rank(g.homeRating)}</span></div>
+                        ${showS && showT ? ssTile(g, 'total') : ''}
+                    </div>
+                    <button type="button" class="ss-gh-toggle" onclick="ssToggleRow('${g.id}')" aria-expanded="${exp}" aria-label="${exp ? 'Hide' : 'Show'} the bars for ${ssEsc(aN)} at ${ssEsc(hN)}"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6 L8 10 L12 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                </div>
+                ${mlTile ? `<div class="ss-gh-ml">${mlTile}</div>` : ''}
                 ${exp ? `<div class="ss-game-body">
-                    ${mlStrip}
                     <div class="ss-cards${types.length === 1 ? ' ss-cards--single' : ''}">
-                        ${types.includes('spread') ? spread.html : ''}
-                        ${types.includes('total') ? total.html : ''}
+                        ${showS ? spread.html : ''}
+                        ${showT ? total.html : ''}
                     </div>
                     <button type="button" class="ss-why-open" onclick="ssWhyOpen('${g.id}')" aria-expanded="${open}">${open ? 'Hide details' : 'Why? See the details'}</button>
                 </div>` : ''}
@@ -29097,10 +29195,12 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             const counts = document.getElementById('ssCounts');
             if (counts) counts.textContent = `${games.length} games · ${built.filter(r => r.hasLean).length} with leans · ${opps.length} value`;
             if (!games.length) { wrap.innerHTML = '<div class="ss-empty">No games loaded yet. Data updates around 9 AM and 5 PM ET, or use Refresh Data in the menu.</div>'; return; }
-            if (!built.length && !noEdge.length) { wrap.innerHTML = '<div class="ss-empty">No games match these filters.</div>'; return; }
-
             // Games with no edge sit behind one button
             const noEdge = built.filter(r => !r.worth);
+            if (!built.length) {
+                wrap.innerHTML = `<div class="ss-empty">${ssFilter === 'best' ? 'No Best Bets right now. A Best Bet needs 4¢+ off with 3+ sportsbooks agreeing.' : ssFilter === 'value' ? 'No value bets right now.' : 'No games match these filters.'}</div>`;
+                return;
+            }
             const visible = ssShowNoEdge ? built : built.filter(r => r.worth);
             built.length = 0; visible.forEach(r => built.push(r));
             // Active-filter badge
