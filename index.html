@@ -10106,6 +10106,16 @@
         .ss-admin-form input { height: 46px; border-radius: 10px; border: 1px solid var(--ss-line2); padding: 0 12px; font: 500 15px Inter, sans-serif; background: var(--ss-surface); color: var(--ss-ink); }
         .ss-admin-form .ss-btn-solid { border: 0; cursor: pointer; min-height: 46px; margin-top: 4px; }
         .ss-admin-err { margin: 0; min-height: 18px; font-size: 13px; color: #B42318; }
+        .ss-m { display: none; }
+        .ss-t10-cards { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.35) transparent; }
+        .ss-t10-cards::-webkit-scrollbar { height: 6px; }
+        .ss-t10-cards::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.35); border-radius: 3px; }
+        .ss-t10-cards::-webkit-scrollbar-track { background: transparent; }
+        .ss-sheet-card { display: none; }
+        .ss-sheet-body[data-tab="spread"] .ss-sheet-card[data-for="spread"], .ss-sheet-body[data-tab="total"] .ss-sheet-card[data-for="total"] { display: block; margin-bottom: 12px; }
+        .ss-sheet-card .ss-mkt { height: auto !important; background-color: var(--ss-surface); }
+        .ss-sheet-card .ss-bars, .ss-sheet-card .ss-meter { display: grid !important; }
+        .ss-sheet-card .ss-meter { display: inline-flex !important; }
         /* Polymarket off */
         body.ss-nopoly #tabValue, body.ss-nopoly .ss-toolbar--sticky .ss-seg,
         body.ss-nopoly .ss-vcall, body.ss-nopoly .ss-why-s2, body.ss-nopoly .ss-why-t2, body.ss-nopoly .ss-ml,
@@ -10515,6 +10525,34 @@
             .ss-group-head { border-radius: 0; }
             .ss-game { border-radius: 0; box-shadow: none; border-top: 1px solid var(--ss-line); }
             .ss-game--best { box-shadow: inset 3px 0 0 var(--ss-orange); }
+            .ss-row, .ss-game-body, .ss-game .ss-why { display: none !important; }
+            .ss-m { display: flex; flex-direction: column; gap: 10px; padding: 14px 14px 12px; }
+            .ss-m-when { font-size: 12px; font-weight: 700; color: var(--ss-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+            .ss-m-teams { display: flex; flex-direction: column; gap: 6px; }
+            .ss-m-team { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; align-items: center; gap: 10px; }
+            .ss-m-name { font-size: 17px; font-weight: 700; color: var(--ss-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .ss-m-name em { font-style: normal; font-size: 11px; font-weight: 700; color: var(--ss-faint); margin-left: 6px; }
+            .ss-m-team > b { font: 700 16px 'JetBrains Mono', monospace; color: var(--ss-muted); }
+            .ss-m-team > b.fav { color: var(--ss-ink); }
+            .ss-m-total .ss-m-name { font-size: 15px; color: var(--ss-ink2); }
+            .ss-m-bets { display: flex; flex-direction: column; gap: 6px; }
+            .ss-bl { display: grid; grid-template-columns: 52px minmax(0, 1fr) 40px; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 10px; background: var(--ss-surface2); border-left: 0; }
+            .ss-bl-type { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ss-muted); }
+            .ss-bl-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+            .ss-bl-main b { font-size: 15px; font-weight: 800; color: var(--ss-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .ss-bl-main small { font-size: 12px; color: var(--ss-ink2); line-height: 1.35; }
+            .ss-bl-tag { align-self: flex-start; font-size: 10px; font-weight: 800; letter-spacing: 0.05em; padding: 2px 6px; border-radius: 4px; color: #FFFFFF; background: var(--ss-muted); }
+            .ss-bl-score { width: 40px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #FFFFFF; font: 800 15px 'JetBrains Mono', monospace; }
+            .ss-bl-score.sc-na { background: var(--ss-track); color: var(--ss-muted); }
+            .ss-bl--best { background: var(--ss-orange-bg); box-shadow: inset 0 0 0 1.5px var(--ss-orange); } .ss-bl--best .ss-bl-tag { background: var(--ss-orange-dk); }
+            .ss-bl--value { background: var(--ss-green-bg); } .ss-bl--value .ss-bl-tag { background: var(--ss-green); }
+            .ss-bl--lean { background: var(--ss-lean-bg); } .ss-bl--lean .ss-bl-tag { background: var(--ss-navy); }
+            .ss-bl--ls { background: var(--ss-purple-bg); } .ss-bl--ls .ss-bl-tag { background: var(--ss-purple); }
+            .ss-bl--none { background: transparent; border: 1px dashed var(--ss-line2); }
+            .ss-bl--none .ss-bl-tag { background: transparent; color: var(--ss-faint); padding: 0; }
+            .ss-bl--none .ss-bl-main b { font-weight: 600; color: var(--ss-ink2); }
+            .ss-m-details { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; border-radius: 10px; border: 1px solid var(--ss-line2); background: var(--ss-surface); color: var(--ss-navy); font: 700 14px Inter, sans-serif; cursor: pointer; }
+            .ss-game--best .ss-m { box-shadow: none; }
             .ss-row { grid-template-columns: minmax(0, 1fr) auto 14px; gap: 10px; padding: 10px 12px; }
             .ss-row-time, .ss-row-total, .ss-games--sorted .ss-row-time { display: none; }
             .ss-games--sorted .ss-row { grid-template-columns: minmax(0, 1fr) auto 14px; }
@@ -28437,7 +28475,8 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
         // =====================================================================
         let ssFilter = 'all', ssConf = 'all', ssSearch = '', ssTopExpanded = false, ssTop25 = false, ssMarketView = 'all', ssSort = 'time';
         let ssShowNoEdge = false;
-        const ssExpanded = new Set();
+        const ssExpanded = new Set();   // desktop: rows the user collapsed
+        const ssCollapsed = new Set();
         const ssIsPhone = () => window.matchMedia('(max-width: 640px)').matches;
         function ssToggleFilters(force) {
             const p = document.getElementById('ssFilterPanel'), b = document.getElementById('ssFilterBtn');
@@ -28786,15 +28825,78 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             if (r.hasLean) return `<span class="ss-sig ss-sig--lean">LEAN <b>${sc ?? '–'}</b></span>`;
             return sc != null ? `<span class="ss-sig ss-sig--plain sc-${ssPolyOn ? cls : 'model'}"><b>${sc}</b></span>` : '<span class="ss-sig ss-sig--none">No edge</span>';
         }
+        // ---- Phone game card: teams, lines, O/U, then one clear line per bet ----
+        function ssBetLine(g, type) {
+            const opps = (ssOppsByGame()[g.id] || []).filter(x => x.type === type).sort((a, b) => b.edge - a.edge);
+            const o = opps[0] || null;
+            const l = ssLean(g, type);
+            const favLine = type === 'spread'
+                ? (g.spread == null ? '—' : g.spread <= 0 ? `${ssShortName(g, 'home')} ${ssLineText(g.spread)}` : `${ssShortName(g, 'away')} ${ssLineText(-g.spread)}`)
+                : `O/U ${g.total ?? '—'}`;
+            let sc;
+            if (!ssPolyOn) sc = ssModelScore(g, type);
+            else if (o) sc = ssBetScore(o, g);
+            else if (l) sc = ssSideScore(g, type, l.side);
+            else sc = ssSideScore(g, type, null);
+            const scHtml = sc ? `<span class="ss-bl-score sc-${sc.cls}">${sc.score}</span>` : '<span class="ss-bl-score sc-na">–</span>';
+            let tag, pick, detail, cls;
+            if (o) {
+                const st = ssStrength(o.edge, o.books);
+                tag = st.best ? '★ BEST BET' : 'VALUE';
+                cls = st.best ? 'best' : 'value';
+                pick = ssPickText(g, o);
+                const leanOther = l && !ssModelAgrees(o, g);
+                detail = `${ssCents1(o.edge)} off at ${ssCents(o.polyPrice)}${leanOther ? ` · model likes ${ssEsc(l.label)}` : l ? ' · model agrees' : ''}`;
+            } else if (l) {
+                tag = 'LEAN'; cls = 'lean'; pick = l.label;
+                const bl = ssBestLine(g, type, l.side);
+                detail = `Model ${type === 'spread' ? ssLineText(+l.model.toFixed(1)) : l.model.toFixed(1)} vs book ${type === 'spread' ? ssLineText(l.book) : l.book} (+${l.edge.toFixed(1)} pts)${bl && bl.gain > 0 ? ` · best ${type === 'spread' ? ssLineText(bl.line) : bl.line} at ${ssEsc(bl.book)}` : ''}`;
+            } else {
+                tag = 'NO EDGE'; cls = 'none'; pick = favLine; detail = 'Model is close to the book';
+            }
+            return `<div class="ss-bl ss-bl--${cls}">
+                <span class="ss-bl-type">${type === 'spread' ? 'Spread' : 'Total'}</span>
+                <span class="ss-bl-main"><span class="ss-bl-tag">${tag}</span><b>${ssEsc(pick)}</b><small>${detail}</small></span>
+                ${scHtml}
+            </div>`;
+        }
+        function ssPhoneCard(r) {
+            const { g, ml, types } = r;
+            const aN = ssShortName(g, 'away'), hN = ssShortName(g, 'home');
+            const aSp = g.spread != null ? ssLineText(-g.spread) : '—', hSp = g.spread != null ? ssLineText(g.spread) : '—';
+            const rank = rr => rr && rr.rank && rr.rank <= 25 ? `<em>#${rr.rank}</em>` : '';
+            const when = ssSort !== 'time' ? `<div class="ss-m-when">${g.commenceTime.toLocaleString('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' })}</div>` : '';
+            const mlLine = ml && ssPolyOn ? `<div class="ss-bl ss-bl--${ml.longshot ? 'ls' : ml.best ? 'best' : 'value'}">
+                <span class="ss-bl-type">To win</span>
+                <span class="ss-bl-main"><span class="ss-bl-tag">${ml.longshot ? 'LONGSHOT' : ml.best ? '★ BEST BET' : 'VALUE'}</span><b>${ssEsc(ml.pick)}</b><small>${ssCents1(ml.o.edge)} off at ${ssCents(ml.o.polyPrice)}${ml.longshot ? ` · wins about 1 in ${(1 / ml.o.fairProb).toFixed(1)}` : ''}</small></span>
+                <span></span>
+            </div>` : '';
+            return `<div class="ss-m">
+                ${when}
+                <div class="ss-m-teams">
+                    <div class="ss-m-team">${ssBadge(aN, 26)}<span class="ss-m-name">${ssEsc(aN)}${rank(g.awayRating)}</span><b class="${g.spread > 0 ? 'fav' : ''}">${aSp}</b></div>
+                    <div class="ss-m-team">${ssBadge(hN, 26)}<span class="ss-m-name">${ssEsc(hN)}${rank(g.homeRating)}</span><b class="${g.spread < 0 ? 'fav' : ''}">${hSp}</b></div>
+                    <div class="ss-m-team ss-m-total"><span></span><span class="ss-m-name">Total (O/U)</span><b class="fav">${g.total ?? '—'}</b></div>
+                </div>
+                <div class="ss-m-bets">
+                    ${types.includes('spread') ? ssBetLine(g, 'spread') : ''}
+                    ${types.includes('total') ? ssBetLine(g, 'total') : ''}
+                    ${mlLine}
+                </div>
+                <button type="button" class="ss-m-details" onclick="ssOpenSheet('${g.id}')">See why: model, bars and prices<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 4 L10 8 L6 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            </div>`;
+        }
+
         function ssRowHtml(r) {
             const { g, spread, total, best, ml, types } = r;
-            const exp = ssExpanded.has(g.id), open = ssOpen.has(g.id) && !ssIsPhone();
+            const exp = !ssCollapsed.has(g.id), open = ssOpen.has(g.id) && !ssIsPhone();
             const aN = ssShortName(g, 'away'), hN = ssShortName(g, 'home');
             const aSp = g.spread != null ? ssLineText(-g.spread) : '—', hSp = g.spread != null ? ssLineText(g.spread) : '—';
             const rank = rr => rr && rr.rank && rr.rank <= 25 ? `<em>#${rr.rank}</em>` : '';
             const when = g.commenceTime.toLocaleString('en-US', ssSort === 'time' ? { hour: 'numeric', minute: '2-digit' } : { weekday: 'short', hour: 'numeric', minute: '2-digit' });
             const mlStrip = ml ? `<div class="ss-ml${ml.best ? ' ss-ml--best' : ''}${ml.longshot ? ' ss-ml--ls' : ''}"><span class="ss-ml-label">${ml.longshot ? 'LONGSHOT' : 'MONEYLINE'}</span><span class="ss-ml-pick">${ml.best ? '★ ' : ''}${ssEsc(ml.pick)}${ml.longshot ? ` · ${ssCents(ml.o.polyPrice)}` : ''}</span><b title="Costs ${ssCents(ml.o.polyPrice)}, worth ${ssCents1(ml.o.fairProb)}, ${ml.o.books} books">${ssCents1(ml.o.edge)} off</b>${ml.o.tradeUrl ? `<a href="${ssEsc(ml.o.tradeUrl)}" target="_blank" rel="noopener">Trade</a>` : ''}</div>` : '';
             return `<article id="game-${g.id}" class="ss-game${best ? ' ss-game--best' : ''}${exp ? ' ss-game--exp' : ''}${open ? ' ss-game--open' : ''}">
+                ${ssPhoneCard(r)}
                 <button type="button" class="ss-row" onclick="ssToggleRow('${g.id}')" aria-expanded="${exp}">
                     <span class="ss-row-time">${when}</span>
                     <span class="ss-row-teams">
@@ -28817,7 +28919,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             </article>`;
         }
         function ssToggleRow(id) {
-            if (ssExpanded.has(id)) { ssExpanded.delete(id); ssOpen.delete(id); } else ssExpanded.add(id);
+            if (ssCollapsed.has(id)) ssCollapsed.delete(id); else { ssCollapsed.add(id); ssOpen.delete(id); }
             renderToday();
             restoreTrackedButtonStates();
         }
@@ -28843,7 +28945,11 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                     <button type="button" role="tab" data-t="spread">Spread</button>
                     <button type="button" role="tab" data-t="total">Total</button>
                 </div>
-                <div class="ss-sheet-body" data-tab="${tab}">${ssWhy(g)}</div>
+                <div class="ss-sheet-body" data-tab="${tab}">
+                    <div class="ss-sheet-card" data-for="spread">${ssMarket(g, 'spread', ssOppsByGame()[g.id] || []).html}</div>
+                    <div class="ss-sheet-card" data-for="total">${ssMarket(g, 'total', ssOppsByGame()[g.id] || []).html}</div>
+                    ${ssWhy(g)}
+                </div>
             </div>`;
             document.body.appendChild(el);
             document.body.style.overflow = 'hidden';
@@ -28879,7 +28985,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 const si = document.getElementById('ssSearch'); if (si) si.value = '';
             }
             ssShowNoEdge = true;
-            ssExpanded.add(id);
+            ssCollapsed.delete(id);
             if (!ssIsPhone()) ssOpen.add(id);
             renderToday();
             restoreTrackedButtonStates();
