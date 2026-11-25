@@ -21484,7 +21484,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
 
         // Render the prediction tracker UI
         async function renderPredictionTracker() {
-            const allPredictions = await getAllPredictions();
+            const allPredictions = await getRecordPredictions();
             allPredictionsCache = allPredictions;
             
             // Sort by date descending
@@ -25251,7 +25251,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             let stats = null;
             try {
                 if (!allPredictionsCache.length) {
-                    allPredictionsCache = await getAllPredictions();
+                    allPredictionsCache = await getRecordPredictions();
                 }
                 stats = calculatePredictionStats(allPredictionsCache);
             } catch (e) {
@@ -26961,7 +26961,7 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
 
             // Load data and render
             try {
-                allPredictionsCache = await getAllPredictions();
+                allPredictionsCache = await getRecordPredictions();
             } catch (e) {
                 console.warn('Report card: could not load predictions', e);
                 allPredictionsCache = [];
@@ -27472,6 +27472,26 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             });
         }
 
+        // ===== Shared model record =====
+        // The Record tab reads data/model_log.json (written by the scheduled job), so every browser
+        // shows the same record. Falls back to this browser's own picks if the file isn't available.
+        let _recordCache = null, _recordCacheAt = 0;
+        async function getRecordPredictions() {
+            if (_recordCache && Date.now() - _recordCacheAt < 120000) return _recordCache;
+            try {
+                const r = await fetch('data/model_log.json', { cache: 'no-store' });
+                if (r.ok) {
+                    const log = await r.json();
+                    _recordCache = (log.picks || []).filter(p => p.status === 'graded' || p.status === 'pending');
+                    _recordCacheAt = Date.now();
+                    window.__recordSource = 'shared';
+                    return _recordCache;
+                }
+            } catch (e) { /* fall through */ }
+            window.__recordSource = 'local';
+            return getAllPredictions();
+        }
+
         // ===== Scheduled snapshot (written twice a day by GitHub Actions) =====
         let SNAPSHOT = null;
         async function loadSnapshotAndRender() {
@@ -27485,6 +27505,8 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                 console.warn('[Snapshot] Not loaded:', e.message);
                 return false;
             } finally {
+                window.__snapshotLoaded = !!SNAPSHOT;
+                window.__snapshotDone = true;   // signal for the scheduled capture job
                 SNAPSHOT = null; // a manual Refresh Data click always pulls live data
             }
         }
