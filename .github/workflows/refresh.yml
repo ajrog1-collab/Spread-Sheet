@@ -1,0 +1,43 @@
+name: Refresh data
+
+# Times are UTC. During standard time (Nov-early Mar): 14:00 = 9am ET, 22:00 = 5pm ET, 16:30 = 11:30am ET.
+# After clocks change in March each run happens one hour later in ET.
+on:
+  schedule:
+    - cron: "0 14 * * *"       # morning: every day
+    - cron: "0 22 * * *"       # evening: every day, before most tip-offs
+    - cron: "30 16 * * 0,6"    # weekends: before the noon-4pm games
+  workflow_dispatch: {}        # "Run workflow" button for a manual refresh
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Pull data and update value log
+        env:
+          PROXY_URL: ${{ vars.PROXY_URL }}
+          SITE_DIR: ${{ vars.SITE_DIR || '.' }}
+        run: python scripts/snapshot.py
+
+      - name: Save to repo
+        env:
+          SITE_DIR: ${{ vars.SITE_DIR || '.' }}
+        run: |
+          git config user.name "spreadsheet-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add "$SITE_DIR/data"
+          git diff --cached --quiet || (git commit -m "Data refresh $(date -u +%Y-%m-%dT%H:%MZ)" && git push)
