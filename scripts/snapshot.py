@@ -219,6 +219,8 @@ def main():
         "odds": trim_odds(odds),
         "polymarket": poly,
         "value": {"minEdge": MIN_EDGE, "compared": value_all.get("compared", 0), "opportunities": upcoming},
+        # Every Polymarket-vs-books comparison (used for the price checks in each game's "Why" panel)
+        "prices": [o for o in comps if parse_dt(o["startTime"]) and parse_dt(o["startTime"]) > t],
         "games": trim_games(games),
         "teams": teams,
     }
