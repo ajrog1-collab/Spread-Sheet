@@ -96,6 +96,13 @@ def trim_odds(odds):
     return out
 
 
+def trim_teams(teams):
+    """Names, abbreviations, colors and logos for the team badges (whatever the API provides)."""
+    keep = ("school", "team", "displayName", "shortDisplayName", "abbreviation", "mascot",
+            "primaryColor", "secondaryColor", "color", "alternateColor", "logo", "logos")
+    return [{k: t.get(k) for k in keep if t.get(k) not in (None, "", [])} for t in teams or [] if isinstance(t, dict)]
+
+
 def trim_games(games):
     keep = ("id", "homeTeam", "awayTeam", "homePoints", "awayPoints", "status", "startDate", "neutralSite")
     return [{k: g.get(k) for k in keep} for g in games or []]
@@ -166,6 +173,11 @@ def main():
     value_all = get("/api/value", {"minEdge": "-1"})   # every comparison, used for closing prices
     start = (t - timedelta(days=45)).date().isoformat()
     games = get("/api/games", {"startDate": start, "endDate": t.date().isoformat()})
+    try:
+        teams = trim_teams(get("/api/teams"))
+    except Exception as e:  # logos/colors are optional
+        print(f"Teams skipped: {e}")
+        teams = []
     print(f"ratings={len(ratings)} odds={len(odds)} poly={len(poly)} compared={value_all.get('compared')} games={len(games)}")
 
     comps = value_all.get("opportunities", [])
@@ -208,6 +220,7 @@ def main():
         "polymarket": poly,
         "value": {"minEdge": MIN_EDGE, "compared": value_all.get("compared", 0), "opportunities": upcoming},
         "games": trim_games(games),
+        "teams": teams,
     }
     save_json(os.path.join(DATA_DIR, "snapshot.json"), snapshot)
     s = summarize(all_bets)
