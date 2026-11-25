@@ -10100,7 +10100,15 @@
         .ss-game--open .ss-why-btn { background: var(--ss-navy-dk); color: #FFFFFF; }
         .ss-game--open .ss-why-btn svg { transform: rotate(180deg); }
 
-        .ss-why { border-top: 1px solid var(--ss-line); padding: 20px; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr); gap: 18px; }
+        .ss-why { border-top: 1px solid var(--ss-line); padding: 16px 20px 20px; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr) 44px; gap: 16px; align-items: stretch; }
+        .ss-why-foot { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+        .ss-why-foot .ss-btn-solid { flex: none; }
+        .ss-panel-sub { margin-top: 6px !important; padding-top: 10px; border-top: 1px solid var(--ss-line); }
+        .ss-parts { display: grid; grid-template-columns: minmax(0, 1fr) 56px max-content; gap: 8px; align-items: center; font-size: 13px; color: var(--ss-ink2); }
+        .ss-parts .ss-track { height: 10px; border-radius: 5px; }
+        .ss-parts .ss-num { white-space: nowrap; }
+        .ss-pc-name { font-size: 14px; font-weight: 700; color: var(--ss-ink); }
+        .ss-pc-verdict { font-size: 12px; color: var(--ss-ink2); }
         .ss-panel { background: var(--ss-surface); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
         .ss-panel h3 { margin: 0; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ss-muted); }
         .ss-h2h-names { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: var(--ss-ink); }
@@ -10153,6 +10161,7 @@
             .ss-why-btn { grid-column: 1 / -1; width: 100%; }
             .ss-why-btn .ss-why-text { display: inline; margin-right: 8px; font: 700 14px Inter, sans-serif; }
             .ss-why { grid-template-columns: 1fr; }
+            .ss-why-foot .ss-btn-solid { flex: 1; }
             .ss-vrow { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
         }
         @media (max-width: 640px) {
@@ -25967,10 +25976,12 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
         }
 
         async function fetchValue() {
-            if (SNAPSHOT) return SNAPSHOT.value;
+            if (SNAPSHOT) return { ...SNAPSHOT.value, all: SNAPSHOT.prices || SNAPSHOT.value?.opportunities || [] };
             const proxyUrl = document.getElementById('proxyUrl').value.trim();
             if (!proxyUrl) throw new Error('Enter proxy URL');
-            return fetchWithRetry(`${proxyUrl}/api/value`, { headers: { 'ngrok-skip-browser-warning': 'true' } }, 1);
+            const v = await fetchWithRetry(`${proxyUrl}/api/value?minEdge=-1`, { headers: { 'ngrok-skip-browser-warning': 'true' } }, 1);
+            const all = v.opportunities || [];
+            return { ...v, minEdge: 0.03, all, opportunities: all.filter(o => o.edge >= 0.03) };
         }
 
         // Keep each tracked bet's latest fair value until tip-off (that becomes its "close")
@@ -28040,6 +28051,42 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
             return { kind: 'none', html: `<div class="ss-mkt ss-mkt--none"><span class="ss-mkt-label">${label}</span><span class="ss-none">No edge</span></div>` };
         }
 
+        // Model numbers for both markets, without the lean thresholds
+        function ssModelNums(g) {
+            const a = g.analysis || {};
+            const out = {};
+            if (a.hasData && g.spread != null && a.spreadPick) {
+                const homePick = a.spreadPick.side === 'home';
+                const edge = a.spreadEdge || 0;
+                out.modelHomeSpread = homePick ? g.spread - edge : g.spread + edge;
+                out.spreadEdge = edge; out.spreadSide = a.spreadPick.side;
+            }
+            if (a.hasData && g.total != null && a.totalPick) {
+                const edge = a.totalEdge || 0;
+                out.modelTotal = a.totalPick.pick === 'OVER' ? g.total + edge : g.total - edge;
+                out.totalEdge = edge; out.totalSide = a.totalPick.pick === 'OVER' ? 'over' : 'under';
+            }
+            return out;
+        }
+
+        // Price check for one market: the Polymarket side with the best price vs what the books say it is worth
+        function ssPriceCheck(g, type) {
+            const list = (state.value?.all || state.value?.opportunities || []).filter(o => o.gameId === g.id && o.type === type);
+            if (!list.length) return `<p class="ss-muted">No Polymarket price at the sportsbook line for this ${type === 'spread' ? 'spread' : 'total'}.</p>`;
+            const o = list.sort((x, y) => y.edge - x.edge)[0];
+            const pick = o.type === 'total' ? o.label : o.label.replace(o.side, ssShortName(g, o.side === g.homeTeam ? 'home' : 'away'));
+            const off = o.edge > 0;
+            const rows = off
+                ? [{ label: 'Costs', val: o.polyPrice * 100, color: 'var(--ss-gray-bar)', text: ssCents(o.polyPrice) },
+                   { label: 'Worth', val: o.polyPrice * 100, gapW: o.edge * 100, color: 'var(--ss-green)', text: ssCents1(o.fairProb) }]
+                : [{ label: 'Costs', val: o.polyPrice * 100, color: 'var(--ss-gray-bar)', text: ssCents(o.polyPrice) },
+                   { label: 'Worth', val: o.fairProb * 100, color: 'var(--ss-green)', text: ssCents1(o.fairProb) }];
+            const verdict = o.edge >= 0.03 ? `<b class="ss-good">${ssCents1(o.edge)} off: value bet</b>`
+                : off ? `<span>${ssCents1(o.edge)} off: too small to count as value</span>`
+                : `<span>Costs ${ssCents1(-o.edge)} more than it is worth: no discount</span>`;
+            return `<div class="ss-pc-name">${ssEsc(pick)}</div>${ssBarRows(rows)}<div class="ss-pc-verdict">${verdict}</div>`;
+        }
+
         function ssWhy(g) {
             const a = g.analysis || {};
             const hr = g.homeRating || {}, ar = g.awayRating || {};
@@ -28059,38 +28106,53 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                     <div class="ss-h2h-r"><i style="width:${bar(hv, lo, hi)}%;background:${hL.color}"></i><b>${f(hv)}</b></div>
                 </div>`).join('');
 
-            // How the model gets its spread (home perspective, positive = home wins by)
-            let mathHtml = '<p class="ss-muted">No model projection for this game.</p>';
-            const sl = ssLean(g, 'spread');
-            if (a.hasData && g.spread != null) {
+            const m = ssModelNums(g);
+            const fav = margin => Math.abs(margin) < 0.05 ? 'Even' : `${margin > 0 ? hN : aN} by ${Math.abs(margin).toFixed(1)}`;
+
+            // ---- Spread: what makes up the model's number ----
+            let spreadHtml = '<p class="ss-muted">No model spread for this game.</p>';
+            if (m.modelHomeSpread != null) {
                 const pace = ((hr.pace || 68) + (ar.pace || 68)) / 2;
-                const strength = ((hr.netRating || 0) - (ar.netRating || 0)) * pace / 100;
+                const strength = ((hr.netRating || 0) - (ar.netRating || 0)) * pace / 100;   // + helps home
                 const hca = a.dynamicHCA ?? 3.2;
-                const modelHomeSpread = sl ? (sl.side === 'home' ? sl.model : -sl.model) : -(a.projectedMargin ?? 0);
-                const modelMargin = -modelHomeSpread;
+                const modelMargin = -m.modelHomeSpread;
                 const other = modelMargin - strength - hca;
-                const fav = m => m >= 0 ? `${hN} by ${Math.abs(m).toFixed(1)}` : `${aN} by ${Math.abs(m).toFixed(1)}`;
-                mathHtml = `
-                    <div class="ss-kv"><span>Team strength gap</span><b>${fav(strength)}</b></div>
-                    <div class="ss-kv"><span>Home court (${ssEsc(hN)})</span><b>${ssSigned(hca)}</b></div>
-                    <div class="ss-kv"><span>Rest, travel, recent form</span><b>${ssSigned(other)}</b></div>
+                const parts = [['Team strength', strength], [`Home court`, hca], ['Rest, travel, form', other]];
+                const scale = Math.max(...parts.map(p => Math.abs(p[1])), 1);
+                const partRows = parts.map(([lab, v]) => {
+                    const team = v >= 0 ? hN : aN, look = v >= 0 ? hL : aL;
+                    return `<span>${lab}</span><span class="ss-track"><i style="width:${(Math.abs(v) / scale * 100).toFixed(1)}%;background:${look.color}"></i></span><span class="ss-num">${Math.abs(v) < 0.05 ? '0.0' : `${ssEsc(look.abbr)} +${Math.abs(v).toFixed(1)}`}</span>`;
+                }).join('');
+                const sl = ssLean(g, 'spread');
+                spreadHtml = `
+                    <div class="ss-parts">${partRows}</div>
                     <div class="ss-kv ss-kv--total"><span>Model</span><b>${fav(modelMargin)}</b></div>
-                    <div class="ss-kv ss-muted"><span>Sportsbook</span><b>${fav(-g.spread)}</b></div>
-                    ${sl ? `<div class="ss-kv ss-kv--edge"><span>Edge</span><b>${sl.edge.toFixed(1)} pts on ${ssEsc(sl.name)}</b></div>` : ''}
-                    ${g.total != null && a.projectedTotal != null ? `<div class="ss-kv ss-muted"><span>Total: model vs book</span><b>${(ssLean(g, 'total')?.model ?? a.projectedTotal).toFixed(1)} vs ${g.total}</b></div>` : ''}`;
+                    <div class="ss-kv"><span>Sportsbook</span><b>${fav(-g.spread)}</b></div>
+                    ${sl ? `<div class="ss-kv ss-kv--edge"><span>Edge</span><b>${sl.edge.toFixed(1)} pts on ${ssEsc(sl.name)}</b></div>`
+                         : `<div class="ss-kv ss-muted"><span>Edge</span><b>${(m.spreadEdge || 0).toFixed(1)} pts: too small for a lean</b></div>`}`;
             }
 
-            // Price check + actions for leans
-            const tl = ssLean(g, 'total');
-            const priceRows = [];
-            [['spread', sl], ['total', tl]].forEach(([type, l]) => {
-                if (!l || typeof findPolyPrice !== 'function') return;
-                const q = findPolyPrice(g, type);
-                if (q && q.diff === 0) priceRows.push(`<div class="ss-kv"><span>Polymarket · ${ssEsc(l.label)}</span><b>${ssCents(q.price)}</b></div>`);
-            });
+            // ---- Total: model vs book ----
+            let totalHtml = '<p class="ss-muted">No model total for this game.</p>';
+            if (m.modelTotal != null) {
+                const tl = ssLean(g, 'total');
+                const bv = (g.total - 110) / 60 * 100, mv = (m.modelTotal - 110) / 60 * 100;
+                const lo = Math.min(bv, mv), hi = Math.max(bv, mv);
+                const bars = mv >= bv
+                    ? [{ label: 'Book', val: bv, color: 'var(--ss-gray-bar)', text: String(g.total) }, { label: 'Model', val: lo, gapW: hi - lo, color: 'var(--ss-navy)', text: m.modelTotal.toFixed(1) }]
+                    : [{ label: 'Book', val: lo, gapW: hi - lo, color: 'var(--ss-gray-bar)', text: String(g.total) }, { label: 'Model', val: mv, color: 'var(--ss-navy)', text: m.modelTotal.toFixed(1) }];
+                const pace = ((hr.pace || 68) + (ar.pace || 68)) / 2;
+                totalHtml = `
+                    ${ssBarRows(bars)}
+                    <div class="ss-kv"><span>Pace (possessions per game)</span><b>${pace.toFixed(1)}</b></div>
+                    <div class="ss-kv"><span>Model projected score</span><b>${ssEsc(ssTeamLook(aN).abbr)} ${((m.modelTotal + (m.modelHomeSpread ?? 0)) / 2).toFixed(0)} · ${ssEsc(ssTeamLook(hN).abbr)} ${((m.modelTotal - (m.modelHomeSpread ?? 0)) / 2).toFixed(0)}</b></div>
+                    ${tl ? `<div class="ss-kv ss-kv--edge"><span>Edge</span><b>${tl.edge.toFixed(1)} pts on ${ssEsc(tl.label)}</b></div>`
+                         : `<div class="ss-kv ss-muted"><span>Edge</span><b>${(m.totalEdge || 0).toFixed(1)} pts: too small for a lean</b></div>`}`;
+            }
+
+            const sl = ssLean(g, 'spread'), tl = ssLean(g, 'total');
+            const trackBtn = (type, l) => l ? `<button type="button" class="ss-btn-outline bb-track-btn" id="track-${g.id}-${type}" onclick="trackPick('${g.id}','${type}',this)">Track ${ssEsc(l.label)}</button>` : '';
             const trade = g.poly?.tradeUrl;
-            const trackBtns = [['spread', sl], ['total', tl]].filter(x => x[1])
-                .map(([type, l]) => `<button type="button" class="ss-btn-outline bb-track-btn" id="track-${g.id}-${type}" onclick="trackPick('${g.id}','${type}',this)">Track ${ssEsc(l.label)}</button>`).join('');
             return `
                 <div class="ss-why">
                     <div class="ss-panel">
@@ -28100,14 +28162,22 @@ Residual: ${d.residual > 0 ? '+' : ''}${(d.residual * 100).toFixed(1)}%</title>
                         <p class="ss-muted">Longer bar = better. Defense: fewer points allowed per 100 possessions.</p>
                     </div>
                     <div class="ss-panel">
-                        <h3>How the model gets its number</h3>
-                        ${mathHtml}
+                        <h3>Spread: how the model gets its number</h3>
+                        ${spreadHtml}
+                        <h3 class="ss-panel-sub">Price check</h3>
+                        ${ssPriceCheck(g, 'spread')}
+                        ${sl ? `<div class="ss-actions">${trackBtn('spread', sl)}</div>` : ''}
                     </div>
                     <div class="ss-panel">
-                        <h3>Price check</h3>
-                        ${priceRows.join('') || '<p class="ss-muted">No matching Polymarket price for these leans.</p>'}
-                        <div class="ss-actions">${trackBtns}${trade ? `<a class="ss-btn-solid" href="${ssEsc(trade)}" target="_blank" rel="noopener">Open on Polymarket</a>` : ''}</div>
-                        <p class="ss-muted">Leans are unproven: 50.3% vs closing spreads in last season's test.</p>
+                        <h3>Total: how the model gets its number</h3>
+                        ${totalHtml}
+                        <h3 class="ss-panel-sub">Price check</h3>
+                        ${ssPriceCheck(g, 'total')}
+                        ${tl ? `<div class="ss-actions">${trackBtn('total', tl)}</div>` : ''}
+                    </div>
+                    <div class="ss-why-foot">
+                        <p class="ss-muted">Leans are unproven: 50.3% vs closing spreads in last season's test. Value bets are judged on the Scorecard.</p>
+                        ${trade ? `<a class="ss-btn-solid" href="${ssEsc(trade)}" target="_blank" rel="noopener">Open game on Polymarket</a>` : ''}
                     </div>
                 </div>`;
         }
