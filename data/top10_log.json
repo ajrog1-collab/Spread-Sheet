@@ -1,6 +1,226 @@
 {
- "updatedAt": "2026-11-27T22:25:35.519925+00:00",
+ "updatedAt": "2026-11-28T03:48:40.996727+00:00",
  "bets": [
+  {
+   "id": "2969a91168251baffa46c87c548deab4_total_under_141.5",
+   "gameId": "2969a91168251baffa46c87c548deab4",
+   "homeTeam": "Minnesota Golden Gophers",
+   "awayTeam": "California Golden Bears",
+   "startTime": "2026-11-29T01:00:00Z",
+   "type": "total",
+   "side": "under",
+   "line": 141.5,
+   "label": "Under 141.5",
+   "entryPrice": 0.49,
+   "entryWorth": 0.49,
+   "edge": 0,
+   "books": 2,
+   "score": 50,
+   "scoreLabel": "Thin",
+   "rank": 10,
+   "best": false,
+   "model": "none",
+   "firstSeenAt": "2026-11-28T03:48:40.996727+00:00",
+   "result": null
+  },
+  {
+   "id": "23fa84767409d0b0926e13fc1acf4c8d_moneyline_monmouthhawks_ml",
+   "gameId": "23fa84767409d0b0926e13fc1acf4c8d",
+   "homeTeam": "Monmouth Hawks",
+   "awayTeam": "Saint Joseph's Hawks",
+   "startTime": "2026-11-29T00:00:00Z",
+   "type": "moneyline",
+   "side": "Monmouth Hawks",
+   "line": null,
+   "label": "Monmouth Hawks to win",
+   "entryPrice": 0.45,
+   "entryWorth": 0.445,
+   "edge": -0.005,
+   "books": 2,
+   "score": 53,
+   "scoreLabel": "Thin",
+   "rank": 4,
+   "best": false,
+   "model": "agrees",
+   "firstSeenAt": "2026-11-28T03:48:40.996727+00:00",
+   "result": null
+  },
+  {
+   "id": "ac2865b89583a7cf6926af5af7862d83_total_over_165.5",
+   "gameId": "ac2865b89583a7cf6926af5af7862d83",
+   "homeTeam": "Santa Clara Broncos",
+   "awayTeam": "Utah Tech Trailblazers",
+   "startTime": "2026-11-29T00:00:00Z",
+   "type": "total",
+   "side": "over",
+   "line": 165.5,
+   "label": "Over 165.5",
+   "entryPrice": 0.49,
+   "entryWorth": 0.499,
+   "edge": 0.009,
+   "books": 3,
+   "score": 50,
+   "scoreLabel": "Thin",
+   "rank": 9,
+   "best": false,
+   "model": "disagrees",
+   "firstSeenAt": "2026-11-28T03:48:40.996727+00:00",
+   "result": null
+  },
+  {
+   "id": "ac9fe04c3340e41135fd294d1af14bf9_total_over_155.5",
+   "gameId": "ac9fe04c3340e41135fd294d1af14bf9",
+   "homeTeam": "Boise State Broncos",
+   "awayTeam": "North Texas Mean Green",
+   "startTime": "2026-11-28T20:30:00Z",
+   "type": "total",
+   "side": "over",
+   "line": 155.5,
+   "label": "Over 155.5",
+   "entryPrice": 0.48,
+   "entryWorth": 0.489,
+   "edge": 0.009,
+   "books": 3,
+   "score": 50,
+   "scoreLabel": "Thin",
+   "rank": 8,
+   "best": false,
+   "model": "disagrees",
+   "firstSeenAt": "2026-11-28T03:48:40.996727+00:00",
+   "result": null
+  },
+  {
+   "id": "cda8f19bc529344ee4859ebccc881ebc_moneyline_southernindianascreamingeagles_ml",
+   "gameId": "cda8f19bc529344ee4859ebccc881ebc",
+   "homeTeam": "Southern Indiana Screaming Eagles",
+   "awayTeam": "Ball State Cardinals",
+   "startTime": "2026-11-28T19:00:00Z",
+   "type": "moneyline",
+   "side": "Southern Indiana Screaming Eagles",
+   "line": null,
+   "label": "Southern Indiana Screaming Eagles to win",
+   "entryPrice": 0.43,
+   "entryWorth": 0.428,
+   "edge": -0.002,
+   "books": 7,
+   "score": 54,
+   "scoreLabel": "Thin",
+   "rank": 3,
+   "best": false,
+   "model": "agrees",
+   "firstSeenAt": "2026-11-28T03:48:40.996727+00:00",
+   "result": null
+  },
+  {
+   "id": "69b3a66c6f994631d5c0bded42fe67ac_moneyline_chattanoogamocs_ml",
+   "gameId": "69b3a66c6f994631d5c0bded42fe67ac",
+   "homeTeam": "Chattanooga Mocs",
+   "awayTeam": "Troy Trojans",
+   "startTime": "2026-11-28T19:00:00Z",
+   "type": "moneyline",
+   "side": "Chattanooga Mocs",
+   "line": null,
+   "label": "Chattanooga Mocs to win",
+   "entryPrice": 0.61,
+   "entryWorth": 0.613,
+   "edge": 0.003,
+   "books": 7,
+   "score": 51,
+   "scoreLabel": "Thin",
+   "rank": 6,
+   "best": false,
+   "model": "none",
+   "firstSeenAt": "2026-11-28T03:48:40.996727+00:00",
+   "result": null
+  },
+  {
+   "id": "d8d91df758dd1233efdc1abe92137305_moneyline_colgateraiders_ml",
+   "gameId": "d8d91df758dd1233efdc1abe92137305",
+   "homeTeam": "Colgate Raiders",
+   "awayTeam": "Vermont Catamounts",
+   "startTime": "2026-11-28T18:00:00Z",
+   "type": "moneyline",
+   "side": "Colgate Raiders",
+   "line": null,
+   "label": "Colgate Raiders to win",
+   "entryPrice": 0.52,
+   "entryWorth": 0.523,
+   "edge": 0.003,
+   "books": 3,
+   "score": 51,
+   "scoreLabel": "Thin",
+   "rank": 5,
+   "best": false,
+   "model": "none",
+   "firstSeenAt": "2026-11-28T03:48:40.996727+00:00",
+   "result": null
+  },
+  {
+   "id": "d83ca85d22c803601e6aab65bc254672_spread_sandiegostaztecs_8.5",
+   "gameId": "d83ca85d22c803601e6aab65bc254672",
+   "homeTeam": "Texas Tech Red Raiders",
+   "awayTeam": "San Diego St Aztecs",
+   "startTime": "2026-11-28T04:30:00Z",
+   "type": "spread",
+   "side": "San Diego St Aztecs",
+   "line": 8.5,
+   "label": "San Diego St Aztecs +8.5",
+   "entryPrice": 0.48,
+   "entryWorth": 0.492,
+   "edge": 0.012,
+   "books": 5,
+   "score": 58,
+   "scoreLabel": "Thin",
+   "rank": 2,
+   "best": false,
+   "model": "none",
+   "firstSeenAt": "2026-11-28T03:48:40.996727+00:00",
+   "result": null
+  },
+  {
+   "id": "d83ca85d22c803601e6aab65bc254672_total_over_142.5",
+   "gameId": "d83ca85d22c803601e6aab65bc254672",
+   "homeTeam": "Texas Tech Red Raiders",
+   "awayTeam": "San Diego St Aztecs",
+   "startTime": "2026-11-28T04:30:00Z",
+   "type": "total",
+   "side": "over",
+   "line": 142.5,
+   "label": "Over 142.5",
+   "entryPrice": 0.49,
+   "entryWorth": 0.491,
+   "edge": 0.001,
+   "books": 3,
+   "score": 51,
+   "scoreLabel": "Thin",
+   "rank": 7,
+   "best": false,
+   "model": "none",
+   "firstSeenAt": "2026-11-28T03:48:40.996727+00:00",
+   "result": null
+  },
+  {
+   "id": "fd6efd7dbe43547477817d434e740852_spread_creightonbluejays_5.5",
+   "gameId": "fd6efd7dbe43547477817d434e740852",
+   "homeTeam": "Gonzaga Bulldogs",
+   "awayTeam": "Creighton Bluejays",
+   "startTime": "2026-11-28T04:00:00Z",
+   "type": "spread",
+   "side": "Creighton Bluejays",
+   "line": 5.5,
+   "label": "Creighton Bluejays +5.5",
+   "entryPrice": 0.47,
+   "entryWorth": 0.485,
+   "edge": 0.015,
+   "books": 3,
+   "score": 58,
+   "scoreLabel": "Thin",
+   "rank": 1,
+   "best": false,
+   "model": "none",
+   "firstSeenAt": "2026-11-28T03:48:40.996727+00:00",
+   "result": null
+  },
   {
    "id": "018ae040de9fffa378fba5cfbb88c8f7_total_over_139.5",
    "gameId": "018ae040de9fffa378fba5cfbb88c8f7",
@@ -219,7 +439,9 @@
    "best": false,
    "model": "agrees",
    "firstSeenAt": "2026-11-27T04:01:15.730366+00:00",
-   "result": null
+   "result": "loss",
+   "finalHome": 59,
+   "finalAway": 72
   },
   {
    "id": "cd744c919b9a21ddf2611504bf49f376_moneyline_northcarolinatarheels_ml",
@@ -241,7 +463,9 @@
    "best": false,
    "model": "agrees",
    "firstSeenAt": "2026-11-27T04:01:15.730366+00:00",
-   "result": null
+   "result": "loss",
+   "finalHome": 59,
+   "finalAway": 72
   },
   {
    "id": "b45868adb6bfc90b2080067130c72a87_spread_charlestonsouthernbuccaneers_9.5",
@@ -263,7 +487,9 @@
    "best": false,
    "model": "agrees",
    "firstSeenAt": "2026-11-27T22:25:35.519925+00:00",
-   "result": null
+   "result": "win",
+   "finalHome": 67,
+   "finalAway": 76
   },
   {
    "id": "ff2176f4daaef2d1975208c1449ac700_total_over_152.5",
@@ -285,7 +511,9 @@
    "best": false,
    "model": "agrees",
    "firstSeenAt": "2026-11-27T04:01:15.730366+00:00",
-   "result": null
+   "result": "loss",
+   "finalHome": 93,
+   "finalAway": 57
   },
   {
    "id": "1f87dcbca697a752ec04a6d6294636f0_total_under_175.5",
@@ -307,7 +535,9 @@
    "best": false,
    "model": "agrees",
    "firstSeenAt": "2026-11-27T22:25:35.519925+00:00",
-   "result": null
+   "result": "loss",
+   "finalHome": 116,
+   "finalAway": 76
   },
   {
    "id": "ff2176f4daaef2d1975208c1449ac700_total_over_151.5",
@@ -329,7 +559,9 @@
    "best": false,
    "model": "agrees",
    "firstSeenAt": "2026-11-27T22:25:35.519925+00:00",
-   "result": null
+   "result": "loss",
+   "finalHome": 93,
+   "finalAway": 57
   },
   {
    "id": "61fabe838642d2eb1431fcee1cf2ec02_total_under_157.5",
@@ -351,7 +583,9 @@
    "best": false,
    "model": "agrees",
    "firstSeenAt": "2026-11-27T04:01:15.730366+00:00",
-   "result": null
+   "result": "win",
+   "finalHome": 76,
+   "finalAway": 78
   },
   {
    "id": "04915f643fc6eb1073d25f6bc1d8e53f_total_under_151.5",
@@ -373,7 +607,9 @@
    "best": false,
    "model": "none",
    "firstSeenAt": "2026-11-27T04:01:15.730366+00:00",
-   "result": null
+   "result": "loss",
+   "finalHome": 111,
+   "finalAway": 56
   },
   {
    "id": "04915f643fc6eb1073d25f6bc1d8e53f_spread_southernjaguars_36.5",
@@ -395,7 +631,9 @@
    "best": false,
    "model": "agrees",
    "firstSeenAt": "2026-11-27T04:01:15.730366+00:00",
-   "result": null
+   "result": "loss",
+   "finalHome": 111,
+   "finalAway": 56
   },
   {
    "id": "f3cd5043f4c5a7d9f1a5b5dc4f0417f3_total_over_147.5",
@@ -439,7 +677,9 @@
    "best": false,
    "model": "agrees",
    "firstSeenAt": "2026-11-27T04:01:15.730366+00:00",
-   "result": null
+   "result": "win",
+   "finalHome": 71,
+   "finalAway": 83
   },
   {
    "id": "3ce2ec8471b46e17dc7b246a086a3e8d_spread_oregonducks_9.5",
@@ -461,7 +701,9 @@
    "best": false,
    "model": "agrees",
    "firstSeenAt": "2026-11-26T04:03:28.883345+00:00",
-   "result": null
+   "result": "win",
+   "finalHome": 59,
+   "finalAway": 62
   },
   {
    "id": "00ffa84e4fac12fc9b2885305e76ad31_spread_baylorbears_3.5",
@@ -483,7 +725,9 @@
    "best": false,
    "model": "none",
    "firstSeenAt": "2026-11-26T22:42:23.461263+00:00",
-   "result": null
+   "result": "loss",
+   "finalHome": 72,
+   "finalAway": 64
   },
   {
    "id": "3ce2ec8471b46e17dc7b246a086a3e8d_spread_oregonducks_10.5",
@@ -505,7 +749,9 @@
    "best": false,
    "model": "agrees",
    "firstSeenAt": "2026-11-26T22:42:23.461263+00:00",
-   "result": null
+   "result": "win",
+   "finalHome": 59,
+   "finalAway": 62
   },
   {
    "id": "3ce2ec8471b46e17dc7b246a086a3e8d_total_under_148.5",
@@ -527,7 +773,9 @@
    "best": false,
    "model": "agrees",
    "firstSeenAt": "2026-11-26T22:42:23.461263+00:00",
-   "result": null
+   "result": "win",
+   "finalHome": 59,
+   "finalAway": 62
   },
   {
    "id": "3cb03cfb4f93a60fd1ce506ee8555130_total_under_157.5",
@@ -549,7 +797,9 @@
    "best": false,
    "model": "none",
    "firstSeenAt": "2026-11-25T21:48:50.318844+00:00",
-   "result": null
+   "result": "loss",
+   "finalHome": 93,
+   "finalAway": 90
   },
   {
    "id": "3cb03cfb4f93a60fd1ce506ee8555130_spread_stjohnsredstorm_-2.5",
@@ -571,7 +821,9 @@
    "best": false,
    "model": "none",
    "firstSeenAt": "2026-11-25T21:48:50.318844+00:00",
-   "result": null
+   "result": "loss",
+   "finalHome": 93,
+   "finalAway": 90
   },
   {
    "id": "3cb03cfb4f93a60fd1ce506ee8555130_total_over_161.5",
@@ -593,7 +845,9 @@
    "best": false,
    "model": "none",
    "firstSeenAt": "2026-11-26T22:42:23.461263+00:00",
-   "result": null
+   "result": "win",
+   "finalHome": 93,
+   "finalAway": 90
   },
   {
    "id": "ff463f606d0a8912ca36a58b809e5f9e_spread_kansasstwildcats_13.5",
@@ -615,7 +869,9 @@
    "best": false,
    "model": "agrees",
    "firstSeenAt": "2026-11-26T22:42:23.461263+00:00",
-   "result": null
+   "result": "win",
+   "finalHome": 104,
+   "finalAway": 91
   },
   {
    "id": "8d107304a440a02e1eaf34b9e8eac486_moneyline_ucdavisaggies_ml",
@@ -637,7 +893,9 @@
    "best": false,
    "model": "agrees",
    "firstSeenAt": "2026-11-26T04:03:28.883345+00:00",
-   "result": null
+   "result": "win",
+   "finalHome": 68,
+   "finalAway": 63
   },
   {
    "id": "8d107304a440a02e1eaf34b9e8eac486_total_over_138.5",
@@ -659,7 +917,9 @@
    "best": false,
    "model": "agrees",
    "firstSeenAt": "2026-11-26T22:42:23.461263+00:00",
-   "result": null
+   "result": "loss",
+   "finalHome": 68,
+   "finalAway": 63
   },
   {
    "id": "8cdf0f9df5b4480c117a9455b60b067b_spread_smumustangs_4.5",

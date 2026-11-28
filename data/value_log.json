@@ -1,13 +1,13 @@
 {
- "updatedAt": "2026-11-27T22:24:50.081318+00:00",
+ "updatedAt": "2026-11-28T03:48:01.932866+00:00",
  "minEdge": 0.02,
  "summary": {
   "flagged": 20,
-  "graded": 4,
-  "wins": 1,
-  "losses": 3,
-  "profitUnits": -1.83,
-  "roiPct": -45.7,
+  "graded": 14,
+  "wins": 3,
+  "losses": 11,
+  "profitUnits": -7.57,
+  "roiPct": -54.1,
   "avgEntryEdgePct": 2.5,
   "avgEdgeVsClosePct": 2.39,
   "beatClosePct": 100.0,
@@ -75,7 +75,10 @@
    "closeFair": 0.492,
    "closePrice": 0.47,
    "closeAt": "2026-11-27T04:00:18.055477+00:00",
-   "result": null
+   "result": "loss",
+   "finalHome": 67,
+   "finalAway": 76,
+   "gradedAt": "2026-11-28T03:48:01.932866+00:00"
   },
   {
    "id": "ff2176f4daaef2d1975208c1449ac700_moneyline_bowlinggreenfalcons_ml",
@@ -96,7 +99,10 @@
    "closeFair": 0.052,
    "closePrice": 0.029,
    "closeAt": "2026-11-27T22:24:50.081318+00:00",
-   "result": null
+   "result": "loss",
+   "finalHome": 93,
+   "finalAway": 57,
+   "gradedAt": "2026-11-28T03:48:01.932866+00:00"
   },
   {
    "id": "1f87dcbca697a752ec04a6d6294636f0_spread_illinoisfightingillini_-27.5",
@@ -117,7 +123,10 @@
    "closeFair": 0.493,
    "closePrice": 0.47,
    "closeAt": "2026-11-27T22:24:50.081318+00:00",
-   "result": null
+   "result": "win",
+   "finalHome": 116,
+   "finalAway": 76,
+   "gradedAt": "2026-11-28T03:48:01.932866+00:00"
   },
   {
    "id": "70b5b5c697f509bfd278d01f32999aba_moneyline_bucknellbison_ml",
@@ -138,7 +147,10 @@
    "closeFair": 0.234,
    "closePrice": 0.21,
    "closeAt": "2026-11-27T04:00:18.055477+00:00",
-   "result": null
+   "result": "loss",
+   "finalHome": 89,
+   "finalAway": 86,
+   "gradedAt": "2026-11-28T03:48:01.932866+00:00"
   },
   {
    "id": "7183152f6944c6c86a45fe3c134d8b85_spread_hofstrapride_-5.5",
@@ -159,7 +171,10 @@
    "closeFair": 0.493,
    "closePrice": 0.47,
    "closeAt": "2026-11-27T04:00:18.055477+00:00",
-   "result": null
+   "result": "loss",
+   "finalHome": 49,
+   "finalAway": 75,
+   "gradedAt": "2026-11-28T03:48:01.932866+00:00"
   },
   {
    "id": "04915f643fc6eb1073d25f6bc1d8e53f_total_under_151.5",
@@ -180,7 +195,10 @@
    "closeFair": 0.495,
    "closePrice": 0.46,
    "closeAt": "2026-11-27T04:00:18.055477+00:00",
-   "result": null
+   "result": "loss",
+   "finalHome": 111,
+   "finalAway": 56,
+   "gradedAt": "2026-11-28T03:48:01.932866+00:00"
   },
   {
    "id": "04915f643fc6eb1073d25f6bc1d8e53f_spread_southernjaguars_36.5",
@@ -201,7 +219,10 @@
    "closeFair": 0.495,
    "closePrice": 0.47,
    "closeAt": "2026-11-27T04:00:18.055477+00:00",
-   "result": null
+   "result": "loss",
+   "finalHome": 111,
+   "finalAway": 56,
+   "gradedAt": "2026-11-28T03:48:01.932866+00:00"
   },
   {
    "id": "3ce2ec8471b46e17dc7b246a086a3e8d_spread_oregonducks_9.5",
@@ -222,7 +243,10 @@
    "closeFair": 0.498,
    "closePrice": 0.47,
    "closeAt": "2026-11-26T04:02:13.948503+00:00",
-   "result": null
+   "result": "win",
+   "finalHome": 59,
+   "finalAway": 62,
+   "gradedAt": "2026-11-28T03:48:01.932866+00:00"
   },
   {
    "id": "3cb03cfb4f93a60fd1ce506ee8555130_total_under_157.5",
@@ -243,7 +267,10 @@
    "closeFair": 0.498,
    "closePrice": 0.47,
    "closeAt": "2026-11-25T21:47:58.764790+00:00",
-   "result": null
+   "result": "loss",
+   "finalHome": 93,
+   "finalAway": 90,
+   "gradedAt": "2026-11-28T03:48:01.932866+00:00"
   },
   {
    "id": "3cb03cfb4f93a60fd1ce506ee8555130_spread_stjohnsredstorm_-2.5",
@@ -264,7 +291,10 @@
    "closeFair": 0.486,
    "closePrice": 0.51,
    "closeAt": "2026-11-26T04:02:13.948503+00:00",
-   "result": null
+   "result": "loss",
+   "finalHome": 93,
+   "finalAway": 90,
+   "gradedAt": "2026-11-28T03:48:01.932866+00:00"
   },
   {
    "id": "8cdf0f9df5b4480c117a9455b60b067b_spread_smumustangs_4.5",
